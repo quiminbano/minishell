@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/01 14:19:55 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/02 12:29:50 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,13 @@ SRC = test.c
 
 OBJ = test.o
 
-LIBFT = libft/libft.a
+LIBFT = -L libft -lft
 
 FLAGS = -Wall -Wextra -Werror
+
+RL_L = -L ~/.brew/opt/readline/lib -lreadline
+
+RL_I = -I ~/.brew/opt/readline/include/readline
 
 CC = cc
 
@@ -26,7 +30,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		$(MAKE) -C ./libft
-		$(CC) $(FLAGS) -lreadline $(OBJ) $(LIBFT) -o $(NAME)
+		$(CC) $(FLAGS) $(OBJ) $(RL_I) $(LIBFT) $(RL_L) -o $(NAME)
 
 %.o: %.c
 		$(CC) $(FLAGS) -I. -c $< -o $@
