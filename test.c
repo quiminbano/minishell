@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/01 13:03:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:32:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	main(void)
 	i = 0;
 	while (1)
 	{
-		str = readline("minishell>> ");
+		str = readline("minishell$ ");
+		if (ft_strlen(str) > 0)
+			add_history(str);
 		printf("%s\n", str);
 		free(str);
 		i = 0;
