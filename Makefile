@@ -6,15 +6,15 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/03 13:31:12 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/03 17:31:53 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c
+SRC = minishell.c minishell_utils.c
 
-OBJ = minishell.o
+OBJ = minishell.o minishell_utils.o
 
 LIBFT = -Llibft -lft
 
