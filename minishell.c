@@ -6,37 +6,53 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/03 17:38:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:58:08 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_i_need_to_leave(void)
+static int	ft_start(void)
 {
-	rl_replace_line("", 1);
-	rl_redisplay();
+	pid_t		pid;
+	char		**str;
+	extern char	**environ;
+
+	str = ft_split("clear", ' ');
+	pid = fork();
+	if (pid < 0)
+		return (1);
+	if (pid == 0)
+		execve("/usr/bin/clear", str, environ);
+	else
+	{
+		wait(NULL);
+		ft_free_split(str);
+		printf("Welcome to minishell. Developed by corellan and hel-hosr. ");
+		printf("Hive Helsinki. 2023.\n");
+	}
+	return (0);
 }
 
 int	main(void)
 {
 	char	*str;
+	t_exit	exit;
 
+	if (ft_start() == 1)
+		return (1);
 	while (1)
 	{
 		str = readline("minishell$ ");
-		if (str != (void *)0 && ft_strlen(str) > 0)
-			add_history(str);
-		if (str == (void *)0)
-		{
-			ft_i_need_to_leave();
-			exit(0);
-		}
-		if (ft_strncmp("exit\0", str, 5) == 0 || ft_strncmp("exit ", str, 5) == 0)
-		{
-			if (ft_wordcount_exit(str) > 1)
-			printf("%d\n", ft_wordcount_exit(str));
-		}
+		exit.r = ft_line_checker(str, &(exit.ret));
+		if (exit.r == 0)
+			return (0);
+		else if (exit.r == 1)
+			return (exit.ret);
+		else if (exit.r == 2)
+			return (255);
+		else if (exit.ret == 3)
+			continue ;
 		printf("%s\n", str);
 		free(str);
 	}
