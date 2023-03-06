@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 09:31:58 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:12:36 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct s_exit
 # include <fcntl.h>
 # include <sys/wait.h>
 
+char		**ft_custom_split(char const *s, char c);
+int			ft_check_single_quot(char const *str, int *i, int *j);
+int			ft_check_double_quot(char const *str, int *i, int *j);
 int			ft_wordcount_argc(char const *str);
 int			ft_count_space(char const *str);
 long long	ft_atoll(char const *str);
