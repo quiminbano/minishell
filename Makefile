@@ -6,19 +6,21 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/04 19:43:31 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/06 08:43:27 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c minishell_utils.c minishell_exit.c minishell_argc.c
+SRC = minishell.c minishell_utils.c minishell_exit.c minishell_argc.c \
+minishell_utils_exit.c
 
-OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o
+OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
+minishell_utils_exit.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 
 RL_L = -lreadline -L /opt/homebrew/opt/readline/lib
 
