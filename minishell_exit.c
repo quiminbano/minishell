@@ -6,11 +6,15 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/04 19:48:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:42:00 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function prints the exit message and it returns a number to notify to the 
+main function to return exit.ret (*ret). The (*ret) number is gotten typecasting
+the number returned by the function ft_atoll as unsigned char.*/
 
 static int	ft_sucess_return_exit(char **array, char *str, int *ret)
 {
@@ -27,6 +31,11 @@ static int	ft_sucess_return_exit(char **array, char *str, int *ret)
 	free(str);
 	return (1);
 }
+
+/*This function prints the proper error case detected in the function 
+ft_exit_multiargument and returns a number to the main function. So, with
+this number, the main function knows which number should return to exit
+the minishell.*/
 
 static int	ft_print_error_exit(char **array, char *str, int error)
 {
@@ -49,6 +58,13 @@ static int	ft_print_error_exit(char **array, char *str, int error)
 	}
 	return (0);
 }
+
+/*This function splits all the arguments in the string, to check the
+arguments written after the word exit. First, the function checks if
+there are more than one argument after the word exit, and it checks
+if there are valid numbers to print the proper error message. On the 
+other hand, it check the arguments when there is only one extra argument
+after the word exit.*/
 
 static int	ft_exit_multiargument(char *str, int *ret)
 {
@@ -75,6 +91,12 @@ static int	ft_exit_multiargument(char *str, int *ret)
 	}
 	return (0);
 }
+
+/*This function check how many arguments were written after the word exit.
+if it was just written the word exit, if it was just written the word exit,
+the minishell prints in stderr the word exit, and returns a 0. if it has more
+arguments, the function returns a value given by the auxiliar function
+ft_exit_multiargument.*/
 
 int	ft_exit_check(char *str, int *ret)
 {

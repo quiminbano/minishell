@@ -6,11 +6,14 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:48:36 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 09:31:36 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:03:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function counts how many spaces are before the first word written in
+a command.*/
 
 int	ft_count_space(char const *str)
 {
@@ -23,6 +26,9 @@ int	ft_count_space(char const *str)
 	}
 	return (i);
 }
+
+/*This function checks if there are special characters in the command written.
+it works for now with the command exit.*/
 
 int	ft_check_symbols(char const *str)
 {
@@ -39,6 +45,9 @@ int	ft_check_symbols(char const *str)
 	}
 	return (j);
 }
+
+/*This function counts how many arguments are in a line. For now, it works with
+the command exit.*/
 
 int	ft_wordcount_argc(char const *str)
 {

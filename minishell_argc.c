@@ -6,17 +6,26 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 09:06:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:48:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function is an answer to press ctrl + D. Not well implemented yet.*/
 
 static void	ft_i_need_to_leave(void)
 {
 	rl_replace_line("", 1);
 	rl_redisplay();
 }
+
+/*This function check many thins. First it checks that the string is not NULL.
+If it is not NULL, the function add_history is called to cast the history of
+the commands written. It also check if we press ctrl + D in the terminal to
+indicate the end of file (EOF). This is not handled properly yet. Finally, 
+the function check the differents ways that the command exit needs to be written
+to be valid. */
 
 int	ft_line_checker(char *s, int *ret)
 {

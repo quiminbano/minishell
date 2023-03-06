@@ -6,11 +6,14 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 14:28:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 08:42:35 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:17:59 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function checks if the numbers written as an argument are overflowed or
+not.*/
 
 int	ft_am_i_valid_number(char const *str)
 {
@@ -36,6 +39,13 @@ int	ft_am_i_valid_number(char const *str)
 	return (0);
 }
 
+/*This function checks if the string represents a number or not. For that, it
+uses a counter(i) to count how many digits has the number before finding weird
+characters. If this counter(i) matchs with the length of the string, it means
+that the string represents a number and the function returns 0. But, if the 
+counter(i) is less than the length of the string, it means that it is not a 
+valid number and it returns 1.*/
+
 int	ft_am_i_a_number(char *str)
 {
 	size_t	i;
@@ -57,6 +67,9 @@ int	ft_am_i_a_number(char *str)
 		return (1);
 	return (0);
 }
+
+/*This function converts a string in a long long number. it doesn't work with
+LONG_LONG_MIN.*/
 
 long long	ft_atoll(char const *str)
 {
