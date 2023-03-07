@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 18:36:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:59:16 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ If the user writes exit + a text message or numbers under LONG_LONG_MIN or
 numbers bigger than LONG_LONG_MAX, the minishell doesn't exit and it continues
 working.*/
 
+
+
+
 int	main(void)
 {
 	char	*str;
@@ -59,6 +62,7 @@ int	main(void)
 		return (1);
 	while (1)
 	{
+		handle_shortcuts();
 		str = readline("minishell$ ");
 		exit.r = ft_line_checker(str, &(exit.ret));
 		if (exit.r == 0)
