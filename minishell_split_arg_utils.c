@@ -6,11 +6,14 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/07 19:21:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:57:39 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function helps to check how many words are in the string
+to split when there are single quotaations in the string.*/
 
 int	ft_check_single_quot(char const *str, int *i, int *j)
 {
@@ -35,6 +38,9 @@ int	ft_check_single_quot(char const *str, int *i, int *j)
 	return (1);
 }
 
+/*This function helps to check how many words are in the string
+to split when there are double quotaations in the string.*/
+
 int	ft_check_double_quot(char const *str, int *i, int *j)
 {
 	int	k;
@@ -57,6 +63,11 @@ int	ft_check_double_quot(char const *str, int *i, int *j)
 	}
 	return (1);
 }
+
+/*This function return the length, of the part of the string to be splitted, 
+when the text is inside single quotation marks (''). It also set up a flag
+(sp->p) to know if the string has a double quotation mark in the beginning and 
+the end of the string.*/
 
 size_t	ft_len_single_quot(char const *s, size_t *st, t_sp_arg *sp)
 {
@@ -87,6 +98,11 @@ size_t	ft_len_single_quot(char const *s, size_t *st, t_sp_arg *sp)
 	return (k);
 }
 
+/*This function return the length, of the part of the string to be splitted, 
+when the text is inside double quotation marks (""). It also set up a flag
+(sp->p) to know if the string has a double quotation mark in the beginning and 
+the end of the string.*/
+
 size_t	ft_len_double_quot(char const *s, size_t *st, t_sp_arg *sp)
 {
 	size_t	k;
@@ -115,6 +131,9 @@ size_t	ft_len_double_quot(char const *s, size_t *st, t_sp_arg *sp)
 	}
 	return (k);
 }
+
+/*This function counts how many times the characters to be skipped, to 
+processes the splitting process, are in the string to be splitted.*/
 
 size_t	ft_count_char_arg(char const *str)
 {

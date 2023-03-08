@@ -6,12 +6,20 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/07 18:50:12 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:27:48 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include "libft/libft.h"
+# include <string.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 typedef struct s_exit
 {
@@ -21,19 +29,13 @@ typedef struct s_exit
 
 typedef struct s_sp_arg
 {
-	int	p;
-	int	q;
-	int	t;
+	int		p;
+	int		q;
+	int		t;
+	size_t	i;
+	size_t	j;
+	size_t	len;
 }	t_sp_arg;
-
-
-# include "libft/libft.h"
-# include <string.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <fcntl.h>
-# include <sys/wait.h>
 
 char		**ft_custom_split(char const *s);
 int			ft_check_single_quot(char const *str, int *i, int *j);
@@ -51,5 +53,6 @@ int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *str, int *ret);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
+int			ft_echo(char *str);
 
 #endif

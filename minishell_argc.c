@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 18:48:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:31:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,10 @@ int	ft_line_checker(char *s, int *ret)
 		else
 			return (3);
 	}
+	if ((ft_strncmp("echo\0", (s + i), 5) == 0) || \
+		(ft_strncmp("echo ", (s + i), 5) == 0) || \
+		(ft_strncmp("\"echo\"", (s + i), 7) == 0) || \
+		(ft_strncmp("\"echo\" ", (s + i), 7) == 0))
+		return (ft_echo(s));
 	return (3);
 }

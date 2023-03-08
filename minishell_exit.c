@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/06 18:42:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:34:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	ft_exit_multiargument(char *str, int *ret)
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
 			ft_am_i_valid_number(array[1]) == 1)
-			return(ft_print_error_exit(array, str, 1));
+			return (ft_print_error_exit(array, str, 1));
 		else
 			return (ft_print_error_exit(array, str, 2));
 	}
@@ -85,7 +85,7 @@ static int	ft_exit_multiargument(char *str, int *ret)
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
 			ft_am_i_valid_number(array[1]) == 1)
-			return(ft_print_error_exit(array, str, 1));
+			return (ft_print_error_exit(array, str, 1));
 		else
 			return (ft_sucess_return_exit(array, str, &(*ret)));
 	}
@@ -107,6 +107,6 @@ int	ft_exit_check(char *str, int *ret)
 		return (0);
 	}
 	else if (ft_wordcount_argc(str) > 1)
-		 return (ft_exit_multiargument(str, &(*ret)));
+		return (ft_exit_multiargument(str, &(*ret)));
 	return (3);
 }
