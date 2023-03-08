@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 14:27:48 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:06:31 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_sp_arg
 	size_t	len;
 }	t_sp_arg;
 
+typedef struct s_echo
+{
+	int				pos;
+	struct s_echo	*next;
+}	t_echo;
+
 char		**ft_custom_split(char const *s);
 int			ft_check_single_quot(char const *str, int *i, int *j);
 int			ft_check_double_quot(char const *str, int *i, int *j);
@@ -54,5 +60,9 @@ int			ft_line_checker(char *str, int *ret);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 int			ft_echo(char *str);
+void		ft_add_to_list(t_echo **begin, int num);
+int			ft_listsize(t_echo **lst);
+void		ft_free_list(t_echo **lst);
+void		ft_print_list(t_echo **a);
 
 #endif
