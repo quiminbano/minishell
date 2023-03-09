@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/07 16:59:16 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/09 14:38:03 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ unsigned char number. If the user writes just exit, the minishell returns 0.
 If the user writes exit + a text message or numbers under LONG_LONG_MIN or 
 numbers bigger than LONG_LONG_MAX, the minishell doesn't exit and it continues
 working.*/
-
-
-
 
 int	main(void)
 {

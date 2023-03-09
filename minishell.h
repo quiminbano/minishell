@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/07 16:11:43 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:43:52 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int			ft_line_checker(char *str, int *ret);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 void		handle_shortcuts(void);
+void 		handle_ctrlD(void);
 
 
 #endif
