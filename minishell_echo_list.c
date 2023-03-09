@@ -6,11 +6,13 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 21:06:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:35:22 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function frees the t_echo list.*/
 
 void	ft_free_list(t_echo **lst)
 {
@@ -28,6 +30,8 @@ void	ft_free_list(t_echo **lst)
 	free(temp);
 }
 
+/*This function adds a new node to the t_echo linked list.*/
+
 static t_echo	*ft_listnew(int content)
 {
 	t_echo	*new;
@@ -39,6 +43,8 @@ static t_echo	*ft_listnew(int content)
 	new->next = NULL;
 	return (new);
 }
+
+/*This function adds the number num as a last node of the list.*/
 
 void	ft_add_to_list(t_echo **begin, int num)
 {
@@ -57,6 +63,8 @@ void	ft_add_to_list(t_echo **begin, int num)
 	}
 }
 
+/*This function measure the length of the list.*/
+
 int	ft_listsize(t_echo **lst)
 {
 	int		i;
@@ -71,6 +79,9 @@ int	ft_listsize(t_echo **lst)
 	}
 	return (i);
 }
+
+/*This function prints every member of the list. This function was made to
+debug.*/
 
 void	ft_print_list(t_echo **a)
 {

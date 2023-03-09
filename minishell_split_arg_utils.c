@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 13:57:39 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:27:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ size_t	ft_len_single_quot(char const *s, size_t *st, t_sp_arg *sp)
 	if (s[k] == '\0')
 	{
 		sp->p = 0;
-		return (0);
+		return (1);
 	}
 	else
 	{
@@ -120,7 +120,7 @@ size_t	ft_len_double_quot(char const *s, size_t *st, t_sp_arg *sp)
 	if (s[k] == '\0')
 	{
 		sp->p = 0;
-		return (0);
+		return (1);
 	}
 	else
 	{

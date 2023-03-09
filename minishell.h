@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 21:06:31 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:23:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int			ft_line_checker(char *str, int *ret);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 int			ft_echo(char *str);
+int			ft_check_s_quot_echo(char const *str, int *i, int *j, t_echo **e);
+int			ft_check_d_quot_echo(char const *str, int *i, int *j, t_echo **e);
 void		ft_add_to_list(t_echo **begin, int num);
 int			ft_listsize(t_echo **lst);
 void		ft_free_list(t_echo **lst);
