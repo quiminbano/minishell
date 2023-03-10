@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 10:07:54 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/10 11:52:40 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ int	main(void)
 		else if (exit.r == 2)
 			return (255);
 		else if (exit.r == 3)
-			continue ;
-		printf("%s\n", str);
-		free(str);
+		{
+			printf("%s\n", str);
+			free(str);
+		}
 	}
 	return (0);
 }
