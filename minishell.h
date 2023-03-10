@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 15:43:52 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:22:17 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <termios.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <sys/errno.h>
 
 typedef struct s_exit
 {
@@ -74,5 +75,7 @@ void		ft_add_to_list(t_echo **begin, int num);
 int			ft_listsize(t_echo **lst);
 void		ft_free_list(t_echo **lst);
 void		ft_print_list(t_echo **a);
+int			ft_pwd(void);
+int			ft_cd(char *s, int i);
 
 #endif
