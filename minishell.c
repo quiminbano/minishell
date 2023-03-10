@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
 /*   Updated: 2023/03/08 10:07:54 by corellan         ###   ########.fr       */
@@ -59,6 +59,7 @@ int	main(void)
 		return (1);
 	while (1)
 	{
+		handle_shortcuts();
 		str = readline("minishell$ ");
 		exit.r = ft_line_checker(str, &(exit.ret));
 		if (exit.r == 0)

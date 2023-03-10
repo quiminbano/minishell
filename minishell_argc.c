@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 14:31:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:44:35 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function is an answer to press ctrl + D. Not well implemented yet.*/
-
-static void	ft_i_need_to_leave(void)
-{
-	rl_replace_line("", 1);
-	rl_redisplay();
-}
 
 /*This function check many thins. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
@@ -34,10 +26,7 @@ int	ft_line_checker(char *s, int *ret)
 	if (s != (void *)0 && ft_strlen(s) > 0)
 		add_history(s);
 	if (s == (void *)0)
-	{
-		ft_i_need_to_leave();
-		exit(0);
-	}
+		handle_ctrlD();
 	i = ft_count_space(s);
 	if ((ft_strncmp("exit\0", (s + i), 5) == 0) || \
 		(ft_strncmp("exit ", (s + i), 5) == 0) || \

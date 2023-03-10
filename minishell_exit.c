@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
 /*   Updated: 2023/03/08 10:34:18 by corellan         ###   ########.fr       */
