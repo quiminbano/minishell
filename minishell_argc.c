@@ -38,5 +38,10 @@ int	ft_line_checker(char *s, int *ret)
 		else
 			return (3);
 	}
+	if ((ft_strncmp("echo\0", (s + i), 5) == 0) || \
+		(ft_strncmp("echo ", (s + i), 5) == 0) || \
+		(ft_strncmp("\"echo\"", (s + i), 7) == 0) || \
+		(ft_strncmp("\"echo\" ", (s + i), 7) == 0))
+		return (ft_echo(s));
 	return (3);
 }
