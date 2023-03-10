@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 15:44:35 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:23:05 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,15 @@ int	ft_line_checker(char *s, int *ret)
 		(ft_strncmp("\"echo\"", (s + i), 7) == 0) || \
 		(ft_strncmp("\"echo\" ", (s + i), 7) == 0))
 		return (ft_echo(s));
+	if ((ft_strncmp("pwd\0", (s + i), 4) == 0) || \
+		(ft_strncmp("pwd ", (s + i), 4) == 0) || \
+		(ft_strncmp("\"pwd\"", (s + i), 6) == 0) || \
+		(ft_strncmp("\"pwd\" ", (s + i), 6) == 0))
+		return (ft_pwd());
+	if ((ft_strncmp("cd\0", (s + i), 3) == 0) || \
+		(ft_strncmp("cd ", (s + i), 3) == 0) || \
+		(ft_strncmp("\"cd\"", (s + i), 5) == 0) || \
+		(ft_strncmp("\"cd\" ", (s + i), 5) == 0))
+		return(ft_cd(s, i));
 	return (3);
 }

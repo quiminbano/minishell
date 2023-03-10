@@ -6,7 +6,7 @@
 #    By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/07 14:26:31 by hel-hosr         ###   ########.fr        #
+#    Updated: 2023/03/10 14:15:01 by hel-hosr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,14 @@ NAME = minishell
 SRC = minishell.c minishell_utils.c minishell_exit.c minishell_argc.c \
 minishell_utils_exit.c minishell_echo.c minishell_split_arg.c \
 minishell_split_arg_utils.c minishell_split_arg_utils2.c \
-minishell_echo_list.c minishell_echo_utils.c minishell_shortcuts.c
+minishell_echo_list.c minishell_echo_utils.c minishell_shortcuts.c \
+minishell_pwd_cd.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
 minishell_split_arg_utils.o minishell_split_arg_utils2.o \
-minishell_echo_list.o minishell_echo_utils.o minishell_shortcuts.o
+minishell_echo_list.o minishell_echo_utils.o minishell_shortcuts.o\
+minishell_pwd_cd.o
 
 
 LIBFT = -Llibft -lft
