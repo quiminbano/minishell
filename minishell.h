@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/11 17:10:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/11 20:04:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 typedef struct s_env
 {
 	char	**env;
-	char	*oldpwd;
+	char	oldpwd[BUFFER];
+	char	newpwd[BUFFER];
 	int		level;
 }	t_env;
 
@@ -59,7 +60,7 @@ int			ft_count_space(char const *str);
 long long	ft_atoll(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
-int			ft_line_checker(char *str, int *ret, char **environ);
+int			ft_line_checker(char *s, int *ret, t_env *env);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 char		**ft_custom_split(char const *s);
@@ -78,7 +79,7 @@ int			ft_listsize(t_echo **lst);
 void		ft_free_list(t_echo **lst);
 void		ft_print_list(t_echo **a);
 int			ft_pwd(void);
-int			ft_cd(char *s, int i);
+int			ft_cd(char *s, int i, t_env *env);
 int			ft_env(char **environ);
 
 #endif
