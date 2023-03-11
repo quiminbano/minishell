@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/10 14:00:48 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:39:49 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 /*This function clears the screen when the program is started. Also, it prints
 the welcome message to the user */
 
-static int	ft_start(void)
+static int	ft_start(char **environ)
 {
 	pid_t		pid;
 	char		**str;
-	extern char	**environ;
 
 	str = ft_split("clear", ' ');
 	pid = fork();
@@ -50,25 +49,29 @@ If the user writes exit + a text message or numbers under LONG_LONG_MIN or
 numbers bigger than LONG_LONG_MAX, the minishell doesn't exit and it continues
 working.*/
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	char	*str;
-	t_exit	exit;
+	int		ret;
+	t_env	env;
 
-	if (ft_start() == 1)
+	if (av[0] != NULL)
+		ac = 0;
+	ft_copy_env(&env, envp);
+	if (ft_start(envp) == 1)
 		return (1);
 	while (1)
 	{
 		handle_shortcuts();
 		str = readline("minishell$ ");
-		exit.r = ft_line_checker(str, &(exit.ret));
-		if (exit.r == 0)
+		ac = ft_line_checker(str, &(ret), env.env);
+		if (ac == 0)
 			return (0);
-		else if (exit.r == 1)
-			return (exit.ret);
-		else if (exit.r == 2)
+		else if (ac == 1)
+			return (ret);
+		else if (ac == 2)
 			return (255);
-		else if (exit.r == 3)
+		else if (ac == 3)
 		{
 			//printf("%s\n", str);
 			free(str);

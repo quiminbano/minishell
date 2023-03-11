@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_pwd_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/10 15:41:52 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/11 11:44:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 */
 int	ft_pwd(void)
 {
-	char	path[1024];
+	char	path[BUFFER];
 
 	if (getcwd(path, sizeof(path)))
-		printf("%s\n",path);
+		printf("%s\n", path);
 	else
-		perror("Path unavailable: ");
+		perror("minishell");
 	return (3);
 }
 
@@ -41,7 +41,13 @@ int	ft_cd(char *s, int i)
 	str = ft_strdup(s + i + 3);
 	path = ft_split(str, ' ');
 	if (chdir(path[0]) == -1)
-		printf("minishell: cd: %s: %s\n", path[0], strerror(errno));
+	{
+		write(STDERR_FILENO, "minishell: cd: ", 15);
+		write(STDERR_FILENO, path[0], ft_strlen(path[0]));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
+		write(STDERR_FILENO, "\n", 1);
+	}
 	free(str);
 	ft_free_split(path);
 	return (3);
