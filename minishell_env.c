@@ -6,11 +6,13 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:14:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/11 17:44:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:10:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function increase the shell level (SHLVL) in one unit.*/
 
 static void	ft_update_shlvl(int i, t_env *env)
 {
@@ -30,6 +32,25 @@ static void	ft_update_shlvl(int i, t_env *env)
 	ft_free_split(array);
 }
 
+/*This function defines OLDPWD empty if does not exist in the original envp
+2D array. This function also modified the shell level in one unit.*/
+
+static void	ft_copy_env_aux(t_env *env, int i)
+{
+	if (env->flag == 0)
+	{
+		ft_add_variables(&(*env), "OLDPWD");
+		env->flag = 1;
+	}
+	while (ft_strncmp("SHLVL=", env->env[i], 6) != 0)
+		i++;
+	ft_update_shlvl(i, &(*env));
+}
+
+/*This function copies the original envp 2D, that is coming from zsh or bash
+to our program. We also modified the OLDPWD, if exists, to be empty when we
+start the minishell.*/
+
 void	ft_copy_env(t_env *env, char **envp)
 {
 	int	i;
@@ -44,23 +65,39 @@ void	ft_copy_env(t_env *env, char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		env->env[i] = ft_strdup(envp[i]);
+		if (ft_strncmp("OLDPWD=", envp[i], 7) == 0)
+		{
+			env->env[i] = ft_strdup("OLDPWD");
+			env->flag = 1;
+			printf("%d\n", env->flag);
+		}
+		else
+			env->env[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	i = 0;
-	while (ft_strncmp("SHLVL=", env->env[i], 6) != 0)
-		i++;
-	ft_update_shlvl(i, &(*env));
+	ft_copy_env_aux(&(*env), i);
 }
 
-int	ft_env(char **envp)
+/*This function prints the enviroment variables that have a defined value in
+the env 2D array. We can know if an eviromental variable has a value if the
+equal character (=) is present in the string. Also, we need to print the
+route /usr/bin/env when */
+
+int	ft_env(t_env *env)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i] != NULL)
+	while (env->env[i] != NULL)
 	{
-		printf("%s\n", envp[i]);
+		if(ft_strchr(env->env[i], '=') != NULL)
+		{
+			if(ft_strncmp("_=", env->env[i], 2) == 0)
+				printf("_=/usr/bin/env\n");
+			else
+				printf("%s\n", env->env[i]);
+		}
 		i++;
 	}
 	return (3);

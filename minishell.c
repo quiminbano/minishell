@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/11 20:22:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:08:11 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ int	main(int ac, char **av, char **envp)
 
 	if (av[0] != NULL)
 		ac = 0;
+	env.flag = 0;
 	ft_copy_env(&env, envp);
-	if (ft_start(envp) == 1)
+	if (ft_start(env.env) == 1)
 		return (1);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/11 20:04:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:21:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_env
 	char	oldpwd[BUFFER];
 	char	newpwd[BUFFER];
 	int		level;
+	int		flag;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -80,6 +81,7 @@ void		ft_free_list(t_echo **lst);
 void		ft_print_list(t_echo **a);
 int			ft_pwd(void);
 int			ft_cd(char *s, int i, t_env *env);
-int			ft_env(char **environ);
+int			ft_env(t_env *env);
+void		ft_add_variables(t_env *env, char *variable);
 
 #endif

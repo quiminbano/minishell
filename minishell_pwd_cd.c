@@ -6,27 +6,48 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/11 20:32:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:03:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function updates the oldpwd enviroment variable, depending if oldpwd was
+written before or not. We identified this with env->flag.*/
+
+static void	ft_env_update_oldpwd(t_env *env, char **array, int i)
+{
+	if (env->flag == 2)
+	{
+		while (ft_strncmp("OLDPWD=", env->env[i], 7) != 0)
+			i++;
+		array = ft_split(env->env[i], '=');
+		if (array == NULL)
+			return ;
+		free(env->env[i]);
+		array[0] = ft_strjoin_free(array[0], "=");
+		env->env[i] = ft_strjoin(array[0], env->oldpwd);
+		ft_free_split(array);
+	}
+	else if (env->flag == 1)
+	{
+		while (ft_strncmp("OLDPWD", env->env[i], 6) != 0)
+			i++;
+		env->env[i] = ft_strjoin_free(env->env[i], "=");
+		env->env[i] = ft_strjoin_free(env->env[i], env->oldpwd);
+		env->flag = 2;
+	}
+}
+
+/*This function overwrite the information of the variables PWD and OLDPWD in
+the enviromental variables, everytime that the command cd is called and changes
+directory successfully. */
 
 static void	ft_env_update(t_env *env)
 {
 	char	**array;
 	int		i;
 
-	i = 0;
-	while (ft_strncmp("OLDPWD=", env->env[i], 7) != 0)
-		i++;
-	array = ft_split(env->env[i], '=');
-	if (array == NULL)
-		return ;
-	free(env->env[i]);
-	array[0] = ft_strjoin_free(array[0], "=");
-	env->env[i] = ft_strjoin(array[0], env->oldpwd);
-	ft_free_split(array);
 	i = 0;
 	while (ft_strncmp("PWD=", env->env[i], 4) != 0)
 		i++;
@@ -37,6 +58,9 @@ static void	ft_env_update(t_env *env)
 	array[0] = ft_strjoin_free(array[0], "=");
 	env->env[i] = ft_strjoin(array[0], env->newpwd);
 	ft_free_split(array);
+	i = 0;
+	ft_env_update_oldpwd(&(*env), array, i);
+
 }
 
 /*	print working directory path
@@ -59,7 +83,12 @@ int	ft_pwd(void)
 	if we have a space after the path and some other text after the space, cd would still work, taking 
 	in consideration the path before the space.
 	e.g in: cd ./desktop/application/ garbage text
-	"garbage text" will be ignored and the path "./desktop/application/" will apply
+	"garbage text" will be ignored and the path "./desktop/application/" will apply.
+	UPDATE
+	ft_cd now tracks the information about the directory we are now and the
+	directory we want to access. So, we can print the variable OLDPWD enerytime
+	we call the command env. Another change I did is, now, when we fail to
+	change directory, we print the message in the STDERR instead of the STDOUT.
 */
 int	ft_cd(char *s, int i, t_env *env)
 {

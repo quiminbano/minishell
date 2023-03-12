@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/11 18:49:59 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/12 14:26:32 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,22 @@ SRC = minishell.c minishell_utils.c minishell_exit.c minishell_argc.c \
 minishell_utils_exit.c minishell_echo.c minishell_split_arg.c \
 minishell_split_arg_utils.c minishell_split_arg_utils2.c \
 minishell_echo_list.c minishell_echo_utils.c minishell_shortcuts.c \
-minishell_pwd_cd.c minishell_env.c
+minishell_pwd_cd.c minishell_env.c minishell_export.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
 minishell_split_arg_utils.o minishell_split_arg_utils2.o \
 minishell_echo_list.o minishell_echo_utils.o minishell_shortcuts.o\
-minishell_pwd_cd.o minishell_env.o
+minishell_pwd_cd.o minishell_env.o minishell_export.o
 
 
 LIBFT = -Llibft -lft
 
 FLAGS = -Wall -Wextra -Werror
 
-RL_L = -lreadline -L /opt/Homebrew/opt/readline/lib
+RL_L = -lreadline -L ~/.brew/opt/readline/lib
 
-RL_I = -I /opt/Homebrew/opt/readline/include
+RL_I = -I ~/.brew/opt/readline/include
 
 CC = cc
 
