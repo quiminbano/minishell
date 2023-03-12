@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/10 14:23:05 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/12 11:47:54 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ indicate the end of file (EOF). This is not handled properly yet. Finally,
 the function check the differents ways that the command exit needs to be written
 to be valid. */
 
-int	ft_line_checker(char *s, int *ret)
+int	ft_line_checker(char *s, int *ret, t_env *env)
 {
 	int	i;
 
@@ -52,6 +52,11 @@ int	ft_line_checker(char *s, int *ret)
 		(ft_strncmp("cd ", (s + i), 3) == 0) || \
 		(ft_strncmp("\"cd\"", (s + i), 5) == 0) || \
 		(ft_strncmp("\"cd\" ", (s + i), 5) == 0))
-		return(ft_cd(s, i));
+		return(ft_cd(s, i, &(*env)));
+	if ((ft_strncmp("env\0", (s + i), 4) == 0) || \
+		(ft_strncmp("env ", (s + i), 4) == 0) || \
+		(ft_strncmp("\"env\"", (s + i), 6) == 0) || \
+		(ft_strncmp("\"env\" ", (s + i), 6) == 0))
+		return(ft_env(&(*env)));
 	return (3);
 }

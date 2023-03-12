@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/10 15:22:17 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:21:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@
 # include <signal.h>
 # include <sys/ioctl.h>
 # include <sys/errno.h>
+# define BUFFER 1024
 
-typedef struct s_exit
+typedef struct s_env
 {
-	int	r;
-	int	ret;
-}	t_exit;
+	char	**env;
+	char	oldpwd[BUFFER];
+	char	newpwd[BUFFER];
+	int		level;
+	int		flag;
+}	t_env;
 
 typedef struct s_sp_arg
 {
@@ -49,7 +53,7 @@ typedef struct s_echo
 	struct s_echo	*next;
 }	t_echo;
 
-
+void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 void 		handle_ctrlD(void);
 int			ft_wordcount_argc(char const *str);
@@ -57,7 +61,7 @@ int			ft_count_space(char const *str);
 long long	ft_atoll(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
-int			ft_line_checker(char *str, int *ret);
+int			ft_line_checker(char *s, int *ret, t_env *env);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 char		**ft_custom_split(char const *s);
@@ -76,6 +80,8 @@ int			ft_listsize(t_echo **lst);
 void		ft_free_list(t_echo **lst);
 void		ft_print_list(t_echo **a);
 int			ft_pwd(void);
-int			ft_cd(char *s, int i);
+int			ft_cd(char *s, int i, t_env *env);
+int			ft_env(t_env *env);
+void		ft_add_variables(t_env *env, char *variable);
 
 #endif
