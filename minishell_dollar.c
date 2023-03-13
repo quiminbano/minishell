@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 12:01:20 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/13 14:59:43 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:12:44 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int         get_cmd(char *s, t_env *env)
 
 /*
 	Checks if there a $ sign in the beginning, or after a space, 
-	If so, we call get_cmd, to get the command written after $
+	If so, we call get_cmd, to get the what's written after $
 	If we have a $ sign AND a valid command, the function will return 1.
 */
 
