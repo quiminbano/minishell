@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/10 13:04:23 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/13 10:56:58 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_incrementer_echo(const char *str, int *i, int *j, t_echo **e)
 	{
 		(*i) += 2;
 		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+			ft_add_to_list_echo(&(*e), (*j));
 		return (0);
 	}
 	else if ((str[(*i)] != 32 && str[(*i)] != 39 && str[(*i)] != 34) && \
@@ -34,7 +34,7 @@ static int	ft_incrementer_echo(const char *str, int *i, int *j, t_echo **e)
 		(*j)++;
 		(*i)++;
 		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+			ft_add_to_list_echo(&(*e), (*j));
 		return (0);
 	}
 	else
@@ -147,6 +147,6 @@ int	ft_echo(char *str)
 		write(1, "\n", 1);
 	ft_free_split(array);
 	if (echo != NULL)
-		ft_free_list(&echo);
+		ft_free_list_echo(&echo);
 	return (3);
 }

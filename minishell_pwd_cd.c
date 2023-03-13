@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/12 15:03:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:41:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ static void	ft_env_update(t_env *env)
 	array[0] = ft_strjoin_free(array[0], "=");
 	env->env[i] = ft_strjoin(array[0], env->newpwd);
 	ft_free_split(array);
+	i = 0;
+	while (ft_strncmp("OLDPWD=", env->env[i], 7) != 0)
+			i++;
+	if (ft_strncmp("OLDPWD=", env->env[i], 7) == 0)
+		env->flag = 2;
 	i = 0;
 	ft_env_update_oldpwd(&(*env), array, i);
 

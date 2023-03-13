@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/12 14:21:37 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:21:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ typedef struct s_echo
 	struct s_echo	*next;
 }	t_echo;
 
+typedef struct s_export
+{
+	int				index;
+	struct s_export *next;
+}	t_export;
+
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 void 		handle_ctrlD(void);
@@ -75,13 +81,21 @@ size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
 int			ft_echo(char *str);
 int			ft_check_s_quot_echo(char const *str, int *i, int *j, t_echo **e);
 int			ft_check_d_quot_echo(char const *str, int *i, int *j, t_echo **e);
-void		ft_add_to_list(t_echo **begin, int num);
-int			ft_listsize(t_echo **lst);
-void		ft_free_list(t_echo **lst);
-void		ft_print_list(t_echo **a);
+void		ft_add_to_list_echo(t_echo **begin, int num);
+int			ft_listsize_echo(t_echo **lst);
+void		ft_free_list_echo(t_echo **lst);
+void		ft_print_list_echo(t_echo **a);
 int			ft_pwd(void);
 int			ft_cd(char *s, int i, t_env *env);
 int			ft_env(t_env *env);
 void		ft_add_variables(t_env *env, char *variable);
+int			ft_export(t_env *env, char *str);
+void		ft_add_to_list_export(t_export **begin, int num);
+int			ft_listsize_export(t_export **lst);
+void		ft_free_list_export(t_export **lst);
+void		ft_decide_what_print(char **array, t_export **exp);
+void		ft_sort_and_print_strings(char **array);
+void		ft_putstr_export(char *st, int fd);
+void		ft_print_list_export(t_export **a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 18:32:39 by corellan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:42:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/13 10:27:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	ft_putstr_fd(char *s, int fd)
 
 	i = 0;
 	if (s == NULL)
+	{
+		write(fd, "(null)", 6);
 		return ;
+	}
 	while (s[i] != '\0')
 	{
 		ft_putchar_fd(s[i], fd);
