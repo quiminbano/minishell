@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 15:05:41 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:10:49 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int ac, char **av, char **envp)
 	char	*str;
 	int		ret;
 	t_env	env;
-	int x;
+
 	if (av[0] != NULL)
 		ac = 0;
 	env.flag = 0;
@@ -65,7 +65,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		handle_shortcuts();
 		str = readline("minishell$ ");
-		x = check_dollar(str, &env);
 		ac = ft_line_checker(str, &(ret), &env);
 		if (ac == 0)
 			return (0);
@@ -78,7 +77,6 @@ int	main(int ac, char **av, char **envp)
 			//printf("%s\n", str);
 			free(str);
 		}
-		printf("   %d   ", x);
 	}
 	return (0);
 }
