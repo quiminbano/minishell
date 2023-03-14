@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 10:56:58 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:38:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static void	ft_echo_aux(char **array, t_echo **begin, int i)
 		if (echo != NULL && i == echo->pos)
 		{
 			write(1, " ", 1);
+			while (echo->next != NULL && echo->pos == echo->next->pos)
+				echo = echo->next;	
 			echo = echo->next;
 		}
 		write(1, array[i], ft_strlen(array[i]));

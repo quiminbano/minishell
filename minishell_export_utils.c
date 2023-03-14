@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 17:21:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:56:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,24 @@ void	ft_sort_and_print_strings(char **array)
 			ft_free_list_export(&(exp));
 		exp = NULL;
 	}
+}
+
+int	ft_check_first_variable(char *variable)
+{
+	char	**array;
+	int		i;
+
+	i = 0;
+	array = ft_split(variable, '=');
+	while ((array[0][i] > 47 && array[0][i] < 58) || \
+		(array[0][i] > 64 && array[0][i] < 91) || \
+		(array[0][i] > 96 && array[0][i] < 123) || (array[0][i] == 95))
+		i++;
+	if (i < (int)ft_strlen(array[0]))
+	{
+		ft_free_split(array);
+		return (1);
+	}
+	ft_free_split(array);
+	return (0);
 }

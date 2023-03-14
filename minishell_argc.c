@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 14:43:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:56:50 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,52 @@ indicate the end of file (EOF). This is not handled properly yet. Finally,
 the function check the differents ways that the command exit needs to be written
 to be valid. */
 
-int	ft_line_checker(char *s, int *ret, t_env *env)
+int	ft_line_checker(char *st, int *ret, t_env *env)
 {
-	int	i;
+	int		i;
+	char	**array;
 
-	if (s != (void *)0 && ft_strlen(s) > 0)
-		add_history(s);
-	if (s == (void *)0)
-		handle_ctrlD();
-	i = ft_count_space(s);
-	if ((ft_strncmp("exit\0", (s + i), 5) == 0) || \
-		(ft_strncmp("exit ", (s + i), 5) == 0) || \
-		(ft_strncmp("\"exit\"", (s + i), 7) == 0) || \
-		(ft_strncmp("\"exit\" ", (s + i), 7) == 0))
+	if (st != (void *)0 && ft_strlen(st) > 0)
+		add_history(st);
+	if (st == (void *)0)
+		return(handle_ctrlD(st));
+	array = ft_custom_split(st);
+	array = ft_process_line(array, st);
+	i = ft_count_space(st);
+	if ((ft_strncmp("exit\0", (st + i), 5) == 0) || \
+		(ft_strncmp("exit ", (st + i), 5) == 0) || \
+		(ft_strncmp("\"exit\"", (st + i), 7) == 0) || \
+		(ft_strncmp("\"exit\" ", (st + i), 7) == 0))
 	{
-		if (ft_check_symbols(s) == 0)
-			return (ft_exit_check(s, &(*ret)));
+		if (ft_check_symbols(st) == 0)
+			return (ft_exit_check(st, &(*ret)));
 		else
 			return (3);
 	}
-	if ((ft_strncmp("echo\0", (s + i), 5) == 0) || \
-		(ft_strncmp("echo ", (s + i), 5) == 0) || \
-		(ft_strncmp("\"echo\"", (s + i), 7) == 0) || \
-		(ft_strncmp("\"echo\" ", (s + i), 7) == 0))
-		return (ft_echo(s));
-	if ((ft_strncmp("pwd\0", (s + i), 4) == 0) || \
-		(ft_strncmp("pwd ", (s + i), 4) == 0) || \
-		(ft_strncmp("\"pwd\"", (s + i), 6) == 0) || \
-		(ft_strncmp("\"pwd\" ", (s + i), 6) == 0))
+	if ((ft_strncmp("echo\0", (st + i), 5) == 0) || \
+		(ft_strncmp("echo ", (st + i), 5) == 0) || \
+		(ft_strncmp("\"echo\"", (st + i), 7) == 0) || \
+		(ft_strncmp("\"echo\" ", (st + i), 7) == 0))
+		return (ft_echo(st));
+	if ((ft_strncmp("pwd\0", (st + i), 4) == 0) || \
+		(ft_strncmp("pwd ", (st + i), 4) == 0) || \
+		(ft_strncmp("\"pwd\"", (st + i), 6) == 0) || \
+		(ft_strncmp("\"pwd\" ", (st + i), 6) == 0))
 		return (ft_pwd());
-	if ((ft_strncmp("cd\0", (s + i), 3) == 0) || \
-		(ft_strncmp("cd ", (s + i), 3) == 0) || \
-		(ft_strncmp("\"cd\"", (s + i), 5) == 0) || \
-		(ft_strncmp("\"cd\" ", (s + i), 5) == 0))
-		return(ft_cd(s, i, &(*env)));
-	if ((ft_strncmp("env\0", (s + i), 4) == 0) || \
-		(ft_strncmp("env ", (s + i), 4) == 0) || \
-		(ft_strncmp("\"env\"", (s + i), 6) == 0) || \
-		(ft_strncmp("\"env\" ", (s + i), 6) == 0))
+	if ((ft_strncmp("cd\0", (st + i), 3) == 0) || \
+		(ft_strncmp("cd ", (st + i), 3) == 0) || \
+		(ft_strncmp("\"cd\"", (st + i), 5) == 0) || \
+		(ft_strncmp("\"cd\" ", (st + i), 5) == 0))
+		return(ft_cd(st, i, &(*env)));
+	if ((ft_strncmp("env\0", (st + i), 4) == 0) || \
+		(ft_strncmp("env ", (st + i), 4) == 0) || \
+		(ft_strncmp("\"env\"", (st + i), 6) == 0) || \
+		(ft_strncmp("\"env\" ", (st + i), 6) == 0))
 		return(ft_env(&(*env)));
-	if ((ft_strncmp("export\0", (s + i), 7) == 0) || \
-		(ft_strncmp("export ", (s + i), 7) == 0) || \
-		(ft_strncmp("\"export\"", (s + i), 9) == 0) || \
-		(ft_strncmp("\"export\" ", (s + i), 9) == 0))
-		return(ft_export(&(*env), s));
+	if ((ft_strncmp("export\0", (st + i), 7) == 0) || \
+		(ft_strncmp("export ", (st + i), 7) == 0) || \
+		(ft_strncmp("\"export\"", (st + i), 9) == 0) || \
+		(ft_strncmp("\"export\" ", (st + i), 9) == 0))
+		return(ft_export(&(*env), st));
 	return (3);
 }

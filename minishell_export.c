@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 18:17:38 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 11:02:51 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,16 @@ void	ft_add_variables(t_env *env, char *variable)
 static void	ft_export_aux(char **array, int *i, t_env *env)
 {
 	if (((ft_wordcount_argc(array[(*i)]) > 1) && \
-		((ft_strchr(array[(*i)], '=') == NULL) || \
-		(ft_strnstr(array[(*i)], " =", 2147483647LL) != NULL))) || \
-		(array[(*i)][0] == ' '))
+		(ft_strchr(array[(*i)], '=') == NULL)) || ((array[(*i)][0] > 47) && \
+		(array[(*i)][0] < 58)))
+	{
+		write(STDERR_FILENO, "minishell: export: `", 20);
+		write(STDERR_FILENO, array[(*i)], ft_strlen(array[(*i)]));
+		write(STDERR_FILENO, "': not a valid identifier\n", 26);
+		(*i)++;
+		return ;
+	}
+	else if (ft_check_first_variable(array[(*i)]) == 1)
 	{
 		write(STDERR_FILENO, "minishell: export: `", 20);
 		write(STDERR_FILENO, array[(*i)], ft_strlen(array[(*i)]));

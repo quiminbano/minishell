@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 17:21:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:52:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ typedef struct s_export
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-void 		handle_ctrlD(void);
+int 		handle_ctrlD(char *str);
 int			ft_wordcount_argc(char const *str);
 int			ft_count_space(char const *str);
 long long	ft_atoll(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
-int			ft_line_checker(char *s, int *ret, t_env *env);
+int			ft_line_checker(char *st, int *ret, t_env *env);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char *str, int *ret);
 char		**ft_custom_split(char const *s);
@@ -96,6 +96,7 @@ void		ft_free_list_export(t_export **lst);
 void		ft_decide_what_print(char **array, t_export **exp);
 void		ft_sort_and_print_strings(char **array);
 void		ft_putstr_export(char *st, int fd);
+int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 
 #endif
