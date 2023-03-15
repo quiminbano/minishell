@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/14 11:02:51 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:08:21 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,18 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 	(*i)++;
 }
 
-int	ft_export(t_env *env, char *str)
+int	ft_export(t_env *env, char **array)
 {
+	int	i;
 
-	char	**array;
-	int		i;
-
-	array = NULL;
-	i = 1;
-	if (ft_wordcount_argc(str) == 1)
+	i = 0;
+	while (array[i] != NULL)
+		i++;
+	if (i == 1)
 		ft_sort_and_print_strings(env->env);
 	else
 	{
-		array = ft_custom_split(str);
+		i = 1;
 		while (array[i] != NULL)
 			ft_export_aux(array, &i, &(*env));
 	}

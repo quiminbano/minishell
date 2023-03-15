@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/14 16:52:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/15 14:07:02 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *st, int *ret, t_env *env);
 int			ft_check_symbols(char const *str);
-int			ft_exit_check(char *str, int *ret);
+int			ft_exit_check(char **array, char *str, int *ret);
 char		**ft_custom_split(char const *s);
 int			ft_check_single_quot(char const *str, int *i, int *j);
 int			ft_check_double_quot(char const *str, int *i, int *j);
@@ -78,7 +78,8 @@ size_t		ft_len_double_quot(char const *s, size_t *st, t_sp_arg *sp);
 size_t		ft_count_char_arg(char const *str);
 char		**ft_custom_split_free(char **array, size_t i);
 size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
-int			ft_echo(char *str);
+int			ft_echo(char **array);
+size_t		ft_wordcount_echo(char const *str, t_echo **echo);
 int			ft_check_s_quot_echo(char const *str, int *i, int *j, t_echo **e);
 int			ft_check_d_quot_echo(char const *str, int *i, int *j, t_echo **e);
 void		ft_add_to_list_echo(t_echo **begin, int num);
@@ -86,10 +87,10 @@ int			ft_listsize_echo(t_echo **lst);
 void		ft_free_list_echo(t_echo **lst);
 void		ft_print_list_echo(t_echo **a);
 int			ft_pwd(void);
-int			ft_cd(char *s, int i, t_env *env);
+int			ft_cd(char **path, t_env *env);
 int			ft_env(t_env *env);
 void		ft_add_variables(t_env *env, char *variable);
-int			ft_export(t_env *env, char *str);
+int			ft_export(t_env *env, char **array);
 void		ft_add_to_list_export(t_export **begin, int num);
 int			ft_listsize_export(t_export **lst);
 void		ft_free_list_export(t_export **lst);

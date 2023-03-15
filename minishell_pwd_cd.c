@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/13 18:41:06 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:13:45 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	ft_env_update(t_env *env)
 	env->env[i] = ft_strjoin(array[0], env->newpwd);
 	ft_free_split(array);
 	i = 0;
-	while (ft_strncmp("OLDPWD=", env->env[i], 7) != 0)
-			i++;
-	if (ft_strncmp("OLDPWD=", env->env[i], 7) == 0)
+	while (env->env[i] != NULL && ft_strncmp("OLDPWD=", env->env[i], 7) != 0)
+		i++;
+	if (env->env[i] != NULL && ft_strncmp("OLDPWD=", env->env[i], 7) == 0)
 		env->flag = 2;
 	i = 0;
 	ft_env_update_oldpwd(&(*env), array, i);
@@ -82,6 +82,30 @@ int	ft_pwd(void)
 	return (3);
 }
 
+static int	ft_find_home_path(char ***path, t_env *env, int *i)
+{
+	if ((*i) != 1)
+		return (0);
+	(*i) = 0;
+	while (env->env[(*i)] != NULL && \
+		ft_strncmp("HOME=", env->env[(*i)], 5) != 0)
+		(*i)++;
+	if (env->env[(*i)] != NULL)
+	{
+		ft_free_split((*path));
+		(*path) = ft_split(env->env[(*i)], '=');
+		if ((*path) == NULL)
+			return (1);
+	}
+	else
+	{
+		write(STDERR_FILENO, "minishell: cd: ", 15);
+		write(STDERR_FILENO, "HOME not set\n", 13);
+		return (1);
+	}
+	return (0);
+}
+
 /*
 	str = everything typed after "cd"
 	path = it takes str, and if a space is found, everything after it is cut, as in the original cd
@@ -95,15 +119,17 @@ int	ft_pwd(void)
 	we call the command env. Another change I did is, now, when we fail to
 	change directory, we print the message in the STDERR instead of the STDOUT.
 */
-int	ft_cd(char *s, int i, t_env *env)
+int	ft_cd(char **path, t_env *env)
 {
-	char	*str;
-	char	**path;
+	int	i;
 
-	str = ft_strdup(s + i + 3);
-	path = ft_split(str, ' ');
+	i = 0;
 	getcwd(env->oldpwd, sizeof(env->oldpwd));
-	if (chdir(path[0]) == 0)
+	while (path[i] != NULL)
+		i++;
+	if (i == 1 && ft_find_home_path(&path, &(*env), &i) == 1)
+		return (3);
+	if (chdir(path[1]) == 0)
 	{
 		getcwd(env->newpwd, sizeof(env->newpwd));
 		ft_env_update(&(*env));
@@ -111,12 +137,11 @@ int	ft_cd(char *s, int i, t_env *env)
 	else
 	{
 		write(STDERR_FILENO, "minishell: cd: ", 15);
-		write(STDERR_FILENO, path[0], ft_strlen(path[0]));
+		write(STDERR_FILENO, path[1], ft_strlen(path[1]));
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 		write(STDERR_FILENO, "\n", 1);
 	}
-	free(str);
 	ft_free_split(path);
 	return (3);
 }
