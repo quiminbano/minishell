@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 15:00:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:51:58 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_env
 	char	newpwd[BUFFER];
 	int		level;
 	int		flag;
-    char    *var_value;
+	char	*new_str;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -84,5 +84,5 @@ int			ft_pwd(void);
 int			ft_cd(char *s, int i, t_env *env);
 int			ft_env(t_env *env);
 void		ft_add_variables(t_env *env, char *variable);
-int			check_dollar(char *s, t_env *env);
+void		collect_args(char *s, t_env *env);
 #endif
