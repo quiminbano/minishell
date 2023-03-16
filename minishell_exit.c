@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 12:28:59 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:43:01 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ if there are valid numbers to print the proper error message. On the
 other hand, it check the arguments when there is only one extra argument
 after the word exit.*/
 
-static int	ft_exit_multiargument(char **array, char *str, int *ret, int i)
+static int	ft_exit_multiargument(char **array, char *str, int *ret)
 {
+	int	i;
+
+	i = ft_array_len(array);
 	if (i > 2)
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
@@ -97,9 +100,7 @@ int	ft_exit_check(char **array, char *str, int *ret)
 {
 	int	i;
 
-	i = 0;
-	while (array[i] != NULL)
-		i++;
+	i = ft_array_len(array);
 	if (i == 1)
 	{
 		write(2, "exit\n", 5);
@@ -108,6 +109,6 @@ int	ft_exit_check(char **array, char *str, int *ret)
 		return (0);
 	}
 	else if (i > 1)
-		return (ft_exit_multiargument(array, str, &(*ret), i));
+		return (ft_exit_multiargument(array, str, &(*ret)));
 	return (3);
 }

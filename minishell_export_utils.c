@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/14 11:56:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:45:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ int	ft_check_first_variable(char *variable)
 	int		i;
 
 	i = 0;
+	array = NULL;
+	if (ft_strlen(variable) == 0)
+		return (1);
 	array = ft_split(variable, '=');
 	while ((array[0][i] > 47 && array[0][i] < 58) || \
 		(array[0][i] > 64 && array[0][i] < 91) || \

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 14:08:21 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:32:01 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ void	ft_add_variables(t_env *env, char *variable)
 	char	**array;
 	int		i;
 
-	i = 0;
 	if (ft_check_already_exist(&(*env), variable) == 1)
 		return ;
-	while (env->env[i] != NULL)
-		i++;
+	i = ft_array_len(env->env);
 	array = (char **)malloc(sizeof(char *) * (i + 2));
 	if (array == NULL)
 		return ;
@@ -120,16 +118,22 @@ int	ft_export(t_env *env, char **array)
 {
 	int	i;
 
-	i = 0;
-	while (array[i] != NULL)
-		i++;
+	i = ft_array_len(array);
 	if (i == 1)
 		ft_sort_and_print_strings(env->env);
 	else
 	{
 		i = 1;
-		while (array[i] != NULL)
-			ft_export_aux(array, &i, &(*env));
+		if (ft_strlen(array[i]) > 1 && array[i][0] == '-')
+		{
+			write(STDERR_FILENO, "minishell: export: Options are not ", 35);
+			write(STDERR_FILENO, "available in this version of export\n", 36);
+		}
+		else
+		{
+			while (array[i] != NULL)
+				ft_export_aux(array, &i, &(*env));
+		}
 	}
 	if (array != NULL)
 		ft_free_split(array);

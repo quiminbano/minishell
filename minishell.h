@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 14:07:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:47:42 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_env
 	char	newpwd[BUFFER];
 	int		level;
 	int		flag;
+	int		set_f;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -63,7 +64,8 @@ void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 int 		handle_ctrlD(char *str);
 int			ft_wordcount_argc(char const *str);
-int			ft_count_space(char const *str);
+int			ft_find_word_array(char **array, char *needle);
+int			ft_array_len(char **array);
 long long	ft_atoll(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);

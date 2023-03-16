@@ -3,27 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:48:36 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/07 14:47:08 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:38:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*This function counts how many spaces are before the first word written in
-a command.*/
+/*This function returns the index of a string where a word (needle) is 
+contained. If the word doesn't exist, it returns the ammount of strings in the
+array.*/
 
-int	ft_count_space(char const *str)
+int	ft_find_word_array(char **array, char *needle)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (str[i] == ' ')
-	{
+	if (array == NULL)
+		return (0);
+	while (array[i] != NULL && \
+		(ft_strncmp(needle, array[i], ft_strlen(needle)) != 0))
 		i++;
-	}
+	return (i);
+}
+
+/*This function returns the ammount of strings that a 2D-array has.*/
+
+int	ft_array_len(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (array == NULL)
+		return (0);
+	while (array[i] != NULL)
+		i++;
 	return (i);
 }
 

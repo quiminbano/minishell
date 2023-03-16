@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:14:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 13:59:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:42:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ static void	ft_update_shlvl(int i, t_env *env)
 	char	*number;
 	int		level;
 
+	if (i == ft_array_len(env->env))
+	{
+		ft_add_variables(&(*env), "SHLVL");
+		i = ft_find_word_array(env->env, "SHLVL");
+		env->env[i] = ft_strjoin_free(env->env[i], "=");
+		env->env[i] = ft_strjoin_free(env->env[i], "0");
+	}
 	array = ft_split(env->env[i], '=');
 	if (array == NULL)
 		return ;
@@ -42,8 +49,15 @@ static void	ft_copy_env_aux(t_env *env, int i)
 		ft_add_variables(&(*env), "OLDPWD");
 		env->flag = 1;
 	}
-	while (ft_strncmp("SHLVL=", env->env[i], 6) != 0)
-		i++;
+	if (ft_find_word_array(env->env, "PWD") == ft_array_len(env->env))
+	{
+		getcwd(env->newpwd, sizeof(env->newpwd));
+		ft_add_variables(&(*env), "PWD");
+		i = ft_find_word_array(env->env, "PWD");
+		env->env[i] = ft_strjoin_free(env->env[i], "=");
+		env->env[i] = ft_strjoin_free(env->env[i], env->newpwd);
+	}
+	i = ft_find_word_array(env->env, "SHLVL=");
 	ft_update_shlvl(i, &(*env));
 }
 
@@ -55,9 +69,7 @@ void	ft_copy_env(t_env *env, char **envp)
 {
 	int	i;
 
-	i = 0;
-	while (envp[i] != NULL)
-		i++;
+	i = ft_array_len(envp);
 	env->env = (char **)malloc(sizeof(char *) * (i + 1));
 	if (env->env == NULL)
 		exit(1);
@@ -69,7 +81,6 @@ void	ft_copy_env(t_env *env, char **envp)
 		{
 			env->env[i] = ft_strdup("OLDPWD");
 			env->flag = 1;
-			printf("%d\n", env->flag);
 		}
 		else
 			env->env[i] = ft_strdup(envp[i]);
