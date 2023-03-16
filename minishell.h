@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 15:51:58 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:23:35 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_echo
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-void 		handle_ctrlD(void);
+void		handle_ctrlD(void);
 int			ft_wordcount_argc(char const *str);
 int			ft_count_space(char const *str);
 long long	ft_atoll(char const *str);

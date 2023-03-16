@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 14:52:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:23:13 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,5 @@ int	main(int ac, char **av, char **envp)
 			free(str);
 		}
 	}
-	
 	return (0);
 }

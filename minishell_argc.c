@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 14:54:32 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:25:29 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_line_checker(char *s, int *ret, t_env *env)
 		s = ft_strdup(env->new_str);
 		free(env->new_str);
 	}
-		
 	if (s == (void *)0)
 		handle_ctrlD();
 	i = ft_count_space(s);

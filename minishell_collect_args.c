@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/15 15:42:21 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:47:37 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,12 @@ static void	parse_str(char **split_str, t_env *env)
 
 	i = 0;
 	env->new_str = ft_strdup("");
-	while(split_str[i])
+	while (split_str[i])
 	{
 		if (ft_strchr(split_str[i], '$'))
-			{
-				process_substr(split_str[i], env);
-			}
+			process_substr(split_str[i], env);
 		else
-		{
 			env->new_str = ft_strjoin(env->new_str, split_str[i]);
-		}
 		env->new_str = ft_strjoin(env->new_str, " ");
 		i++;
 	}
