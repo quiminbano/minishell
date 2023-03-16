@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 13:25:29 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:09:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	char	**array;
 
-	if (st != NULL && ft_strlen(s) > 0)
+	if (st != NULL && ft_strlen(st) > 0)
 	{	
 		add_history(st);
 		collect_args(st, env);
