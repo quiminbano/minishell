@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/08 10:34:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:43:01 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,12 @@ if there are valid numbers to print the proper error message. On the
 other hand, it check the arguments when there is only one extra argument
 after the word exit.*/
 
-static int	ft_exit_multiargument(char *str, int *ret)
+static int	ft_exit_multiargument(char **array, char *str, int *ret)
 {
-	char	**array;
+	int	i;
 
-	array = ft_split(str, ' ');
-	if (array == NULL)
-		return (0);
-	if (ft_wordcount_argc(str) > 2)
+	i = ft_array_len(array);
+	if (i > 2)
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
 			ft_am_i_valid_number(array[1]) == 1)
@@ -98,15 +96,19 @@ the minishell prints in stderr the word exit, and returns a 0. if it has more
 arguments, the function returns a value given by the auxiliar function
 ft_exit_multiargument.*/
 
-int	ft_exit_check(char *str, int *ret)
+int	ft_exit_check(char **array, char *str, int *ret)
 {
-	if (ft_wordcount_argc(str) == 1)
+	int	i;
+
+	i = ft_array_len(array);
+	if (i == 1)
 	{
 		write(2, "exit\n", 5);
 		free(str);
+		ft_free_split(array);
 		return (0);
 	}
-	else if (ft_wordcount_argc(str) > 1)
-		return (ft_exit_multiargument(str, &(*ret)));
+	else if (i > 1)
+		return (ft_exit_multiargument(array, str, &(*ret)));
 	return (3);
 }

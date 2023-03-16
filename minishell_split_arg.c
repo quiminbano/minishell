@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 18:27:49 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:23:12 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	ft_incrementer_wc(const char *str, int *i, int *j)
 		(*i) += 2;
 		return (0);
 	}
-	else if ((str[(*i)] != 32 && str[(*i)] != 39 && str[(*i)] != 34) && \
+	if ((str[(*i)] != 32 && str[(*i)] != 39 && str[(*i)] != 34) && \
 		(str[(*i) + 1] == 32 || str[(*i) + 1] == 39 || str[(*i) + 1] == 34 || \
 		str[(*i) + 1] == '\0'))
 	{

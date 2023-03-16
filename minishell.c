@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 13:23:13 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:49:51 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **envp)
 	if (av[0] != NULL)
 		ac = 0;
 	env.flag = 0;
+	env.set_f = 0;
 	ft_copy_env(&env, envp);
 	if (ft_start(env.env) == 1)
 		return (1);
@@ -73,10 +74,7 @@ int	main(int ac, char **av, char **envp)
 		else if (ac == 2)
 			return (255);
 		else if (ac == 3)
-		{
-			//printf("%s\n", str);
 			free(str);
-		}
 	}
 	return (0);
 }

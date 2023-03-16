@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_shortcuts.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:26:40 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/09 15:49:30 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:47:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 	it will reposition the cursor at the end of the previous line (after it automatically moved to the next line)
 	and will print "exit" and exit
 */
-void handle_ctrlD(void)
+int handle_ctrlD(char *str)
 {
 	printf("\033[1A");
 	printf("\033[11C");
 	printf("exit\n");
-	exit(0);
+	free(str);
+	return(0);
 }
 
 static void	sigint_func(int sig)

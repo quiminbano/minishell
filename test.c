@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:09:21 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 18:28:16 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:09:40 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 	int		i;
 
 	i = 0;
-	array = ft_custom_split("'hello");
+	array = ft_custom_split("Hello\"\"world");
 	while (array[i] != NULL)
 	{
 		printf("%s\n", array[i]);

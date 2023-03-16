@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
 /*   Updated: 2023/03/13 15:12:58 by hel-hosr         ###   ########.fr       */
@@ -23,8 +23,8 @@ static int	ft_incrementer_echo(const char *str, int *i, int *j, t_echo **e)
 		(str[(*i)] == 34 && str[(*i) + 1] == 34))
 	{
 		(*i) += 2;
-		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+		if (str[(*i)] == 32 || str[(*i)] == '\0')
+			ft_add_to_list_echo(&(*e), (*j));
 		return (0);
 	}
 	else if ((str[(*i)] != 32 && str[(*i)] != 39 && str[(*i)] != 34) && \
@@ -33,8 +33,8 @@ static int	ft_incrementer_echo(const char *str, int *i, int *j, t_echo **e)
 	{
 		(*j)++;
 		(*i)++;
-		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+		if (str[(*i)] == 32 || str[(*i)] == '\0')
+			ft_add_to_list_echo(&(*e), (*j));
 		return (0);
 	}
 	else
@@ -47,7 +47,7 @@ differences between them are that, in this function we pass the linked
 list (t_echo) as a double pointer, to store the word value where we should 
 print a space character between the words.*/
 
-static size_t	ft_wordcount_echo(char const *str, t_echo **echo)
+size_t	ft_wordcount_echo(char const *str, t_echo **echo)
 {
 	int	i;
 	int	j;
@@ -93,26 +93,19 @@ character between the option -n and the first word. After that, there is a
 while loop that helps to print an space character before array[i] if the
 member of the list (pos) matchs with the value of the index i.*/
 
-static void	ft_echo_aux(char **array, t_echo **begin, int i)
+static void	ft_echo_aux(char **array, int i)
 {
-	t_echo	*echo;
-
-	echo = (*begin);
-	if (echo != NULL)
-		echo = echo->next;
 	if (ft_second_arg_echo_check(array[1]) < (int)ft_strlen(array[1]))
+	{
 		write(1, array[1], ft_strlen(array[1]));
-	else
-		echo = echo->next;
+		write(1, " ", 1);
+	}
 	while (array[i] != NULL)
 	{
-		if (echo != NULL && i == echo->pos)
-		{
-			write(1, " ", 1);
-			echo = echo->next;
-		}
 		write(1, array[i], ft_strlen(array[i]));
 		i++;
+		if (array[i] != NULL)
+			write(1, " ", 1);
 	}
 }
 
@@ -126,27 +119,21 @@ _echo_check, we check if we need to print a skip line(\n) or not, adding
 the opcion -n, -nn, -nnn, etc. ft_free_split and ft_free_list free the
 split and the echo list respectively.*/
 
-int	ft_echo(char *str)
+int	ft_echo(char **array)
 {
-	char	**array;
-	int		i;
-	t_echo	*echo;
+	int	i;
 
 	i = 2;
-	echo = NULL;
-	array = ft_custom_split(str);
 	if (array[1] == NULL)
 	{
 		write(1, "\n", 1);
 		ft_free_split(array);
 		return (3);
 	}
-	ft_wordcount_echo(str, &(echo));
-	ft_echo_aux(array, &echo, i);
-	if (ft_second_arg_echo_check(array[1]) < (int)ft_strlen(array[1]))
+	ft_echo_aux(array, i);
+	if ((ft_second_arg_echo_check(array[1]) < (int)ft_strlen(array[1])) || \
+		(ft_strlen(array[1]) == 0))
 		write(1, "\n", 1);
 	ft_free_split(array);
-	if (echo != NULL)
-		ft_free_list(&echo);
 	return (3);
 }

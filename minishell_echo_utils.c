@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:23:24 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 16:50:54 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/15 10:42:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	ft_check_s_quot_echo(char const *str, int *i, int *j, t_echo **e)
 	{
 		(*i) = (k + 1);
 		(*j) += 1;
-		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+		if (str[(*i)] == 32 || str[(*i)] == '\0')
+			ft_add_to_list_echo(&(*e), (*j));
 	}
 	return (1);
 }
@@ -64,8 +64,8 @@ int	ft_check_d_quot_echo(char const *str, int *i, int *j, t_echo **e)
 	{
 		(*i) = (k + 1);
 		(*j) += 1;
-		if (str[(*i)] == 32)
-			ft_add_to_list(&(*e), (*j));
+		if (str[(*i)] == 32 || str[(*i)] == '\0')
+			ft_add_to_list_echo(&(*e), (*j));
 	}
 	return (1);
 }
