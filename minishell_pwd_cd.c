@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_pwd_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
 /*   Updated: 2023/03/16 13:51:22 by corellan         ###   ########.fr       */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/15 14:06:13 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:25:29 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,13 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	char	**array;
 
-	if (st != (void *)0 && ft_strlen(st) > 0)
+	if (st != NULL && ft_strlen(s) > 0)
+	{	
 		add_history(st);
+		collect_args(st, env);
+		st = ft_strdup(env->new_str);
+		free(env->new_str);
+	}
 	if (st == (void *)0)
 		return(handle_ctrlD(st));
 	array = ft_custom_split(st);

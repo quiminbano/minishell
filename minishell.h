@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 12:47:42 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:23:35 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_env
 	char	newpwd[BUFFER];
 	int		level;
 	int		flag;
+	char	*new_str;
 	int		set_f;
 }	t_env;
 
@@ -92,6 +93,7 @@ int			ft_pwd(void);
 int			ft_cd(char **path, t_env *env);
 int			ft_env(t_env *env);
 void		ft_add_variables(t_env *env, char *variable);
+void		collect_args(char *s, t_env *env);
 int			ft_export(t_env *env, char **array);
 void		ft_add_to_list_export(t_export **begin, int num);
 int			ft_listsize_export(t_export **lst);
