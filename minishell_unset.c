@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:42:40 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 12:39:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:15:04 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	ft_remove_variables(t_env *env, char *variable)
 	ft_copy_back_after_unset(&(*env), array, i);
 }
 
+/*This function checks if the arguments passed to the ft_unset_aux function
+are valid or not.*/
+
 static int	ft_check_unset_variable(char *variable)
 {
 	int		i;
@@ -80,6 +83,9 @@ static int	ft_check_unset_variable(char *variable)
 		return (1);
 	return (0);
 }
+
+/*This function is similar to ft_export_aux. So, it check if the arguments
+we pass are valid.*/
 
 static void	ft_unset_aux(char **array, int *i, t_env *env)
 {
@@ -104,13 +110,19 @@ static void	ft_unset_aux(char **array, int *i, t_env *env)
 	(*i)++;
 }
 
+/*This function is similar to ft_export. The difference is that when we call
+unset without any variable, the programm does not do anything.*/
+
 int	ft_unset(t_env *env, char **array)
 {
 	int	i;
 
 	i = ft_array_len(array);
 	if (i == 1)
+	{
+		ft_free_split(array);
 		return (3);
+	}
 	i = 1;
 	if (ft_strlen(array[i]) > 1 && array[i][0] == '-')
 	{

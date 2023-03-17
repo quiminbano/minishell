@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 14:44:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 17:08:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	ft_add_variables_copy_back(t_env *env, char **array, int i)
 	}
 	ft_free_split(array);
 }
+
+/*This function prints the enviromental variables when we call the export
+command. */
 
 void	ft_putstr_export(char *st, int fd)
 {
@@ -60,6 +63,13 @@ void	ft_putstr_export(char *st, int fd)
 	write(fd, "\n", 1);
 }
 
+/*This function decides the order to print two or more enviromental variables
+that starts with the same character. To achieve that, we analize the strings
+and we compared them with the function ft_strncmp. if the value of the
+comparition is more than 1, we swap the values contained in the linked list
+and we reset the analysis. We print the enviromental variables when the
+comparations of the strings is less than 0 in all the cases.*/
+
 void	ft_decide_what_print(char **array, t_export **exp)
 {
 	t_export	*temp;
@@ -86,6 +96,16 @@ void	ft_decide_what_print(char **array, t_export **exp)
 		temp = temp->next;
 	}
 }
+
+/*This function helps to print the enviromental variables in ASCII order, when
+we call the command export. For that we scan every possible character, starting
+for the '\0' (0) character and finishing with the del(127) character in the env.
+variables. if we have a hit, we store the index number of the env 2D-array in a
+linked list (t_export). if the list has only one number in it, we print the
+variable calling the ft_putstr_export function. if we find more than one string
+starting with the same character, we store all the indexes in the link list and
+we call the function ft_decide_what_print to decide the order what to print the
+enviromental variables.*/
 
 void	ft_sort_and_print_strings(char **array)
 {
@@ -115,6 +135,12 @@ void	ft_sort_and_print_strings(char **array)
 		exp = NULL;
 	}
 }
+
+/*This function checks the characters of the enviromental variable we want to
+define. We can define a variable with the export command if the name of the
+variable (not its value) has alphanumeric characters or underscore (_). if
+the variable fulfill the condition, the function returns 0, if not, returns
+1.*/
 
 int	ft_check_first_variable(char *variable)
 {

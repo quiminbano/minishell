@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 15:13:49 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:34:07 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		ft_free_list_args(t_args **lst);
 void		ft_print_list_args(t_args **a);
 int			ft_pwd(void);
 int			ft_cd(char **path, t_env *env);
-int			ft_env(t_env *env);
+int			ft_env(t_env *env, char **array);
 void		ft_add_variables(t_env *env, char *variable);
 void		ft_add_variables_copy_back(t_env *env, char **array, int i);
 void		collect_args(char *st, t_env *env);

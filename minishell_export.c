@@ -6,17 +6,25 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 14:48:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:48:33 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function updates and replaces the existing enviromental variable we
+want to change the value.*/
 
 static void	ft_check_already_exist_aux(t_env *env, char **ar, int i)
 {
 	env->env[i] = ft_strjoin_free(env->env[i], "=");
 	env->env[i] = ft_strjoin_free(env->env[i], ar[1]);
 }
+
+/*This function checks if the variable we try to define with the export
+command exists or not in the enviromental variables. if exists, processes
+the new value defined for the existing enviromental variable and returns 1.
+if it does not exist, returns 0.*/
 
 static int	ft_check_already_exist(t_env *env, char *variable)
 {
@@ -76,6 +84,9 @@ void	ft_add_variables(t_env *env, char *variable)
 	ft_add_variables_copy_back(&(*env), array, i);
 }
 
+/*This function checks if the arguments to define new enviromental variables
+are valid or not.*/
+
 static void	ft_export_aux(char **array, int *i, t_env *env)
 {
 	if (((ft_wordcount_argc(array[(*i)]) > 1) && \
@@ -99,6 +110,15 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 	ft_add_variables(&(*env), array[(*i)]);
 	(*i)++;
 }
+
+/*This function checks the arguments when the command export is called. 
+First, the function checks how many arguments are in the 2D array with
+the command parsed. if it is just one argument, the function calls the
+function ft_sort_and_print_strings, that prints the enviroment variables
+sorted by ASCII index. If there is more than one argument in the command
+and and the second argument starts with the - character, the function
+prints an error. if there is some futher stuff to be checked, the function
+calls the ft_export_aux function.*/
 
 int	ft_export(t_env *env, char **array)
 {
