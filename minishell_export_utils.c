@@ -6,11 +6,31 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 15:45:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:44:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*This function copies back the information stored in the temp 2D array into the
+env->env 2D array. This new enviromental 2D has now the new enviromental variable
+defined.*/
+
+void	ft_add_variables_copy_back(t_env *env, char **array, int i)
+{
+	ft_free_split(env->env);
+	env->env = (char **)malloc(sizeof(char *) * (i + 2));
+	if (env->env == NULL)
+		return ;
+	env->env[i + 1] = NULL;
+	i = 0;
+	while (array[i] != NULL)
+	{
+		env->env[i] = ft_strdup(array[i]);
+		i++;
+	}
+	ft_free_split(array);
+}
 
 void	ft_putstr_export(char *st, int fd)
 {
@@ -28,7 +48,7 @@ void	ft_putstr_export(char *st, int fd)
 	while (st[i] != '\0')
 	{
 		ft_putchar_fd(st[i], fd);
-		if (st[i] == '=')
+		if (st[i] == '=' && flag == 0)
 		{
 			write(fd, "\"", 1);
 			flag = 1;

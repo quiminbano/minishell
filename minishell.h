@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 17:22:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:13:49 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ typedef struct s_sp_arg
 	size_t	len;
 }	t_sp_arg;
 
-typedef struct s_echo
+typedef struct s_args
 {
 	int				pos;
-	struct s_echo	*next;
-}	t_echo;
+	struct s_args	*next;
+}	t_args;
 
 typedef struct s_export
 {
@@ -72,7 +72,7 @@ int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *st, int *ret, t_env *env);
 int			ft_check_symbols(char const *str);
-int			ft_exit_check(char **array, char *str, int *ret);
+int			ft_exit_check(char **array, char *str, int *ret, t_env *env);
 char		**ft_custom_split(char const *s);
 int			ft_check_single_quot(char const *str, int *i, int *j);
 int			ft_check_double_quot(char const *str, int *i, int *j);
@@ -82,18 +82,17 @@ size_t		ft_count_char_arg(char const *str);
 char		**ft_custom_split_free(char **array, size_t i);
 size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
 int			ft_echo(char **array);
-size_t		ft_wordcount_echo(char const *str, t_echo **echo);
-int			ft_check_s_quot_echo(char const *str, int *i, int *j, t_echo **e);
-int			ft_check_d_quot_echo(char const *str, int *i, int *j, t_echo **e);
-void		ft_add_to_list_echo(t_echo **begin, int num);
-int			ft_listsize_echo(t_echo **lst);
-void		ft_free_list_echo(t_echo **lst);
-void		ft_print_list_echo(t_echo **a);
+size_t		ft_wordcount_args(char const *str, t_args **args);
+void		ft_add_to_list_args(t_args **begin, int num);
+int			ft_listsize_args(t_args **lst);
+void		ft_free_list_args(t_args **lst);
+void		ft_print_list_args(t_args **a);
 int			ft_pwd(void);
 int			ft_cd(char **path, t_env *env);
 int			ft_env(t_env *env);
 void		ft_add_variables(t_env *env, char *variable);
-void		collect_args(char *s, t_env *env);
+void		ft_add_variables_copy_back(t_env *env, char **array, int i);
+void		collect_args(char *st, t_env *env);
 int			ft_export(t_env *env, char **array);
 void		ft_add_to_list_export(t_export **begin, int num);
 int			ft_listsize_export(t_export **lst);
@@ -103,5 +102,6 @@ void		ft_sort_and_print_strings(char **array);
 void		ft_putstr_export(char *st, int fd);
 int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
+int			ft_unset(t_env *env, char **array);
 
 #endif

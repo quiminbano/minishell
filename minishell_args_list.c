@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_echo_list.c                              :+:      :+:    :+:   */
+/*   minishell_args_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 10:57:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 15:11:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /*This function frees the t_echo list.*/
 
-void	ft_free_list_echo(t_echo **lst)
+void	ft_free_list_args(t_args **lst)
 {
-	t_echo	*temp;
-	t_echo	*temp2;
+	t_args	*temp;
+	t_args	*temp2;
 
 	temp2 = (*lst)->next;
 	temp = (*lst);
@@ -32,11 +32,11 @@ void	ft_free_list_echo(t_echo **lst)
 
 /*This function adds a new node to the t_echo linked list.*/
 
-static t_echo	*ft_listnew_echo(int content)
+static t_args	*ft_listnew_args(int content)
 {
-	t_echo	*new;
+	t_args	*new;
 
-	new = (t_echo *)malloc(sizeof(t_echo));
+	new = (t_args *)malloc(sizeof(t_args));
 	if (new == NULL)
 		return (NULL);
 	new->pos = content;
@@ -46,13 +46,13 @@ static t_echo	*ft_listnew_echo(int content)
 
 /*This function adds the number num as a last node of the list.*/
 
-void	ft_add_to_list_echo(t_echo **begin, int num)
+void	ft_add_to_list_args(t_args **begin, int num)
 {
-	t_echo	*new;
-	t_echo	*iter;
+	t_args	*new;
+	t_args	*iter;
 
 	iter = *begin;
-	new = ft_listnew_echo(num);
+	new = ft_listnew_args(num);
 	if (*begin == NULL)
 		*begin = new;
 	else
@@ -65,10 +65,10 @@ void	ft_add_to_list_echo(t_echo **begin, int num)
 
 /*This function measure the length of the list.*/
 
-int	ft_listsize_echo(t_echo **lst)
+int	ft_listsize_args(t_args **lst)
 {
 	int		i;
-	t_echo	*temp;
+	t_args	*temp;
 
 	i = 0;
 	temp = *lst;
@@ -83,9 +83,9 @@ int	ft_listsize_echo(t_echo **lst)
 /*This function prints every member of the list. This function was made to
 debug.*/
 
-void	ft_print_list_echo(t_echo **a)
+void	ft_print_list_args(t_args **a)
 {
-	t_echo	*temp;
+	t_args	*temp;
 
 	temp = *a;
 	while (temp != NULL)

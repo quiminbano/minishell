@@ -6,30 +6,16 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 15:32:01 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:48:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*This function copies back the information stored in the temp 2D array into the
-env->env 2D array. This new enviromental 2D has now the new enviromental variable
-defined.*/
-
-static void	ft_add_variables_copy_back(t_env *env, char **array, int i)
+static void	ft_check_already_exist_aux(t_env *env, char **ar, int i)
 {
-	ft_free_split(env->env);
-	env->env = (char **)malloc(sizeof(char *) * (i + 2));
-	if (env->env == NULL)
-		return ;
-	env->env[i + 1] = NULL;
-	i = 0;
-	while (array[i] != NULL)
-	{
-		env->env[i] = ft_strdup(array[i]);
-		i++;
-	}
-	ft_free_split(array);
+	env->env[i] = ft_strjoin_free(env->env[i], "=");
+	env->env[i] = ft_strjoin_free(env->env[i], ar[1]);
 }
 
 static int	ft_check_already_exist(t_env *env, char *variable)
@@ -48,14 +34,14 @@ static int	ft_check_already_exist(t_env *env, char *variable)
 		i++;
 	}
 	if (env->env[i] == NULL)
+	{
+		ft_free_split(ar);
 		return (0);
+	}
 	free(env->env[i]);
 	env->env[i] = ft_strdup(ar[0]);
 	if (ar[1] != NULL)
-	{
-		env->env[i] = ft_strjoin_free(env->env[i], "=");
-		env->env[i] = ft_strjoin_free(env->env[i], ar[1]);
-	}
+		ft_check_already_exist_aux(&(*env), ar, i);
 	ft_free_split(ar);
 	return (1);
 }

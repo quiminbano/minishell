@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 12:49:51 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:50:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int	main(int ac, char **av, char **envp)
 		else if (ac == 2)
 			return (255);
 		else if (ac == 3)
+		{
+			free(env.new_str);
 			free(str);
+		}
 	}
 	return (0);
 }
