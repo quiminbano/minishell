@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
+#    By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/17 15:11:20 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/20 12:08:31 by hel-hosr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,16 @@ minishell_utils_exit.c minishell_echo.c minishell_split_arg.c \
 minishell_split_arg_utils.c minishell_split_arg_utils2.c \
 minishell_args_list.c minishell_args_utils.c minishell_shortcuts.c \
 minishell_pwd_cd.c minishell_env.c minishell_export.c minishell_collect_args.c \
-minishell_export_list.c minishell_export_utils.c minishell_unset.c
+minishell_export_list.c minishell_export_utils.c minishell_unset.c \
+minishell_collect_args_utils.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
 minishell_split_arg_utils.o minishell_split_arg_utils2.o \
 minishell_args_list.o minishell_args_utils.o minishell_shortcuts.o\
 minishell_pwd_cd.o minishell_env.o minishell_export.o minishell_collect_args.o \
-minishell_export_list.o minishell_export_utils.o minishell_unset.o
+minishell_export_list.o minishell_export_utils.o minishell_unset.o \
+minishell_collect_args_utils.o
 
 LIBFT = -Llibft -lft
 

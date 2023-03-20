@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/17 11:45:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:02:47 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,33 @@ static int dollar_idx(char *substr)
 	checks if the text after $ is a valid env arg or not.
 	If so, it will replace it with the right var value, else,
 	it will just add nothing, (an empty string);
+	if after "$" we have "?", then we print the exit_status,
+	but also to replicate the bash behaviour, we check if theres any characters after "$?"
+	, if so, we join them to new_str
 */
+
+
 static void	parse_substr(char **substrs, t_env *env)
 {
-	int	i;
+	int		i;
+	char	*var;
+	int		skip;
 
+	skip = 0;
+	var = NULL;
 	i = 0;
 	while (substrs[i])
 	{
-		if (getenv(substrs[i]))
-			env->new_str = ft_strjoin_free(env->new_str, getenv(substrs[i]));
+		skip = ft_strlen(substrs[i]) + 1;
+		if (substrs[i][0] == '?')
+		{
+			env->new_str = ft_strjoin_free(env->new_str, ft_itoa(env->exit_stts));
+			if (*(substrs + i) + 1 != NULL)
+				substrs[i] = ft_strdup(*(substrs + i) + 1);
+			env->new_str = ft_strjoin_free(env->new_str, substrs[i]);
+		}
+		else if ((var = is_var_available(substrs[i],env)))
+			env->new_str = ft_strjoin_free(env->new_str, var + skip);
 		else
 			env->new_str = ft_strjoin_free(env->new_str, "");
 		i++;

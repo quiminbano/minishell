@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 16:15:30 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:12:16 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 				return (ft_exit_check(array, st, &(*ret), &(*env)));
 		}
 		if (ft_strncmp("echo\0", (array[0]), 5) == 0)
-			return (ft_echo(array));
+			return (ft_echo(array, env));
 		if ((ft_strncmp("pwd\0", (array[0]), 4) == 0))
-			return (ft_pwd());
+			return (ft_pwd(env));
 		if ((ft_strncmp("cd\0", (array[0]), 3) == 0))
 			return(ft_cd(array, &(*env)));
 		if ((ft_strncmp("env\0", (array[0]), 4) == 0))

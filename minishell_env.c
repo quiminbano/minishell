@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:14:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 16:20:15 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:14:05 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ int	ft_env(t_env *env, char **array)
 	int	i;
 
 	i = ft_array_len(array);
+	env->exit_stts = 0;
 	if (i > 1)
 	{
+		env->exit_stts = 127;
 		write(STDERR_FILENO, "env: ", 5);
 		write(STDERR_FILENO, array[1], ft_strlen(array[1]));
 		write(STDERR_FILENO, ": No such file or directory\n", 28);
