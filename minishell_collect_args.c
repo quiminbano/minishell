@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/16 15:47:37 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:45:07 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static void	parse_substr(char **substrs, t_env *env)
 	while (substrs[i])
 	{
 		if (getenv(substrs[i]))
-			env->new_str = ft_strjoin(env->new_str, getenv(substrs[i]));
+			env->new_str = ft_strjoin_free(env->new_str, getenv(substrs[i]));
 		else
-			env->new_str = ft_strjoin(env->new_str, "");
+			env->new_str = ft_strjoin_free(env->new_str, "");
 		i++;
 	}
 }
@@ -74,7 +74,7 @@ static void	process_substr(char *substr, t_env *env)
 	{
 		i = dollar_idx(substr);
 		ft_strlcpy(first_part, substr, i + 1);
-		env->new_str = ft_strjoin(env->new_str, first_part);
+		env->new_str = ft_strjoin_free(env->new_str, first_part);
 		substrs = ft_split(substr + i, '$');
 		parse_substr(substrs, env);
 	}
@@ -82,7 +82,7 @@ static void	process_substr(char *substr, t_env *env)
 	//vars, to match the behaviour of bash
 	//e.g, in bash: $VAR$ will print the value of VAR + $.
 	if (substr[ft_strlen(substr) - 1] == '$')
-		env->new_str = ft_strjoin(env->new_str, "$");
+		env->new_str = ft_strjoin_free(env->new_str, "$");
 	free(first_part);
 	ft_free_split(substrs);
 }
@@ -103,8 +103,8 @@ static void	parse_str(char **split_str, t_env *env)
 		if (ft_strchr(split_str[i], '$'))
 			process_substr(split_str[i], env);
 		else
-			env->new_str = ft_strjoin(env->new_str, split_str[i]);
-		env->new_str = ft_strjoin(env->new_str, " ");
+			env->new_str = ft_strjoin_free(env->new_str, split_str[i]);
+		env->new_str = ft_strjoin_free(env->new_str, " ");
 		i++;
 	}
 }
@@ -118,11 +118,11 @@ static void	parse_str(char **split_str, t_env *env)
 	This function will take the input, and use ' ' as a splitting delimiter, and store the substrings
 	in a 2D array.
 */
-void	collect_args(char *s, t_env *env)
+void	collect_args(char *st, t_env *env)
 {
 	char	**split_str;
 
-	split_str = ft_split(s, ' ');
+	split_str = ft_split(st, ' ');
 	parse_str(split_str, env);
 	ft_free_split(split_str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:14:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/16 14:42:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:20:15 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,22 @@ void	ft_copy_env(t_env *env, char **envp)
 /*This function prints the enviroment variables that have a defined value in
 the env 2D array. We can know if an eviromental variable has a value if the
 equal character (=) is present in the string. Also, we need to print the
-route /usr/bin/env when */
+route /usr/bin/env when we call the env command. if there are more than one
+argument after calling env, an error message is printed.*/
 
-int	ft_env(t_env *env)
+int	ft_env(t_env *env, char **array)
 {
 	int	i;
 
-	i = 0;
+	i = ft_array_len(array);
+	if (i > 1)
+	{
+		write(STDERR_FILENO, "env: ", 5);
+		write(STDERR_FILENO, array[1], ft_strlen(array[1]));
+		write(STDERR_FILENO, ": No such file or directory\n", 28);
+		ft_free_split(array);
+		return (3);
+	}
 	while (env->env[i] != NULL)
 	{
 		if(ft_strchr(env->env[i], '=') != NULL)
@@ -111,5 +120,6 @@ int	ft_env(t_env *env)
 		}
 		i++;
 	}
+	ft_free_split(array);
 	return (3);
 }
