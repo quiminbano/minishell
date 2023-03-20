@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 15:21:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:07:14 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ prepare the system to print the text written. With the function ft_second_arg
 _echo_check, we check if we need to print a skip line(\n) or not, adding
 the opcion -n, -nn, -nnn, etc. ft_free_split frees the array.*/
 
-int	ft_echo(char **array)
+int	ft_echo(char **array, t_env *env)
 {
 	int	i;
 
 	i = 2;
+	env->exit_stts = 0;
 	if (array[1] == NULL)
 	{
 		write(1, "\n", 1);

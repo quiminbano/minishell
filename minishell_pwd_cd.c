@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_pwd_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/17 12:38:16 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:14:41 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,20 @@ static void	ft_env_update(t_env *env)
 /*	print working directory path
 	print error if fail.
 */
-int	ft_pwd(void)
+int	ft_pwd(t_env *env)
 {
 	char	path[BUFFER];
 
 	if (getcwd(path, sizeof(path)))
+	{
 		printf("%s\n", path);
+		env->exit_stts = 0;
+	}
 	else
+	{
 		perror("minishell");
+		env->exit_stts = 1;
+	}
 	return (3);
 }
 
@@ -108,6 +114,7 @@ static int	ft_find_home_path(char ***path, t_env *env, int *i)
 	{
 		write(STDERR_FILENO, "minishell: cd: ", 15);
 		write(STDERR_FILENO, "HOME not set\n", 13);
+		env->exit_stts = 1;
 		return (1);
 	}
 	return (0);
@@ -131,6 +138,7 @@ int	ft_cd(char **path, t_env *env)
 	int	i;
 
 	i = 0;
+	env->exit_stts = 0;
 	getcwd(env->oldpwd, sizeof(env->oldpwd));
 	i = ft_array_len(path);
 	if (i == 1 && ft_find_home_path(&path, &(*env), &i) == 1)
@@ -142,6 +150,7 @@ int	ft_cd(char **path, t_env *env)
 	}
 	else
 	{
+		env->exit_stts = 1;
 		write(STDERR_FILENO, "minishell: cd: ", 15);
 		write(STDERR_FILENO, path[1], ft_strlen(path[1]));
 		write(STDERR_FILENO, ": ", 2);

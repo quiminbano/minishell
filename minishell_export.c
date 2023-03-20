@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 16:48:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:12:58 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 		(ft_strchr(array[(*i)], '=') == NULL)) || ((array[(*i)][0] > 47) && \
 		(array[(*i)][0] < 58)))
 	{
+		env->exit_stts = 1;
 		write(STDERR_FILENO, "minishell: export: `", 20);
 		write(STDERR_FILENO, array[(*i)], ft_strlen(array[(*i)]));
 		write(STDERR_FILENO, "': not a valid identifier\n", 26);
@@ -101,6 +102,7 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 	}
 	else if (ft_check_first_variable(array[(*i)]) == 1)
 	{
+		env->exit_stts = 1;
 		write(STDERR_FILENO, "minishell: export: `", 20);
 		write(STDERR_FILENO, array[(*i)], ft_strlen(array[(*i)]));
 		write(STDERR_FILENO, "': not a valid identifier\n", 26);
@@ -125,6 +127,7 @@ int	ft_export(t_env *env, char **array)
 	int	i;
 
 	i = ft_array_len(array);
+	env->exit_stts = 0;
 	if (i == 1)
 		ft_sort_and_print_strings(env->env);
 	else
@@ -132,6 +135,7 @@ int	ft_export(t_env *env, char **array)
 		i = 1;
 		if (ft_strlen(array[i]) > 1 && array[i][0] == '-')
 		{
+			env->exit_stts = 1;
 			write(STDERR_FILENO, "minishell: export: Options are not ", 35);
 			write(STDERR_FILENO, "available in this version of export\n", 36);
 		}

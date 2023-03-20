@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 12:37:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:19:21 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	ft_exit_check(char **array, char *str, int *ret, t_env *env)
 		ft_free_split(array);
 		ft_free_split(env->env);
 		free(env->new_str);
+		env->exit_stts = 0;
 		return (0);
 	}
 	else if (i > 1)
