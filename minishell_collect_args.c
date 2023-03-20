@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/20 13:02:47 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:03:16 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,30 @@ static int dollar_idx(char *substr)
 	If so, it will replace it with the right var value, else,
 	it will just add nothing, (an empty string);
 	if after "$" we have "?", then we print the exit_status,
-	but also to replicate the bash behaviour, we check if theres any characters after "$?"
+	but also to replicate the bash behaviour, we check if theres any characters after "$?" other
+	than $, (as if there was $, it will be split automatically into a different substring)
 	, if so, we join them to new_str
 */
 
 
 static void	parse_substr(char **substrs, t_env *env)
 {
-	int		i;
+
+	char	*str;
 	char	*var;
 	int		skip;
+	int		i;
 
-	skip = 0;
+	str = NULL;
 	var = NULL;
+	skip = 0;
 	i = 0;
 	while (substrs[i])
 	{
 		skip = ft_strlen(substrs[i]) + 1;
 		if (substrs[i][0] == '?')
-		{
-			env->new_str = ft_strjoin_free(env->new_str, ft_itoa(env->exit_stts));
-			if (*(substrs + i) + 1 != NULL)
-				substrs[i] = ft_strdup(*(substrs + i) + 1);
-			env->new_str = ft_strjoin_free(env->new_str, substrs[i]);
-		}
-		else if ((var = is_var_available(substrs[i],env)))
+			handle_exlamation(env, substrs[i]);
+		if ((var = is_var_available(substrs[i],env)))
 			env->new_str = ft_strjoin_free(env->new_str, var + skip);
 		else
 			env->new_str = ft_strjoin_free(env->new_str, "");
@@ -114,7 +113,6 @@ static void	parse_str(char **split_str, t_env *env)
 	int		i;
 
 	i = 0;
-	env->new_str = ft_strdup("");
 	while (split_str[i])
 	{
 		if (ft_strchr(split_str[i], '$'))

@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 13:12:01 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:51:36 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_export
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-int 		handle_ctrlD(char *str);
+int 		handle_ctrlD(char *str, t_env *env);
 int			ft_wordcount_argc(char const *str);
 int			ft_find_word_array(char **array, char *needle);
 int			ft_array_len(char **array);
@@ -105,5 +105,6 @@ int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
+void		handle_exlamation(t_env *env, char *substr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 13:12:16 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:48:22 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,14 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	char	**array;
 
+	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 	{	
 		add_history(st);
 		collect_args(st, env);
 	}
 	if (st == (void *)0)
-		return(handle_ctrlD(st));
+		return(handle_ctrlD(st, env));
 	array = ft_custom_split(env->new_str);
 	array = ft_process_arg(array, env->new_str);
 	if (array[0] != NULL)
@@ -156,7 +157,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 			return(ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
 			return(ft_unset(&(*env), array));
-		ft_free_split(array);
 	}
+	ft_free_split(array);
 	return (3);
 }
