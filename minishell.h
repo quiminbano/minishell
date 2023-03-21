@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 15:51:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:42:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@
 # include <sys/ioctl.h>
 # include <sys/errno.h>
 # define BUFFER 1024
+# define NORM_START 0
+# define RE_IN 1 // <
+# define RE_OUT 2 // >
+# define RERE_IN 3 // <<
+# define RERE_OUT 4 // >>
+# define PIPE 5 // |
+# define IN_OUT 6 // <>
+
+typedef struct s_lexer
+{
+	int				token;
+	int				i_split;
+	struct s_lexer	*next;
+}	t_lexer;
 
 typedef struct s_env
 {
@@ -72,6 +86,7 @@ long long	ft_atoll(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *st, int *ret, t_env *env);
+int			ft_error_pipe(char *str);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char **array, char *str, int *ret, t_env *env);
 char		**ft_custom_split(char const *s);
@@ -106,5 +121,15 @@ void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
 void		handle_exlamation(t_env *env, char *substr);
+int			check_char(const char *str, int i);
+int			ft_check_s_quot_lexer(char const *str, int *i);
+int			ft_check_d_quot_lexer(char const *str, int *i);
+size_t		ft_len_s_quot_lexer(char const *s, int i);
+size_t		ft_len_d_quot_lexer(char const *s, int i);
+void		ft_free_list_lexer(t_lexer **lst);
+void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
+int			ft_listsize_lexer(t_lexer **lst);
+void		ft_print_list_lexer(t_lexer **a);
+void		ft_tokens_recognition(char const *str, t_lexer **lex);
 
 #endif
