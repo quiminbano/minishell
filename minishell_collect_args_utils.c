@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:07:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/20 15:53:29 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:51:05 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,21 @@ char	*is_var_available(char *substr, t_env *env)
 {
 	int		i;
 	char	*var;
+	char	*add_equal;
 
+	add_equal = ft_strjoin(substr, "=");
 	i = 0;
 	var = NULL;
 	while (env->env[i])
 	{
-		if ((var = ft_strnstr(env->env[i], substr, ft_strlen(substr))))
+		if ((var = ft_strnstr(env->env[i], add_equal, ft_strlen(add_equal))))
+		{
+			free(add_equal);
 			return (var);
+		}
 		i++;
 	}
+	free(add_equal);
 	return (NULL);
 }
 
