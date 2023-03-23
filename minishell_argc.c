@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 13:19:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:47:11 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,11 @@ to be valid. */
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	char	**array;
+	char	**args;
+	int		i;
 
 	env->new_str = ft_strdup("");
+	i = 0;
 	if (st != NULL && ft_strlen(st) > 0)
 	{	
 		add_history(st);
@@ -138,6 +141,14 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		return(handle_ctrlD(st, env));
 	if (st[0] == '|')
 		return (ft_error_pipe(env->new_str));
+	args = ft_split_lexer(st);
+	args = ft_process_lexer(args, st);
+	while (args[i] != NULL)
+	{
+		printf("%s\n", args[i]);
+		i++;
+	}
+	ft_free_split(args);
 	array = ft_custom_split(env->new_str);
 	array = ft_process_arg(array, env->new_str);
 	if (array[0] != NULL)
@@ -159,7 +170,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 			return(ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
 			return(ft_unset(&(*env), array));
-		return (ft_run_commands(array, &(*env)));
+		//return (ft_run_commands(array, &(*env)));
 	}
 	ft_free_split(array);
 	return (3);

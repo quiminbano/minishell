@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 13:17:16 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:31:27 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_lexer
 	int				i_split;
 	struct s_lexer	*next;
 }	t_lexer;
+
+typedef struct s_lex_i
+{
+	int	i;
+	int	j;
+}	t_lex_i;
 
 typedef struct s_env
 {
@@ -79,10 +85,12 @@ typedef struct s_export
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 int 		handle_ctrlD(char *str, t_env *env);
-int			ft_wordcount_argc(char const *str);
+int			ft_wordcount_space(char const *str);
 int			ft_find_word_array(char **array, char *needle);
 int			ft_array_len(char **array);
 long long	ft_atoll(char const *str);
+int			ft_count_space(char *str);
+int			ft_strlen_w_space(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *st, int *ret, t_env *env);
@@ -132,5 +140,7 @@ int			ft_listsize_lexer(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
 int 		ft_run_commands(char **cmd, t_env *env);
+char		**ft_split_lexer(char const *s);
+char		**ft_process_lexer(char **arg, char *str);
 
 #endif

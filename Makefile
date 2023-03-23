@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/23 13:43:39 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/23 17:46:44 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ minishell_split_arg_utils.c minishell_split_arg_utils2.c \
 minishell_args_list.c minishell_args_utils.c minishell_shortcuts.c \
 minishell_pwd_cd.c minishell_env.c minishell_export.c minishell_collect_args.c \
 minishell_export_list.c minishell_export_utils.c minishell_unset.c \
-minishell_collect_args_utils.c minishell_error.c minishell_run_args.c
+minishell_collect_args_utils.c minishell_error.c minishell_run_args.c \
+minishell_split_lexer.c minishell_split_lexer_utils.c minishell_lexer_list.c \
+minishell_args_lexer.c minishell_utils2.c minishell_process_lexer.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -26,11 +28,13 @@ minishell_split_arg_utils.o minishell_split_arg_utils2.o \
 minishell_args_list.o minishell_args_utils.o minishell_shortcuts.o\
 minishell_pwd_cd.o minishell_env.o minishell_export.o minishell_collect_args.o \
 minishell_export_list.o minishell_export_utils.o minishell_unset.o \
-minishell_collect_args_utils.o minishell_error.o minishell_run_args.o
+minishell_collect_args_utils.o minishell_error.o minishell_run_args.o \
+minishell_split_lexer.o minishell_split_lexer_utils.o minishell_lexer_list.o \
+minishell_args_lexer.o minishell_utils2.o minishell_process_lexer.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
 
 RL_L = -lreadline -L ~/.brew/opt/readline/lib
 

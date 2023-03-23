@@ -6,11 +6,21 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:48:36 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 15:05:36 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:48:24 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_count_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	return (i);
+}
 
 /*This function returns the index of a string where a word (needle) is 
 contained. If the word doesn't exist, it returns the ammount of strings in the
@@ -65,7 +75,7 @@ int	ft_check_symbols(char const *str)
 /*This function counts how many arguments are in a line. For now, it works with
 the command exit.*/
 
-int	ft_wordcount_argc(char const *str)
+int	ft_wordcount_space(char const *str)
 {
 	size_t	i;
 	size_t	j;

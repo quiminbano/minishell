@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:18:18 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/21 14:44:42 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:09:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	ft_fill_list_lexer(char const *str, int i, int j, t_lexer **lex)
 		ft_add_to_list_lexer(&(*lex), RERE_IN, j);
 	else if (str[i] == '|' && str[i + 1] != '|')
 		ft_add_to_list_lexer(&(*lex), PIPE, j);
+	else if (str[i] == '<' && str[i + 1] == '>')
+		ft_add_to_list_lexer(&(*lex), IN_OUT, j);
 }
 
 static void	ft_check_first_arg(char const *str, t_lexer **lex)
@@ -40,6 +42,8 @@ static void	ft_check_first_arg(char const *str, t_lexer **lex)
 		ft_add_to_list_lexer(&(*lex), RERE_OUT, 0);
 	else if (str[0] == '<' && str[1] == '<')
 		ft_add_to_list_lexer(&(*lex), RERE_IN, 0);
+	else if (str[0] == '<' && str[1] == '>')
+		ft_add_to_list_lexer(&(*lex), IN_OUT, 0);
 	else
 		ft_add_to_list_lexer(&(*lex), NORM_START, 0);
 }
