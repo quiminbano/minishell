@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 15:51:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:11:56 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
-void		handle_exlamation(t_env *env, char *substr);
+char		*ft_strjoin_c(char *s1, char const c);
+void		handle_exlamation(t_env *env, char *st, int i);
 
 #endif
