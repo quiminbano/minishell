@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/21 16:42:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:17:16 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
 int			ft_listsize_lexer(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
+int 		ft_run_commands(char **cmd, t_env *env);
 
 #endif

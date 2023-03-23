@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/21 16:18:31 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:19:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 			return(ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
 			return(ft_unset(&(*env), array));
+		return (ft_run_commands(array, &(*env)));
 	}
 	ft_free_split(array);
 	return (3);
