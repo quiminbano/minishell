@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 15:11:56 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:57:26 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_env
 	char	*new_str;
 	int		set_f;
 	int		exit_stts;
+	int		is_inside;
 }	t_env;
 
 typedef struct s_sp_arg
