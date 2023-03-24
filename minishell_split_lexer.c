@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 15:12:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:59:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static size_t	ft_count_char(char const *str)
 
 	i = 0;
 	while (check_char(str, i) == 1)
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -35,6 +33,8 @@ static size_t	ft_strlen_char(char const *str)
 			i = ft_len_s_quot_lexer(str, i);
 		else if (str[i] == 34)
 			i = ft_len_d_quot_lexer(str, i);
+		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
+			i += 2;
 		else
 			i++;
 	}
@@ -56,23 +56,16 @@ static size_t	ft_wordcount(char const *str)
 			i = (i + 1 - 1);
 		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
 			i += 2;
-		if (check_char(str, i) == 0 && (check_char(str, (i + 1)) == 1 \
-			|| str[i + 1] == '\0'))
+		if ((str[i] == '\0') || (check_char(str, i) == 0 && \
+			(check_char(str, (i + 1)) == 1 || str[i + 1] == '\0')))
+		{
 			j++;
+			if (str[i] == '\0')
+				break ;
+		}
 		i++;
 	}
 	return ((size_t)j);
-}
-
-static char	**ft_split_free(char **array, size_t i)
-{
-	while (i > 0)
-	{
-		free(array[i--]);
-		array[i] = NULL;
-	}
-	free(array);
-	return (NULL);
 }
 
 char	**ft_split_lexer(char const *s)
@@ -95,7 +88,7 @@ char	**ft_split_lexer(char const *s)
 		character = ft_count_char((s + store + temp));
 		array[i] = (char *)malloc(sizeof(char) * (temp + 1));
 		if (array[i] == NULL)
-			return (ft_split_free(array, i));
+			return (ft_custom_split_free(array, i));
 		ft_strlcpy(array[i], (s + store), (temp + 1));
 		store = store + (temp + character);
 		i++;

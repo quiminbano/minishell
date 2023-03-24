@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 17:31:27 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:23:45 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ size_t		ft_len_double_quot(char const *s, size_t *st, t_sp_arg *sp);
 size_t		ft_count_char_arg(char const *str);
 char		**ft_custom_split_free(char **array, size_t i);
 size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
+int			check_char_now(const char *str, int i);
+int			check_char_after(const char *str, int i);
 int			ft_echo(char **array, t_env *env);
 size_t		ft_wordcount_args(char const *str, t_args **args);
 void		ft_add_to_list_args(t_args **begin, int num);

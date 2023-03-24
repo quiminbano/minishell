@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:51:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 14:24:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:40:49 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	ft_check_s_quot_lexer(char const *str, int *i)
 		k++;
 	}
 	if (str[k] == '\0')
+	{
 		return (0);
+	}
 	else
 		(*i) = (k);
 	return (1);

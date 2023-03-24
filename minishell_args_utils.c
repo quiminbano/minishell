@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:23:24 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 16:19:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:52:57 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ static int	ft_check_s_quot_args(char const *str, int *i, int *j, t_args **ar)
 	if (str[k] == 39)
 		return (0);
 	while (str[k] != 39 && str[k] != '\0')
-	{
-		if (str[k] == '\\' && str[k + 1] == 39)
-			k++;
 		k++;
-	}
 	if (str[k] == '\0')
 		return (0);
 	else
@@ -70,6 +66,18 @@ static int	ft_check_d_quot_args(char const *str, int *i, int *j, t_args **ar)
 	return (1);
 }
 
+static void	ft_increment_args_aux(const char *str, int *i, int *j, t_args **ar)
+{
+	if ((check_char_now(str, (*i)) == 1) && \
+		(check_char_after(str, ((*i) + 1)) == 1))
+	{
+		(*j)++;
+		if (str[(*i) + 1] == ' ' || str[(*i) + 1] == '\0')
+			ft_add_to_list_args(&(*ar), (*j));
+	}
+	(*i)++;
+}
+
 /*This auxiliar function is similar to ft_incrementer in the ft_custom_split.
 The difference between them are that, We store the value of word where it is
 an space character (*j) in t. We store this value in the list t_args. We do 
@@ -96,7 +104,7 @@ static int	ft_incrementer_args(const char *str, int *i, int *j, t_args **ar)
 		return (0);
 	}
 	else
-		(*i)++;
+		ft_increment_args_aux(str, &(*i), &(*j), &(*ar));
 	return (0);
 }
 

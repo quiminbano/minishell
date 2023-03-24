@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/14 13:23:12 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:18:50 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ static size_t	ft_strlen_char(char const *str, size_t *sto, t_sp_arg *sp)
 		i = ft_len_double_quot(str, &(*sto), &(*sp));
 	if (sp->p == 0)
 	{
+		sp->q = 0;
 		while ((str[i] != 32 && str[i] != 39 && str[i] != 34) && \
 			(str[i] != '\0'))
 		{
-			if (str[i] == '\\' && (str[i + 1] == 39 || str[i + 1] == 34 || \
-				str[i + 1] == 't' || str[i + 1] == 'n' || str[i + 1] == '0'))
+			if (str[i] == '\\' && (str[i + 1] != 124 && str[i + 1] != 60 && \
+				str[i + 1] != 62 && str[i + 1] != '\0'))
 			{
 				i += 1;
 				sp->q += 1;
@@ -47,12 +48,6 @@ processed. It also prevents some situations such as many ''''' or
 
 static int	ft_incrementer_wc(const char *str, int *i, int *j)
 {
-	if (str[(*i)] == '\\' && ((str[(*i) + 1] == 39) || str[(*i) + 1] == 34))
-		(*i) += 1;
-	else if (str[(*i)] == 39 && ft_check_single_quot(str, &(*i), &(*j)) == 1)
-		return (0);
-	else if (str[(*i)] == 34 && ft_check_double_quot(str, &(*i), &(*j)) == 1)
-		return (0);
 	if ((str[(*i)] == 39 && str[(*i) + 1] == 39) || \
 		(str[(*i)] == 34 && str[(*i) + 1] == 34))
 	{
@@ -68,7 +63,12 @@ static int	ft_incrementer_wc(const char *str, int *i, int *j)
 		return (0);
 	}
 	else
+	{
+		if ((check_char_now(str, (*i)) == 1) && \
+			(check_char_after(str, ((*i) + 1)) == 1))
+			(*j)++;
 		(*i)++;
+	}
 	return (0);
 }
 
@@ -83,7 +83,15 @@ static size_t	ft_wordcount(char const *str)
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
+	{
+		if (str[i] == '\\' && ((str[i + 1] == 39) || str[i + 1] == 34))
+			i += 1;
+		else if (str[i] == 39 && ft_check_single_quot(str, &i, &j) == 1)
+			continue ;
+		else if (str[i] == 34 && ft_check_double_quot(str, &i, &j) == 1)
+			continue ;
 		ft_incrementer_wc(str, &i, &j);
+	}
 	return (j);
 }
 
@@ -130,6 +138,7 @@ char	**ft_custom_split(char const *s)
 	size_t	store;
 
 	i = ft_wordcount(s);
+	printf("%zu\n", i);
 	store = ft_count_char_arg(s);
 	array = (char **)malloc(sizeof(char *) * (i + 1));
 	if (array == NULL)

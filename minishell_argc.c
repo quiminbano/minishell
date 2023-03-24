@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 17:47:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:34:26 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**ft_process_arg(char **array, char *str)
 
 	args = NULL;
 	ft_wordcount_args(str, &args);
+	ft_print_list_args(&args);
 	len = ft_listsize_args(&args);
 	temp = (char **)malloc(sizeof(char *) * (len + 1));
 	if (temp == NULL)
@@ -149,8 +150,8 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		i++;
 	}
 	ft_free_split(args);
-	array = ft_custom_split(env->new_str);
-	array = ft_process_arg(array, env->new_str);
+	array = ft_custom_split(st);
+	array = ft_process_arg(array, st);
 	if (array[0] != NULL)
 	{
 		if (ft_strncmp("exit\0", (array[0]), 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:18:18 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 14:09:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:36:22 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ void	ft_tokens_recognition(char const *str, t_lexer **lex)
 			i = (i + 1 - 1);
 		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
 			i += 2;
-		if (check_char(str, i) == 0 && (check_char(str, (i + 1)) == 1 \
-			|| str[i + 1] == '\0'))
+		if ((str[i] == '\0') || (check_char(str, i) == 0 && \
+			(check_char(str, (i + 1)) == 1 || str[i + 1] == '\0')))
 			j++;
-		i++;
+		if (str[i] != '\0')
+			i++;
 		if (k != j)
 			ft_fill_list_lexer(str, i, j, &(*lex));
 		k = j;
