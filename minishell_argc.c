@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/21 13:00:06 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:42:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ the ft_work_in_arg_aux. */
 
 static char	*ft_work_in_arg(char **array, int pos, int *j)
 {
-	int			flag;
 	char		*str;
 
-	flag = 0;
 	if ((pos - (*j)) == 1)
 	{
 		str = ft_strdup(array[(*j)]);
@@ -109,6 +107,7 @@ char	**ft_process_arg(char **array, char *str)
 
 	args = NULL;
 	ft_wordcount_args(str, &args);
+	ft_print_list_args(&args);
 	len = ft_listsize_args(&args);
 	temp = (char **)malloc(sizeof(char *) * (len + 1));
 	if (temp == NULL)
@@ -127,8 +126,11 @@ to be valid. */
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	char	**array;
+	char	**args;
+	int		i;
 
 	env->new_str = ft_strdup("");
+	i = 0;
 	if (st != NULL && ft_strlen(st) > 0)
 	{	
 		add_history(st);
@@ -136,8 +138,18 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	}
 	if (st == (void *)0)
 		return(handle_ctrlD(st, env));
-	array = ft_custom_split(env->new_str);
-	array = ft_process_arg(array, env->new_str);
+	if (st[0] == '|')
+		return (ft_error_pipe(env->new_str));
+	args = ft_split_lexer(st);
+	args = ft_process_lexer(args, st);
+	while (args[i] != NULL)
+	{
+		printf("%s\n", args[i]);
+		i++;
+	}
+	ft_free_split(args);
+	array = ft_custom_split(st);
+	array = ft_process_arg(array, st);
 	if (array[0] != NULL)
 	{
 		if (ft_strncmp("exit\0", (array[0]), 5) == 0)
@@ -157,6 +169,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 			return(ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
 			return(ft_unset(&(*env), array));
+		//return (ft_run_commands(array, &(*env)));
 	}
 	ft_free_split(array);
 	return (3);

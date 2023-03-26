@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
 /*   Updated: 2023/03/23 16:21:21 by hel-hosr         ###   ########.fr       */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 14:12:58 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:38:31 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ are valid or not.*/
 
 static void	ft_export_aux(char **array, int *i, t_env *env)
 {
-	if (((ft_wordcount_argc(array[(*i)]) > 1) && \
+	if (((ft_wordcount_space(array[(*i)]) > 1) && \
 		(ft_strchr(array[(*i)], '=') == NULL)) || ((array[(*i)][0] > 47) && \
 		(array[(*i)][0] < 58)))
 	{

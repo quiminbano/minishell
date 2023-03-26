@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:38:45 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/09 18:23:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:44:13 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ size_t	ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp)
 	{
 		while ((sp->i < (size - 1)) && s[sp->i] != '\0')
 		{
-			if (sp->t == 1 && s[sp->i] == '\\' && (s[sp->i + 1] == 39))
+			if (sp->t == 2 && s[sp->i] == '\\' && (s[sp->i + 1] == 34))
 				(sp->i)++;
-			else if (sp->t == 2 && s[sp->i] == '\\' && (s[sp->i + 1] == 34))
-				(sp->i)++;
-			else if (sp->t == 0 && s[sp->i] == '\\' && (s[sp->i + 1] == 't' || \
-				s[sp->i + 1] == 'n' || s[sp->i + 1] == '0' || \
-				s[sp->i + 1] == 39 || s[sp->i + 1] == 34))
+			else if (sp->t == 0 && s[sp->i] == '\\' && (s[sp->i + 1] != 124 || \
+				s[sp->i + 1] != 60 || s[sp->i + 1] != 62 || \
+				s[sp->i + 1] != '\0'))
 				(sp->i)++;
 			d[sp->j] = s[sp->i];
 			(sp->i)++;
@@ -59,4 +57,20 @@ char	**ft_custom_split_free(char **array, size_t i)
 	}
 	free(array);
 	return (NULL);
+}
+
+int	check_char_now(const char *str, int i)
+{
+	if (str[i] == 39 || str[i] == 34)
+		return (1);
+	else
+		return (0);
+}
+
+int	check_char_after(const char *str, int i)
+{
+	if (str[i] == 39 || str[i] == 34 || str[i] == 32 || str[i] == 0)
+		return (1);
+	else
+		return (0);
 }
