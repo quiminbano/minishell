@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/23 17:46:44 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/26 21:16:07 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ minishell_args_lexer.o minishell_utils2.o minishell_process_lexer.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address -static-libsan
+FLAGS = -Wall -Wextra -Werror
 
 RL_L = -lreadline -L ~/.brew/opt/readline/lib
 

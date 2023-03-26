@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 13:23:45 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:01:24 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_sp_arg
 	size_t	i;
 	size_t	j;
 	size_t	len;
+	size_t	temp;
 }	t_sp_arg;
 
 typedef struct s_args
@@ -134,8 +135,8 @@ void		handle_exlamation(t_env *env, char *substr);
 int			check_char(const char *str, int i);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
-size_t		ft_len_s_quot_lexer(char const *s, int i);
-size_t		ft_len_d_quot_lexer(char const *s, int i);
+size_t		ft_len_s_quot_lexer(char const *s, int i, int *flag);
+size_t		ft_len_d_quot_lexer(char const *s, int i, int *flag);
 void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
 int			ft_listsize_lexer(t_lexer **lst);

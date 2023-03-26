@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 17:59:35 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:19:28 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,30 @@ static size_t	ft_count_char(char const *str)
 	return (i);
 }
 
-static size_t	ft_strlen_char(char const *str)
+static size_t	ft_strlen_char(char const *str, t_sp_arg *li)
 {
 	size_t	i;
+	int		flag;
 
 	i = 0;
-	while (str[i] != '\0' && check_char(str, i) == 0)
+	flag = 0;
+	li->q = 0;
+	if (str[i] == 39)
+		i = ft_len_s_quot_lexer(str, i, &flag);
+	else if (str[i] == 34)
+		i = ft_len_d_quot_lexer(str, i, &flag);
+	while (flag == 0 && (str[i] != '\0' && check_char(str, i) == 0))
 	{
-		if (str[i] == 39)
-			i = ft_len_s_quot_lexer(str, i);
-		else if (str[i] == 34)
-			i = ft_len_d_quot_lexer(str, i);
-		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
+		li->t = 1;
+		if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
+		{
 			i += 2;
+			li->q += 1;
+		}
 		else
 			i++;
 	}
-	return (i);
+	return (i - li->q);
 }
 
 static size_t	ft_wordcount(char const *str)
@@ -68,13 +75,36 @@ static size_t	ft_wordcount(char const *str)
 	return ((size_t)j);
 }
 
+size_t	ft_strlcpy_lexer(char *d, char const *s, size_t size, t_sp_arg *li)
+{
+	li->i = 0;
+	li->j = 0;
+	li->len = ft_strlen(s);
+	if (size == 0)
+		return (li->len);
+	else
+	{
+		while ((li->i < (size - 1)) && s[li->i] != '\0')
+		{
+			if (li->t == 1 && (s[li->i] == '\\' && \
+				(check_char(s, (li->i + 1)) == 1)))
+				(li->i)++;
+			d[li->j] = s[li->i];
+			(li->i)++;
+			(li->j)++;
+		}
+		d[li->j] = '\0';
+	}
+	return (li->len);
+}
+
 char	**ft_split_lexer(char const *s)
 {
-	char	**array;
-	size_t	i;
-	size_t	temp;
-	size_t	character;
-	size_t	store;
+	char		**array;
+	size_t		i;
+	size_t		character;
+	size_t		store;
+	t_sp_arg	li;
 
 	i = ft_wordcount(s);
 	store = ft_count_char(s);
@@ -84,13 +114,13 @@ char	**ft_split_lexer(char const *s)
 	i = 0;
 	while (i < ft_wordcount(s))
 	{
-		temp = ft_strlen_char((s + store));
-		character = ft_count_char((s + store + temp));
-		array[i] = (char *)malloc(sizeof(char) * (temp + 1));
+		li.temp = ft_strlen_char((s + store), &li);
+		character = ft_count_char((s + store + li.temp));
+		array[i] = (char *)malloc(sizeof(char) * (li.temp + 1));
 		if (array[i] == NULL)
 			return (ft_custom_split_free(array, i));
-		ft_strlcpy(array[i], (s + store), (temp + 1));
-		store = store + (temp + character);
+		ft_strlcpy_lexer(array[i], (s + store), (li.temp + li.q + 1), &li);
+		store = store + (li.temp + character);
 		i++;
 	}
 	array[i] = NULL;

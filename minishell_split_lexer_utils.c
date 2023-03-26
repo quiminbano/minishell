@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:51:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 17:40:49 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/25 12:59:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,9 @@ int	ft_check_s_quot_lexer(char const *str, int *i)
 
 	k = ((*i) + 1);
 	while (str[k] != 39 && str[k] != '\0')
-	{
-		if (str[k] == '\\' && str[k + 1] == 39)
-			k++;
 		k++;
-	}
 	if (str[k] == '\0')
-	{
 		return (0);
-	}
 	else
 		(*i) = (k);
 	return (1);
@@ -69,20 +63,17 @@ when the text is inside single quotation marks (''). It also set up a flag
 (sp->p) to know if the string has a double quotation mark in the beginning and 
 the end of the string.*/
 
-size_t	ft_len_s_quot_lexer(char const *s, int i)
+size_t	ft_len_s_quot_lexer(char const *s, int i, int *flag)
 {
 	size_t	k;
 
 	k = (i + 1);
 	while (s[k] != 39 && s[k] != '\0')
-	{
-		if (s[k] == '\\' && s[k + 1] == 39)
-			k++;
 		k++;
-	}
 	if (s[k] == '\0')
 		return (1);
 	k = k + 1;
+	(*flag) = 1;
 	return (k);
 }
 
@@ -91,7 +82,7 @@ when the text is inside double quotation marks (""). It also set up a flag
 (sp->p) to know if the string has a double quotation mark in the beginning and 
 the end of the string.*/
 
-size_t	ft_len_d_quot_lexer(char const *s, int i)
+size_t	ft_len_d_quot_lexer(char const *s, int i, int *flag)
 {
 	size_t	k;
 
@@ -105,5 +96,6 @@ size_t	ft_len_d_quot_lexer(char const *s, int i)
 	if (s[k] == '\0')
 		return (1);
 	k = k + 1;
+	(*flag) = 1;
 	return (k);
 }

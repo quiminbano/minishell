@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/21 16:31:37 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/25 12:28:33 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,10 @@ static int dollar_idx(char *substr)
 
 static void	parse_substr(char **substrs, t_env *env)
 {
-
-	char	*str;
 	char	*var;
 	int		skip;
 	int		i;
 
-	str = NULL;
 	var = NULL;
 	skip = 0;
 	i = 0;

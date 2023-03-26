@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 17:34:26 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:42:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ the ft_work_in_arg_aux. */
 
 static char	*ft_work_in_arg(char **array, int pos, int *j)
 {
-	int			flag;
 	char		*str;
 
-	flag = 0;
 	if ((pos - (*j)) == 1)
 	{
 		str = ft_strdup(array[(*j)]);
