@@ -6,135 +6,89 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/25 12:28:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:21:21 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 /*
-	returns the index of the first dollar sign.
+	this function handles stuff that beings with a $ and are OUTSIDE single quotes.
+	it takes the "variable name" after the $ sign, and check if it's a valid variable so it can be replace with its
+	value. If not, it will just replace it with an empty string
 */
-static int dollar_idx(char *substr)
+static int	handle_vars(t_env *env, int i, char *st)
 {
-	int	i;
+	char	*var_name;
+	char	*var_value;
+	int		last_idx;
+	int		var_len;
 
-	i = 0;
-	while (substr[i] != '$')
-		i++;
+	var_len = 0;
+	last_idx = 0;
+	var_name = strdup("");
+	last_idx = i;
+	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
+		&& st[last_idx] != '$' && st[last_idx] != '\"')
+		last_idx++;
+	var_len = last_idx - i + 1;
+	ft_strlcpy(var_name, (st + i), var_len);
+	var_value = is_var_available(var_name, env);
+	if (var_value)
+		env->new_str = ft_strjoin_free(env->new_str, var_value + var_len);
+	else if (st[i++] == '?')
+		handle_exlamation(env, st, i);
+	else
+		env->new_str = ft_strjoin_free(env->new_str, "");
+	i = last_idx;
+	free(var_name);
 	return (i);
 }
-
 /*
-	checks if the text after $ is a valid env arg or not.
-	If so, it will replace it with the right var value, else,
-	it will just add nothing, (an empty string);
-	if after "$" we have "?", then we print the exit_status,
-	but also to replicate the bash behaviour, we check if theres any characters after "$?" other
-	than $, (as if there was $, it will be split automatically into a different substring)
-	, if so, we join them to new_str
+	handles the cases where we only have a $ sign in the input, or there's a $ sign at the end of the line.
 */
-
-
-static void	parse_substr(char **substrs, t_env *env)
+static int	single_dollar(t_env *env)
 {
-	char	*var;
-	int		skip;
-	int		i;
-
-	var = NULL;
-	skip = 0;
-	i = 0;
-	while (substrs[i])
-	{
-		skip = ft_strlen(substrs[i]) + 1;
-		if (substrs[i][0] == '?')
-			handle_exlamation(env, substrs[i]);
-		if ((var = is_var_available(substrs[i],env)))
-			env->new_str = ft_strjoin_free(env->new_str, var + skip);
-		else
-			env->new_str = ft_strjoin_free(env->new_str, "");
-		i++;
-	}
+	env->new_str = ft_strjoin_c(env->new_str, '$');
+	return (1);
 }
-
 /*
-	this function takes each substring containing 1 or more $ sign and process it.
-	
-	if the substring starts with a $ sign, that means we might have : $VAR or $VAR1$VAR2$VAR3...
-	so it takes the substring and splits it again, with '$' as 
-	delimiter, and checks each text after each $.
-	if this text is a valid env arg, it will replace it with it's value, and append to env->new__str, 
-	if not, it will just append an empty str.
-
-	if the substring doesnt start with a $ sign, example hello$VAR1$VAR2, the function will process
-	the first part first "hello" and append it to env->new_str, and then takes the rest $VAR1$VAR2
-	and splits it, and goes through each text after each $ to check if its a valid env ARG or NOT
-
+	toggle the env->inside variable between 0 and 1, that we are gonna use to check
+	if we're inside a single quote or not
 */
-static void	process_substr(char *substr, t_env *env)
+static int	in_or_out(char *st, int i, t_env *env)
 {
-	char	i;
-	char	**substrs;
-	char	*first_part;
-
-	first_part = strdup("");
-	if (substr[0] == '$')
-	{
-		substrs = ft_split(substr, '$');
-		parse_substr(substrs, env);
-	}
-	else
-	{
-		i = dollar_idx(substr);
-		ft_strlcpy(first_part, substr, i + 1);
-		env->new_str = ft_strjoin_free(env->new_str, first_part);
-		substrs = ft_split(substr + i, '$');
-		parse_substr(substrs, env);
-	}
-	//This is used to print a $ sign, in case there was one at the end of a var or a sequence of
-	//vars, to match the behaviour of bash
-	//e.g, in bash: $VAR$ will print the value of VAR + $.
-	if (substr[ft_strlen(substr) - 1] == '$')
-		env->new_str = ft_strjoin_free(env->new_str, "$");
-	free(first_part);
-	ft_free_split(substrs);
+	if (st[i] == '\'' && !env->is_inside)
+		env->is_inside = 1;
+	else if (st[i] == '\'' && env->is_inside)
+		env->is_inside = 0;
+	return (1);
 }
-
 /*
-	this function will parse each substring taken from the string.
-	If the substring doesnt have a $ sign in it, it will join it to env->new_str the way it is.
-	if it has a $ sign, it will call process_susbtr.
-*/
-static void	parse_str(char **split_str, t_env *env)
-{
-	int		i;
-
-	i = 0;
-	while (split_str[i])
-	{
-		if (ft_strchr(split_str[i], '$'))
-			process_substr(split_str[i], env);
-		else
-			env->new_str = ft_strjoin_free(env->new_str, split_str[i]);
-		env->new_str = ft_strjoin_free(env->new_str, " ");
-		i++;
-	}
-}
-
-/*
-	this function is called from linechecker, after adding str to history, this function will 
-	take the str from readline, and replace it with env->new_str, that will take str, 
-	replicate it, while replacing every $VAR with it's correspondant value if possible, and
-	ignoring non existing $VARS
-
-	This function will take the input, and use ' ' as a splitting delimiter, and store the substrings
-	in a 2D array.
+	goes through the whole input, and collects it into env->new_str;
+	if we are outside of ' ', it will collect characters, and expands variables with their value (if valid).
+	inside the ' ', it will not expand variables, but just print them character by character.
 */
 void	collect_args(char *st, t_env *env)
 {
-	char	**split_str;
+	int		i;
 
-	split_str = ft_split(st, ' ');
-	parse_str(split_str, env);
-	ft_free_split(split_str);
+	i = 0;
+	env->is_inside = 0;
+	while (st[i])
+	{
+		if (st[i] == '\'')
+			i += in_or_out(st, i, env);
+		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
+			i += single_dollar(env);
+		else
+		{
+			if (st[i] == '$' && !env->is_inside)
+				i = handle_vars(env, (i + 1), st);
+			else
+			{
+				env->new_str = ft_strjoin_c(env->new_str, st[i]);
+				i++;
+			}
+		}
+	}
 }

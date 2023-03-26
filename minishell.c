@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 14:38:38 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:16:06 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 /*This function clears the screen when the program is started. Also, it prints
 the welcome message to the user */
 
-// static int	ft_start(char **environ)
-// {
-// 	pid_t		pid;
-// 	char		**str;
+static int	ft_start(char **environ)
+{
+	pid_t		pid;
+	char		**str;
 
-// 	str = ft_split("clear", ' ');
-// 	pid = fork();
-// 	if (pid < 0)
-// 		return (1);
-// 	if (pid == 0)
-// 		execve("/usr/bin/clear", str, environ);
-// 	else
-// 	{
-// 		wait(NULL);
-// 		ft_free_split(str);
-// 		printf("Welcome to minishell. Developed by corellan and hel-hosr. ");
-// 		printf("Hive Helsinki. 2023.\n");
-// 	}
-// 	return (0);
-// }
+	str = ft_split("clear", ' ');
+	pid = fork();
+	if (pid < 0)
+		return (1);
+	if (pid == 0)
+		execve("/usr/bin/clear", str, environ);
+	else
+	{
+		wait(NULL);
+		ft_free_split(str);
+		printf("Welcome to minishell. Developed by corellan and hel-hosr. ");
+		printf("Hive Helsinki. 2023.\n");
+	}
+	return (0);
+}
 
 /*This function initialize the shell and initialize the while loop to write
 text until the user decides to exit the program. This text is gathered through
@@ -61,8 +61,8 @@ int	main(int ac, char **av, char **envp)
 	env.flag = 0;
 	env.set_f = 0;
 	ft_copy_env(&env, envp);
-	// if (ft_start(env.env) == 1)
-	// 	return (1);
+	if (ft_start(env.env) == 1)
+		return (1);
 	while (1)
 	{
 		handle_shortcuts();

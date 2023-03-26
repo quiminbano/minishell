@@ -58,6 +58,7 @@ typedef struct s_env
 	char	*new_str;
 	int		set_f;
 	int		exit_stts;
+	int		is_inside;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -86,6 +87,9 @@ typedef struct s_export
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 int 		handle_ctrlD(char *str, t_env *env);
+void		collect_args(char *st, t_env *env);
+void		handle_exlamation(t_env *env, char *st, int i);
+char		*ft_strjoin_c(char *s1, char const c);
 int			ft_wordcount_space(char const *str);
 int			ft_find_word_array(char **array, char *needle);
 int			ft_array_len(char **array);
@@ -119,7 +123,6 @@ int			ft_cd(char **path, t_env *env);
 int			ft_env(t_env *env, char **array);
 void		ft_add_variables(t_env *env, char *variable);
 void		ft_add_variables_copy_back(t_env *env, char **array, int i);
-void		collect_args(char *st, t_env *env);
 int			ft_export(t_env *env, char **array);
 void		ft_add_to_list_export(t_export **begin, int num);
 int			ft_listsize_export(t_export **lst);
@@ -131,7 +134,6 @@ int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
-void		handle_exlamation(t_env *env, char *substr);
 int			check_char(const char *str, int i);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
