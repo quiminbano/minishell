@@ -6,11 +6,17 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/27 11:05:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:50:45 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*static int	ft_process_multi_cmd(char *st, int *ret, t_env *env, t_lexer **lex)
+{
+	ft_free_list_lexer(&(*lex));
+	return (3);
+}*/
 
 /*This function process the line when we put just one single command, without
 any special token (|, <, >, <<, >>)*/
@@ -21,7 +27,7 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 
 	collect_args(st, &(*env));
 	array = ft_custom_split(env->new_str);
-	array = ft_process_arg(array, st);
+	array = ft_process_arg(array, env->new_str);
 	if (array[0] != NULL)
 	{
 		if (ft_strncmp("exit\0", (array[0]), 5) == 0)
@@ -69,5 +75,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
 	}
+	/*else
+		return (ft_process_multi_cmd(st, &(*ret), &(*env)), &lex);*/
 	return (3);
 }
