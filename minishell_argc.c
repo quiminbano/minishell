@@ -6,157 +6,26 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/26 14:42:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:05:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*This function creates a string to be in the processed 2D-array joining more 
-than one string from the original 2D-array. Of course, the start of the string
-needs to be created with ft_strdup.*/
+/*This function process the line when we put just one single command, without
+any special token (|, <, >, <<, >>)*/
 
-static void	ft_work_in_arg_aux(char **array, int pos, int *j, char **str)
-{
-	int	flag;
-
-	flag = 0;
-	while ((*j) < pos)
-	{
-		if (flag == 0)
-		{
-			(*str) = ft_strdup(array[(*j)]);
-			flag = 1;
-		}
-		else
-			(*str) = ft_strjoin_free((*str), array[(*j)]);
-		(*j)++;
-	}
-}
-
-/*This function decides how to process the strings. if the difference between 
-the number that is in the list (pos) and the index of the last string joined
-from the original split in the previous iteration (*j). if the difference 
-between pos and (*j) is 1, we copy the string as it is from the original
-2D-array. if pos and (*j) has the same value, it means that we need to create
-an empty string (because in the original line a "" or '' is comming). if
-the difference between pos and (*j) is more than one, the function goes to
-the ft_work_in_arg_aux. */
-
-static char	*ft_work_in_arg(char **array, int pos, int *j)
-{
-	char		*str;
-
-	if ((pos - (*j)) == 1)
-	{
-		str = ft_strdup(array[(*j)]);
-		(*j) += 1;
-		return (str);
-	}
-	else if (pos == (*j))
-	{
-		str = ft_strdup("");
-		return (str);
-	}
-	else
-		ft_work_in_arg_aux(array, pos, &(*j), &str);
-	return (str);
-}
-
-/*In this function, we start to process the strings we are gonna have in our
-2D-array with the command processed. We pass the element of the list to the
-function ft_work_in_arg, to know how many strings from the original 2D array
-we need to join to form the processed strings. */
-
-static char	**ft_process_arg_aux(char **ar, char **tem, int len, t_args **arg)
-{
-	t_args	*args;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	args = (*arg);
-	while (i < len)
-	{
-		tem[i] = ft_work_in_arg(ar, args->pos, &j);
-		if (args->next != NULL)
-			args = args->next;
-		i++;
-	}
-	args = (*arg);
-	if (args != NULL)
-		ft_free_list_args(&args);
-	ft_free_split(ar);
-	return (tem);
-}
-
-/*This function process the line in case of the arguments are separated by
-"". The function casts in the linked list t_args between what indexes of the
-2D array (**array) there is an space in the original string. if a number is
-repeated in the linked list (for example 1->2->2->3) it means that there is
-combinations of "" or '' in the middle of the text, and we need to create
-empty strings in the processed 2D-array with arguments. The amount of strings
-we are going to create, are gonna be the length of the linked list.*/
-
-char	**ft_process_arg(char **array, char *str)
-{
-	t_args	*args;
-	char	**temp;
-	int		len;
-
-	args = NULL;
-	ft_wordcount_args(str, &args);
-	ft_print_list_args(&args);
-	len = ft_listsize_args(&args);
-	temp = (char **)malloc(sizeof(char *) * (len + 1));
-	if (temp == NULL)
-		return (NULL);
-	temp[len] = NULL;
-	return (ft_process_arg_aux(array, temp, len, &args));
-}
-
-/*This function check many thins. First it checks that the string is not NULL.
-If it is not NULL, the function add_history is called to cast the history of
-the commands written. It also check if we press ctrl + D in the terminal to
-indicate the end of file (EOF). This is not handled properly yet. Finally, 
-the function check the differents ways that the command exit needs to be written
-to be valid. */
-
-int	ft_line_checker(char *st, int *ret, t_env *env)
+static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 {
 	char	**array;
-	char	**args;
-	int		i;
 
-	env->new_str = ft_strdup("");
-	i = 0;
-	if (st != NULL && ft_strlen(st) > 0)
-	{	
-		add_history(st);
-		collect_args(st, env);
-	}
-	if (st == (void *)0)
-		return(handle_ctrlD(st, env));
-	if (st[0] == '|')
-		return (ft_error_pipe(env->new_str));
-	args = ft_split_lexer(st);
-	args = ft_process_lexer(args, st);
-	while (args[i] != NULL)
-	{
-		printf("%s\n", args[i]);
-		i++;
-	}
-	ft_free_split(args);
-	array = ft_custom_split(st);
+	collect_args(st, &(*env));
+	array = ft_custom_split(env->new_str);
 	array = ft_process_arg(array, st);
 	if (array[0] != NULL)
 	{
 		if (ft_strncmp("exit\0", (array[0]), 5) == 0)
-		{
-			if (ft_check_symbols(env->new_str) == 0)
-				return (ft_exit_check(array, st, &(*ret), &(*env)));
-		}
+			return (ft_exit_check(array, st, &(*ret), &(*env)));
 		if (ft_strncmp("echo\0", (array[0]), 5) == 0)
 			return (ft_echo(array, env));
 		if ((ft_strncmp("pwd\0", (array[0]), 4) == 0))
@@ -169,8 +38,36 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 			return(ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
 			return(ft_unset(&(*env), array));
-		//return (ft_run_commands(array, &(*env)));
+		return (ft_run_single_command(array, &(*env)));
 	}
 	ft_free_split(array);
+	return (3);
+}
+
+/*This function check many thins. First it checks that the string is not NULL.
+If it is not NULL, the function add_history is called to cast the history of
+the commands written. It also check if we press ctrl + D in the terminal to
+indicate the end of file (EOF). This is not handled properly yet. Finally, 
+the function check the differents ways that the command exit needs to be written
+to be valid. */
+
+int	ft_line_checker(char *st, int *ret, t_env *env)
+{
+	t_lexer	*lex;
+
+	lex = NULL;
+	env->new_str = ft_strdup("");
+	if (st != NULL && ft_strlen(st) > 0)
+		add_history(st);
+	if (st == (void *)0)
+		return(handle_ctrlD(st, env));
+	if (st[0] == '|')
+		return (ft_error_pipe(st));
+	ft_tokens_recognition(st, &lex);
+	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)
+	{
+		ft_free_list_lexer(&lex);
+		return (ft_process_single_cmd(st, &(*ret), &(*env)));
+	}
 	return (3);
 }

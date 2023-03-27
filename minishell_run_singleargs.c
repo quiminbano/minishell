@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_run_args.c                               :+:      :+:    :+:   */
+/*   minishell_run_singleargs.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 14:02:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:11:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_find_path(char **cmd, t_env *env)
+static char	*ft_find_path_aux(char **cmd, t_env *env, int i, char **array)
 {
-	char	**array;
 	char	*path;
-	int		i;
 
-	array = NULL;
-	path = NULL;
-	if (access(cmd[0], X_OK) == 0)
-	{
-		path = ft_strdup(cmd[0]);
-		return (path);
-	}
+	path = NULL;	
 	i = ft_find_word_array(env->env, "PATH=");
 	if (i < ft_array_len(env->env))
 		array = ft_split(env->env[i] + 5, ':');
@@ -44,27 +36,25 @@ static char	*ft_find_path(char **cmd, t_env *env)
 	return (path);
 }
 
-int ft_run_commands(char **cmd, t_env *env)
+static char	*ft_find_path(char **cmd, t_env *env)
 {
-	pid_t	pid;
-	int		fd[2];
 	char	*path;
+	char	**array;
+	int		i;
 
-	path = ft_find_path(cmd, env);
-	if (path == NULL)
+	path = NULL;
+	array = NULL;
+	i = 0;
+	if (access(cmd[0], X_OK) == 0)
 	{
-		write(STDERR_FILENO, "minishell: ", 11);
-		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
-		write(STDERR_FILENO, ": command not found\n", 20);
-		ft_free_split(cmd);
-		return (3);
+		path = ft_strdup(cmd[0]);
+		return (path);
 	}
-	if (pipe(fd) == -1)
-	{
-		perror("minishell");
-		ft_free_split(cmd);
-		return (3);
-	}
+	return (ft_find_path_aux(cmd, &(*env), i, &(*array)));
+}
+
+static int	ft_run_single_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
+{
 	pid = fork();
 	if (pid == -1)
 	{
@@ -86,5 +76,25 @@ int ft_run_commands(char **cmd, t_env *env)
 		waitpid(pid, NULL, 0);
 	free(path);
 	ft_free_split(cmd);
+	env->exit_stts = 0;
 	return (3);
+}
+
+int ft_run_single_command(char **cmd, t_env *env)
+{
+	pid_t	pid;
+	char	*path;
+
+	pid = 1;
+	path = ft_find_path(cmd, env);
+	if (path == NULL)
+	{
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
+		write(STDERR_FILENO, ": command not found\n", 20);
+		ft_free_split(cmd);
+		env->exit_stts = 127;
+		return (3);
+	}
+	return (ft_run_single_command_aux(cmd, &(*env), path, pid));
 }

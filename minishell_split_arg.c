@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 17:18:50 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:33:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ char	**ft_custom_split(char const *s)
 	size_t	store;
 
 	i = ft_wordcount(s);
-	printf("%zu\n", i);
 	store = ft_count_char_arg(s);
 	array = (char **)malloc(sizeof(char *) * (i + 1));
 	if (array == NULL)
