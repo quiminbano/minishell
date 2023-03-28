@@ -6,35 +6,24 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/27 17:21:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:10:26 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_ex_analyzer(int *flag, char **array)
+static char	*ft_ex_analyzer(int *flag, char **cmd)
 {
 	char	*path;
-	char	*temp;
-	char	pwd[BUFFER];
 	int		fd;
 
 	path = NULL;
-	getcwd(pwd, sizeof(pwd));
-	temp = ft_strjoin(pwd, "/");
-	temp = ft_strjoin_free(temp, array[1]);
-	fd = open(temp, O_RDONLY);
+	fd = open(cmd[0], O_RDONLY);
 	if (fd == -1)
-	{
-		ft_free_split(array);
-		free(temp);
 		(*flag) = 3;
-	}
-	else if (access(temp, F_OK) == 0 && access(temp, X_OK) == -1)
+	else if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == -1)
 	{
 		(*flag) = 4;
-		ft_free_split(array);
-		free(temp);
 		close(fd);
 	}
 	return (path);
@@ -72,14 +61,16 @@ static char	*ft_find_path(char **cmd, t_env *env, int *flag)
 {
 	char	*path;
 	char	**array;
+	char	pwd[BUFFER];
 
 	path = NULL;
 	array = NULL;
+	getcwd(pwd, sizeof(pwd));
 	if (access(cmd[0], X_OK) == 0)
 	{
-		if (ft_strnstr(cmd[0], "./", ft_strlen(cmd[0])) && \
-		(ft_strlen(cmd[0]) == 2))
+		if (chdir(cmd[0]) == 0)
 		{
+			chdir(pwd);
 			(*flag) = 2;
 			return (path);
 		}
@@ -87,10 +78,7 @@ static char	*ft_find_path(char **cmd, t_env *env, int *flag)
 		return (path);
 	}
 	else if (ft_strnstr(cmd[0], "./", ft_strlen(cmd[0])))
-	{
-		array = ft_split(cmd[0], '/');
-		return (ft_ex_analyzer(&(*flag), &(*array)));
-	}
+		return (ft_ex_analyzer(&(*flag), cmd));
 	return (ft_find_path_aux(cmd, &(*env), &(*flag), &(*array)));
 }
 
