@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/27 11:04:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:21:02 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ typedef struct s_export
 	struct s_export *next;
 }	t_export;
 
+typedef struct s_multarg
+{
+	char	**args;
+	char	***array;
+	int		i;
+	int		flag;
+	t_lexer	**lex;
+}	t_multarg;
+
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
 int 		handle_ctrlD(char *str, t_env *env);
@@ -145,6 +154,7 @@ int			ft_listsize_lexer(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
 int 		ft_run_single_command(char **cmd, t_env *env);
+int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);

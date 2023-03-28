@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/23 16:21:21 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:27:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	handle_vars(t_env *env, int i, char *st)
 
 	var_len = 0;
 	last_idx = 0;
-	var_name = strdup("");
+	var_name = ft_strdup("");
 	last_idx = i;
 	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
 		&& st[last_idx] != '$' && st[last_idx] != '\"')
@@ -76,6 +76,8 @@ void	collect_args(char *st, t_env *env)
 	env->is_inside = 0;
 	while (st[i])
 	{
+		if (st[i] == '\\' && st[i + 1] == '\'' && env->is_inside == 0)
+			i += 2;
 		if (st[i] == '\'')
 			i += in_or_out(st, i, env);
 		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
