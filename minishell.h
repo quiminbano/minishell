@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 13:21:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:29:57 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int			ft_strlen_w_space(char const *str);
 int			ft_am_i_valid_number(char const *str);
 int			ft_am_i_a_number(char *str);
 int			ft_line_checker(char *st, int *ret, t_env *env);
-int			ft_error_pipe(char *str);
 int			ft_check_symbols(char const *str);
 int			ft_exit_check(char **array, char *str, int *ret, t_env *env);
 char		**ft_custom_split(char const *s);
@@ -158,5 +157,9 @@ int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
+int			catch_errors(char *st);
+void		ft_error_pipe(char *str);
+void		ft_error_redir(int err);
+void		ft_error_unsupported(void);
 
 #endif

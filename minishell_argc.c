@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 13:23:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:38:19 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		add_history(st);
 	if (st == (void *)0)
 		return(handle_ctrlD(st, env));
-	if (st[0] == '|')
-		return (ft_error_pipe(st));
+	if (catch_errors(st) == 1)
+		return (3);
 	ft_tokens_recognition(st, &lex);
 	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)
 	{

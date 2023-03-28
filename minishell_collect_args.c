@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/27 12:27:06 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:53:20 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static int	handle_vars(t_env *env, int i, char *st)
 
 	var_len = 0;
 	last_idx = 0;
-	var_name = ft_strdup("");
 	last_idx = i;
 	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
 		&& st[last_idx] != '$' && st[last_idx] != '\"')
 		last_idx++;
 	var_len = last_idx - i + 1;
+	var_name = malloc((sizeof(char) * var_len) + 1);
 	ft_strlcpy(var_name, (st + i), var_len);
 	var_value = is_var_available(var_name, env);
 	if (var_value)
@@ -79,7 +79,10 @@ void	collect_args(char *st, t_env *env)
 		if (st[i] == '\\' && st[i + 1] == '\'' && env->is_inside == 0)
 			i += 2;
 		if (st[i] == '\'')
+		{
+			env->new_str = ft_strjoin_c(env->new_str, st[i]);
 			i += in_or_out(st, i, env);
+		}
 		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
 			i += single_dollar(env);
 		else
