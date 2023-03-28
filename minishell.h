@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/27 14:26:37 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:21:02 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ typedef struct s_export
 	int				index;
 	struct s_export *next;
 }	t_export;
+
+typedef struct s_multarg
+{
+	char	**args;
+	char	***array;
+	int		i;
+	int		flag;
+	t_lexer	**lex;
+}	t_multarg;
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);

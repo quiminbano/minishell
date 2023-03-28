@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 17:40:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:23:29 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	ft_work_in_args_lexer(char **ar, char **te, int tok, t_lex_i *idx)
 		l_sstr = ft_strlen_w_space(ar[(*j)] + sp);
 		te[(*i) - 1] = ft_strjoin_free(te[(*i) - 1], (ar[(*j)] + sp + l_sstr));
 		te[(*i)] = (char *)malloc(sizeof(char) * (sp + l_sstr + 1));
+		if (te[(*i)] == NULL)
+			return ;
 		ft_strlcpy(te[(*i)], ar[(*j)], (sp + l_sstr + 1));
 	}
 	else
