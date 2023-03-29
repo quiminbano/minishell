@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 13:21:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:39:32 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,19 @@ typedef struct s_export
 	struct s_export *next;
 }	t_export;
 
-typedef struct s_multarg
+typedef struct s_m_arg
 {
-	char	**args;
-	char	***array;
+	int		fd[2];
+	t_lexer	*lexe;
 	int		i;
-	int		flag;
-	t_lexer	**lex;
-}	t_multarg;
+	int		tmpin;
+	int		tmpout;
+	int		fdin;
+	int		fdout;
+	int		flag_in;
+	int		flag_out;
+	pid_t	pid[BUFFER];
+}	t_m_arg;
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
@@ -158,5 +163,7 @@ int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
+char		*ft_find_path(char **cmd, t_env *env, int *flag);
+int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
 
 #endif

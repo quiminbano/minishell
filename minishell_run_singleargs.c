@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 11:10:26 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:30:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*ft_find_path_aux(char **cmd, t_env *env, int *flag, char **array)
 	return (path);
 }
 
-static char	*ft_find_path(char **cmd, t_env *env, int *flag)
+char	*ft_find_path(char **cmd, t_env *env, int *flag)
 {
 	char	*path;
 	char	**array;

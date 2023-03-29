@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/03/27 15:22:38 by corellan         ###   ########.fr        #
+#    Updated: 2023/03/29 14:17:45 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ minishell_export_list.c minishell_export_utils.c minishell_unset.c \
 minishell_collect_args_utils.c minishell_error.c minishell_run_singleargs.c \
 minishell_split_lexer.c minishell_split_lexer_utils.c minishell_lexer_list.c \
 minishell_args_lexer.c minishell_utils2.c minishell_process_lexer.c \
-minishell_process_args.c minishell_run_singleargs_error.c
+minishell_process_args.c minishell_run_singleargs_error.c \
+minishell_run_multiargs.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -32,7 +33,8 @@ minishell_export_list.o minishell_export_utils.o minishell_unset.o \
 minishell_collect_args_utils.o minishell_error.o minishell_run_singleargs.o \
 minishell_split_lexer.o minishell_split_lexer_utils.o minishell_lexer_list.o \
 minishell_args_lexer.o minishell_utils2.o minishell_process_lexer.o \
-minishell_process_args.o minishell_run_singleargs_error.o
+minishell_process_args.o minishell_run_singleargs_error.o \
+minishell_run_multiargs.o
 
 LIBFT = -Llibft -lft
 
