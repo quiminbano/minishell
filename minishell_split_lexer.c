@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/25 13:19:28 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:18:40 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,12 @@ char	**ft_split_lexer(char const *s)
 	while (i < ft_wordcount(s))
 	{
 		li.temp = ft_strlen_char((s + store), &li);
-		character = ft_count_char((s + store + li.temp));
+		character = ft_count_char((s + store + li.temp + li.q));
 		array[i] = (char *)malloc(sizeof(char) * (li.temp + 1));
 		if (array[i] == NULL)
 			return (ft_custom_split_free(array, i));
 		ft_strlcpy_lexer(array[i], (s + store), (li.temp + li.q + 1), &li);
-		store = store + (li.temp + character);
+		store = store + (li.temp + character + li.q);
 		i++;
 	}
 	array[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/29 16:24:58 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:13:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,22 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	return (3);
 }
 
+/*static void	ft_wait_for_proc_free_and_close(char **ar, t_m_arg *arg)
+{
+	arg->i = 0;
+	while (arg->pid[arg->i] != 0)
+		waitpid(arg->pid[((arg->i)++)], NULL, 0);
+	ft_free_split(ar);
+	dup2(arg->tmpout, STDOUT_FILENO);
+	close(arg->tmpout);
+	dup2(arg->tmpin, STDIN_FILENO);
+	close(arg->tmpin);
+}*/
+
 /*This function prepares the arguments to be processed to run an multiargument
 instruccion.*/
 
-static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
+/*static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 {
 	t_m_arg	arg;
 
@@ -57,27 +69,25 @@ static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 	arg.i = 0;
 	arg.tmpin = dup(STDIN_FILENO);
 	arg.tmpout = dup(STDOUT_FILENO);
-	arg.fdin = dup(arg.tmpin);
+	if (arg.lexe != NULL && ((arg.lexe->token == 2) || \
+		(arg.lexe->token == 4) || (arg.lexe->token == 5)))
+		arg.fdin = dup(arg.tmpin);
+	arg.fdin_next = dup(arg.tmpin);
+	arg.len = ft_array_len(ar);
+	arg.pid[arg.len] = 0;
 	while (ar[arg.i] != NULL)
 	{
 		ft_iterate_mult_args(ar, &(*ret), &(*env), &arg);
 		if (arg.lexe->next != NULL)
 			arg.lexe = arg.lexe->next;
 	}
-	arg.i = 0;
-	while (arg.pid[arg.i] != 0)
-		waitpid(arg.pid[((arg.i)++)], NULL, 0);
-	ft_free_split(ar);
+	ft_wait_for_proc_free_and_close(ar, &arg);
 	arg.lexe = (*le);
-	dup2(arg.tmpout, STDOUT_FILENO);
-	close(arg.tmpout);
-	dup2(arg.tmpin, STDIN_FILENO);
-	close(arg.tmpin);
 	ft_free_list_lexer(&(arg.lexe));
 	return (3);
-}
+}*/
 
-static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
+/*static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 {
 	int	i;
 
@@ -94,7 +104,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 			free(env->new_str);
 	}
 	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
-}
+}*/
 
 /*This function check many thins. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
@@ -127,7 +137,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	{
 		args = ft_split_lexer(st);
 		args = ft_process_lexer(args, st);
-		return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
+		//return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
 	}
 	return (3);
 }

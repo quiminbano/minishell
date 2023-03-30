@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/29 15:39:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/30 16:01:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,15 @@ typedef struct s_m_arg
 	int		fd[2];
 	t_lexer	*lexe;
 	int		i;
+	int		len;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
 	int		fdout;
+	int		fdin_next;
 	int		flag_in;
 	int		flag_out;
+	int		flag_err;
 	pid_t	pid[BUFFER];
 }	t_m_arg;
 
@@ -126,6 +129,7 @@ char		**ft_custom_split_free(char **array, size_t i);
 size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
 int			check_char_now(const char *str, int i);
 int			check_char_after(const char *str, int i);
+int			check_char(const char *str, int i);
 int			ft_echo(char **array, t_env *env);
 size_t		ft_wordcount_args(char const *str, t_args **args);
 void		ft_add_to_list_args(t_args **begin, int num);
@@ -148,7 +152,6 @@ int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
-int			check_char(const char *str, int i);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
 size_t		ft_len_s_quot_lexer(char const *s, int i, int *flag);
@@ -165,5 +168,6 @@ char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
 char		*ft_find_path(char **cmd, t_env *env, int *flag);
 int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
+int			ft_redirections_input(char **ar, t_m_arg *arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/29 16:30:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:16:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 
 	array = ft_custom_split(ar);
 	array = ft_process_arg(array, ar);
-	arg->pid[arg->i] = -1;
 	if (array[0] != NULL)
 	{
 		if (ft_strncmp("exit\0", (array[0]), 5) == 0)
@@ -81,31 +80,42 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 
 int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 {
-	int	i;
-
-	i = ft_array_len(ar);
-	arg->pid[i] = 0;
-	if (arg->lexe->token == 5)
+	arg->pid[arg->i] = -1;
+	arg->flag_err = 0;
+	if (ft_redirections_input(ar, &(*arg)) == 1)
+		arg->flag_err = 1;
+	if (arg->flag_in == 1)
 	{
 		dup2(arg->fdin, STDIN_FILENO);
-		close(arg->fdin);;
-		if (i == (arg->i + 1))
-			arg->fdout = dup(arg->tmpout);
-		else
-		{
-			if (pipe(arg->fd) == -1)
-			{
-				perror("minishell");
-				(arg->i) = i;
-				return (3);
-			}
-			arg->fdout = arg->fd[1];
-			arg->fdin = arg->fd[0];
-		}
-		dup2(arg->fdout, STDOUT_FILENO);
-		close(arg->fdout);
-		ft_proc_and_check_mul(ar[arg->i], &(*re), &(*env), &(*arg));
+		close(arg->fdin);
 	}
+	else
+	{
+		dup2(arg->fdin_next, STDIN_FILENO);
+		close(arg->fdin_next);
+	}
+	if (arg->len == (arg->i + 1))
+		arg->fdout = dup(arg->tmpout);
+	if (arg->lexe->next != NULL && arg->lexe->next->token == 5)
+	{
+		if (pipe(arg->fd) == -1)
+		{
+			perror("minishell");
+			(arg->i) = arg->len;
+			return (3);
+		}
+		arg->fdout = arg->fd[1];
+		arg->fdin_next = arg->fd[0];
+	}
+	dup2(arg->fdout, STDOUT_FILENO);
+	close(arg->fdout);
+	if (arg->flag_err == 0)
+		ft_proc_and_check_mul(ar[arg->i], &(*re), &(*env), &(*arg));
 	(arg->i)++;
+	if (arg->flag_in == 1)
+	{
+		arg->pid[arg->i] = -1;
+		(arg->i)++;
+	}
 	return (3);
 }
