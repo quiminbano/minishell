@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 11:37:10 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:05:36 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		add_history(st);
 	if (st == (void *)0)
 		return(handle_ctrlD(st, env));
-	if (catch_errors(st) == 1)
+	if (catch_errors(st, env) == 1)
 		return (3);
 	ft_tokens_recognition(st, &lex);
 	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)

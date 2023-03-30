@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 14:29:57 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:48:39 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_env
 	int		set_f;
 	int		exit_stts;
 	int		is_inside;
+	int		is_inside_q;
+	int		is_inside_dq;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -157,9 +159,9 @@ int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
-int			catch_errors(char *st);
-void		ft_error_pipe(char *str);
-void		ft_error_redir(int err);
-void		ft_error_unsupported(void);
+int			catch_errors(char *st, t_env *env);
+int			ft_error_pipe(int err);
+int			ft_error_redir(int err, char *st, int i);
+int			ft_error_unsupported(void);
 
 #endif
