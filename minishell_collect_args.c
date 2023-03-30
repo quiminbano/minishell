@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/28 13:53:20 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:37:08 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	collect_args(char *st, t_env *env)
 	{
 		if (st[i] == '\\' && st[i + 1] == '\'' && env->is_inside == 0)
 			i += 2;
-		if (st[i] == '\'')
+		else if (st[i] == '\'')
 		{
 			env->new_str = ft_strjoin_c(env->new_str, st[i]);
 			i += in_or_out(st, i, env);

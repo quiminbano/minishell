@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:01:30 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/28 14:38:44 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:28:59 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	ft_error_redir(int err)
 
 void	ft_error_unsupported(void)
 {
-	write(STDERR_FILENO, "NOT SUPPORTED.\nPlease upgrade to premium version.\n", 50);
+	write(STDERR_FILENO,
+		"\nNOT SUPPORTED.\nPlease upgrade to premium version.\n\n", 52);
 }

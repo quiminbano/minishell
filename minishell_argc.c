@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 13:38:19 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:37:10 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	return (3);
 }
 
-/*This function check many thins. First it checks that the string is not NULL.
+/*This function check many things. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
 the commands written. It also check if we press ctrl + D in the terminal to
 indicate the end of file (EOF). This is not handled properly yet. Finally, 
