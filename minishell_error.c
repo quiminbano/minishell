@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:59:58 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 15:58:00 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:57:52 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	first_or_both(char *st)
 	- \< \! --- \<\<
 	- >< ><< ><<<
 */
-int catch_errors(char *st, t_env *env)
+int	catch_errors(char *st, t_env *env)
 {	
 	int	i;
 	int	inside;
@@ -61,7 +61,9 @@ int catch_errors(char *st, t_env *env)
 			i++;
 		else if (first_or_both(st) != 0)
 			return (ft_error_pipe(first_or_both(st)));
-		else if ( ((st[i] == '<' && st[i + 1] == '<' && st[i + 2] == '<') && (!inside)) || ((st[i] == '&' && st[i + 1] == '&') && (!inside)) )
+		else if (((st[i] == '<' && st[i + 1] == '<' && st[i + 2] == '<')
+				&& (!inside)) || ((st[i] == '&' && st[i + 1] == '&')
+				&& (!inside)))
 			return (ft_error_unsupported());
 		else if ((st[i] == '>' && st[i + 1] == '<') && (!inside))
 			return (ft_error_redir(1, st, i));

@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:01:30 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/30 15:51:52 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:57:51 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_error_pipe(int err)
 
 int	ft_error_redir(int err, char *st, int i)
 {
-
 	if (err == 1)
 	{
 		write(STDERR_FILENO, "minishell: syntax error near unexpected ", 40);
