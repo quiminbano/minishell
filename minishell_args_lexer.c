@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:18:18 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 17:17:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:27:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,45 @@ static void	ft_check_first_arg(char const *str, t_lexer **lex)
 		ft_add_to_list_lexer(&(*lex), NORM_START, 0);
 }
 
+static int	ft_check_dash_tok_lex(const char *str, t_lex_i *idx, t_lexer **le)
+{
+	if (str[idx->i] == '\\' && check_char(str, ((idx->i) + 1)) == 1)
+	{
+		(idx->i) += 1;
+		if (check_char(str, ((idx->i) + 1)) == 1)
+			(idx->j) += 1;
+		(idx->i) += 1;
+		if (idx->k != idx->j)
+			ft_fill_list_lexer(str, idx->i, idx->j, &(*le));
+		idx->k = idx->j;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_tokens_recognition(char const *str, t_lexer **lex)
 {
-	int	i;
-	int	j;
-	int	k;
+	t_lex_i	idx;
 
-	i = 0;
-	j = 0;
-	k = 0;
+	idx.i = 0;
+	idx.j = 0;
+	idx.k = 0;
 	ft_check_first_arg(str, &(*lex));
-	while (str[i] != '\0')
+	while (str[idx.i] != '\0')
 	{
-		if (str[i] == 39 && ft_check_s_quot_lexer(str, &(i)) == 1)
-			i = (i + 1 - 1);
-		else if (str[i] == 34 && ft_check_d_quot_lexer(str, &(i)) == 1)
-			i = (i + 1 - 1);
-		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
-			i += 2;
-		if ((str[i] == '\0') || (check_char(str, i) == 0 && \
-			(check_char(str, (i + 1)) == 1 || str[i + 1] == '\0')))
-			j++;
-		if (str[i] != '\0')
-			i++;
-		if (k != j)
-			ft_fill_list_lexer(str, i, j, &(*lex));
-		k = j;
+		if (str[idx.i] == 39 && ft_check_s_quot_lexer(str, &(idx.i)) == 1)
+			idx.i = (idx.i + 1 - 1);
+		else if (str[idx.i] == 34 && ft_check_d_quot_lexer(str, &(idx.i)) == 1)
+			idx.i = (idx.i + 1 - 1);
+		else if (ft_check_dash_tok_lex(str, &idx, &(*lex)) == 1)
+			continue ;
+		if ((str[idx.i] == '\0') || (check_char(str, idx.i) == 0 && \
+			(check_char(str, (idx.i + 1)) == 1 || str[idx.i + 1] == '\0')))
+			(idx.j)++;
+		if (str[idx.i] != '\0')
+			(idx.i)++;
+		if (idx.k != idx.j)
+			ft_fill_list_lexer(str, idx.i, idx.j, &(*lex));
+		idx.k = idx.j;
 	}
 }

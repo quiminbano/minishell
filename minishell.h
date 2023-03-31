@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 16:01:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:15:15 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_lex_i
 {
 	int	i;
 	int	j;
+	int k;
 }	t_lex_i;
 
 typedef struct s_env
@@ -130,6 +131,7 @@ size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
 int			check_char_now(const char *str, int i);
 int			check_char_after(const char *str, int i);
 int			check_char(const char *str, int i);
+int			ft_check_dash_split_lexer(const char *str, int *i, int *j);
 int			ft_echo(char **array, t_env *env);
 size_t		ft_wordcount_args(char const *str, t_args **args);
 void		ft_add_to_list_args(t_args **begin, int num);

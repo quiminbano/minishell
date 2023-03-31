@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 17:13:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:06:26 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,11 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
 	char	**args;
+	int		i;
 
 	lex = NULL;
 	args = NULL;
+	i = 0;
 	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
@@ -136,7 +138,12 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	else if (lex != NULL)
 	{
 		args = ft_split_lexer(st);
-		args = ft_process_lexer(args, st);
+		while (args[i] != NULL)
+		{
+			printf("%s\n", args[i]);
+			i++;
+		}
+		//args = ft_process_lexer(args, st);
 		//return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
 	}
 	return (3);
