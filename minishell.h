@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:15:15 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:36:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ typedef struct s_lexer
 
 typedef struct s_lex_i
 {
-	int	i;
-	int	j;
-	int k;
+	int		i;
+	int		j;
+	int 	k;
+	int		fl;
 }	t_lex_i;
 
 typedef struct s_env
@@ -90,6 +91,8 @@ typedef struct s_m_arg
 	int		fd[2];
 	t_lexer	*lexe;
 	int		i;
+	int		idx;
+	int		lex_f;
 	int		len;
 	int		tmpin;
 	int		tmpout;
@@ -98,6 +101,8 @@ typedef struct s_m_arg
 	int		fdin_next;
 	int		flag_in;
 	int		flag_out;
+	int		f_err_in;
+	int		f_err_out;
 	int		flag_err;
 	pid_t	pid[BUFFER];
 }	t_m_arg;
@@ -162,6 +167,7 @@ void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
 int			ft_listsize_lexer(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
+int			ft_c_redic_in_a_row(t_lexer **a);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
 int 		ft_run_single_command(char **cmd, t_env *env);
 int			ft_print_error_command(char **cmd, t_env *env, int flag);
@@ -170,6 +176,6 @@ char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
 char		*ft_find_path(char **cmd, t_env *env, int *flag);
 int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
-int			ft_redirections_input(char **ar, t_m_arg *arg);
+void		ft_do_redirections(char **ar, t_m_arg *arg);
 
 #endif

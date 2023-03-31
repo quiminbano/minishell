@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 12:23:29 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:24:04 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_work_in_args_lexer(char **ar, char **te, int tok, t_lex_i *idx)
 	{
 		sp = ft_count_space(ar[(*j)]);
 		l_sstr = ft_strlen_w_space(ar[(*j)] + sp);
-		te[(*i) - 1] = ft_strjoin_free(te[(*i) - 1], (ar[(*j)] + sp + l_sstr));
+		te[idx->k] = ft_strjoin_free(te[idx->k], (ar[(*j)] + sp + l_sstr));
 		te[(*i)] = (char *)malloc(sizeof(char) * (sp + l_sstr + 1));
 		if (te[(*i)] == NULL)
 			return ;
@@ -37,6 +37,17 @@ static void	ft_work_in_args_lexer(char **ar, char **te, int tok, t_lex_i *idx)
 	(*j)++;
 }
 
+static char	**ft_process_lexer_aux2(char **ar, char **te, t_lexer **lexe)
+{
+	t_lexer	*lex;
+
+	lex = (*lexe);
+	if (lex != NULL)
+		ft_free_list_lexer(&(lex));
+	ft_free_split(ar);
+	return (te);
+}
+
 /*In this function, we start to process the strings we are gonna have in our
 2D-array with the command processed. We pass the element of the list to the
 function ft_work_in_arg, to know how many strings from the original 2D array
@@ -44,25 +55,30 @@ we need to join to form the processed strings. */
 
 static char	**ft_process_lexer_aux(char **ar, char **te, int le, t_lexer **lex)
 {
-	t_lexer	*lexer;
 	t_lex_i	idx;
+	t_lexer	*lexe;
 
 	idx.i = 0;
 	idx.j = 0;
-	lexer = (*lex);
-	if (lexer != NULL && lexer->token != 0)
+	idx.fl = 0;
+	idx.k = 0;
+	lexe = (*lex);
+	if (lexe != NULL && lexe->token != 0)
 		idx.i = 1;
 	while (idx.i < le)
 	{
-		ft_work_in_args_lexer(ar, te, lexer->token, &idx);
-		if (lexer->next != NULL)
-			lexer = lexer->next;
+		if ((ft_c_redic_in_a_row(&(lexe)) > 0 && idx.fl == 0))
+		{
+			idx.k = (idx.i - 1);
+			idx.fl = 1;
+		}
+		ft_work_in_args_lexer(ar, te, lexe->token, &idx);
+		if (lexe->next != NULL)
+			lexe = lexe->next;
+		if ((lexe == NULL) || (lexe != NULL && lexe->token == 5))
+			idx.fl = 0;
 	}
-	lexer = (*lex);
-	if (lexer != NULL)
-		ft_free_list_lexer(&lexer);
-	ft_free_split(ar);
-	return (te);
+	return (ft_process_lexer_aux2(ar, te, &(*lex)));
 }
 
 /*This function process the line in case of the arguments are separated by
