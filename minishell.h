@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 16:36:35 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:54:29 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,18 @@ typedef struct s_m_arg
 	t_lexer	*lexe;
 	int		i;
 	int		idx;
+	int		n_redir;
 	int		lex_f;
 	int		len;
 	int		tmpin;
 	int		tmpout;
 	int		fdin;
 	int		fdout;
-	int		fdin_next;
+	int		fdin_pipe;
+	int		fdout_pipe;
+	int		flag_end;
 	int		flag_in;
 	int		flag_out;
-	int		f_err_in;
-	int		f_err_out;
 	int		flag_err;
 	pid_t	pid[BUFFER];
 }	t_m_arg;

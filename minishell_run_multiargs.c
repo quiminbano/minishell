@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 13:30:27 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:57:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 {
 	ft_do_redirections(ar, &(*arg));
-	if (arg->len == (arg->i + 1))
+	if (arg->len == (arg->i + 1) && arg->flag_out == 0)
+	{
+		arg->flag_end = 1;
 		arg->fdout = dup(arg->tmpout);
-	if (arg->lexe != NULL && arg->lexe->token == 5)
+	}
+	if (arg->lexe != NULL)
 	{
 		if (pipe(arg->fd) == -1)
 		{
@@ -91,25 +94,28 @@ int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 			(arg->i) = arg->len;
 			return (3);
 		}
-		arg->fdout = arg->fd[1];
-		arg->fdin_next = arg->fd[0];
+		arg->fdout_pipe = arg->fd[1];
+		arg->fdin_pipe = arg->fd[0];
 		arg->lexe = arg->lexe->next;
 	}
-	dup2(arg->fdout, STDOUT_FILENO);
-	close(arg->fdout);
-	if (arg->flag_err == 0)
-		ft_proc_and_check_mul(ar[arg->i], &(*re), &(*env), &(*arg));
-	if (arg->flag_in == 1)
-		(arg->i)++;
-	if (arg->lex_f == 1)
+	if (arg->flag_out == 1 || arg->flag_end == 1)
 	{
-		while ((arg->lexe != NULL) && (arg->i < (arg->lexe->i_split - 1)))
-			(arg->i)++;
+		dup2(arg->fdout, STDOUT_FILENO);
+		write(arg->fdout_pipe, "\0", 1);
+		close(arg->fdout);
 	}
 	else
 	{
-		while ((arg->lexe != NULL) && (arg->i < (arg->lexe->i_split) - 2))
-			(arg->i)++;
+		dup2(arg->fdout_pipe, STDOUT_FILENO);
+		close(arg->fdout_pipe);
+	}
+	if (arg->flag_err == 0)
+		ft_proc_and_check_mul(ar[arg->i], &(*re), &(*env), &(*arg));
+	arg->idx = 0;
+	while (arg->idx < arg->n_redir)
+	{
+		(arg->idx)++;
+		(arg->i)++;
 	}
 	(arg->i)++;
 	return (3);

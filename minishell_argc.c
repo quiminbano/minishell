@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 16:51:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:17:50 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	return (3);
 }
 
-/*static void	ft_w_for_proc_free_and_close(char **ar, t_m_arg *arg, t_lexer **be)
+static void	ft_w_for_proc_free_and_close(char **ar, t_m_arg *arg, t_lexer **be)
 {
 	arg->i = 0;
+	close(arg->fdin_pipe);
+	close(arg->fdout_pipe);
 	while (arg->pid[arg->i] != 0)
 		waitpid(arg->pid[((arg->i)++)], NULL, 0);
 	ft_free_split(ar);
@@ -56,12 +58,12 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	close(arg->tmpout);
 	dup2(arg->tmpin, STDIN_FILENO);
 	close(arg->tmpin);
-}*/
+}
 
 /*This function prepares the arguments to be processed to run an multiargument
 instruccion.*/
 
-/*static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
+static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 {
 	t_m_arg	arg;
 
@@ -77,7 +79,7 @@ instruccion.*/
 	if (arg.lexe != NULL && ((arg.lexe->token == 2) || \
 		(arg.lexe->token == 4) || (arg.lexe->token == 5)))
 		arg.fdin = dup(arg.tmpin);
-	arg.fdin_next = dup(arg.tmpin);
+	arg.fdin_pipe = dup(arg.tmpin);
 	arg.len = ft_array_len(ar);
 	arg.pid[arg.len] = 0;
 	while (ar[arg.i] != NULL)
@@ -103,7 +105,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 			free(env->new_str);
 	}
 	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
-}*/
+}
 
 /*This function check many thins. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
@@ -116,11 +118,9 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
 	char	**args;
-	int		i;
 
 	lex = NULL;
 	args = NULL;
-	i = 0;
 	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
@@ -138,12 +138,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	{
 		args = ft_split_lexer(st);
 		args = ft_process_lexer(args, st);
-		while (args[i] != NULL)
-		{
-			printf("%s\n", args[i]);
-			i++;
-		}
-		//return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
+		return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
 	}
 	return (3);
 }
