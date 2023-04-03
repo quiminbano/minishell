@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
 /*   Updated: 2023/04/03 11:27:17 by corellan         ###   ########.fr       */
@@ -112,7 +112,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
 }
 
-/*This function check many thins. First it checks that the string is not NULL.
+/*This function check many things. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
 the commands written. It also check if we press ctrl + D in the terminal to
 indicate the end of file (EOF). This is not handled properly yet. Finally, 
@@ -131,8 +131,8 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		add_history(st);
 	if (st == (void *)0)
 		return(handle_ctrlD(st, env));
-	if (st[0] == '|')
-		return (ft_error_pipe(st));
+	if (catch_errors(st, env) == 1)
+		return (3);
 	ft_tokens_recognition(st, &lex);
 	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)
 	{

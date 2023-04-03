@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/27 12:27:06 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:17:50 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ static int	handle_vars(t_env *env, int i, char *st)
 
 	var_len = 0;
 	last_idx = 0;
-	var_name = ft_strdup("");
 	last_idx = i;
 	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
 		&& st[last_idx] != '$' && st[last_idx] != '\"')
 		last_idx++;
 	var_len = last_idx - i + 1;
+	var_name = malloc((sizeof(char) * var_len) + 1);
 	ft_strlcpy(var_name, (st + i), var_len);
 	var_value = is_var_available(var_name, env);
 	if (var_value)
-		env->new_str = ft_strjoin_free(env->new_str, var_value + var_len);
+		replace_var_val(env, var_value, var_len);		
 	else if (st[i++] == '?')
 		handle_exlamation(env, st, i);
 	else
@@ -68,6 +68,22 @@ static int	in_or_out(char *st, int i, t_env *env)
 	if we are outside of ' ', it will collect characters, and expands variables with their value (if valid).
 	inside the ' ', it will not expand variables, but just print them character by character.
 */
+
+/*
+	this is here because of the 25 lines limit
+*/
+static int	helper(t_env *env, int i, char *st)
+{
+	if (st[i] == '$' && !env->is_inside)
+		i = handle_vars(env, (i + 1), st);
+	else
+	{
+		env->new_str = ft_strjoin_c(env->new_str, st[i]);
+		i++;
+	}
+	return (i);
+}
+
 void	collect_args(char *st, t_env *env)
 {
 	int		i;
@@ -78,19 +94,14 @@ void	collect_args(char *st, t_env *env)
 	{
 		if (st[i] == '\\' && st[i + 1] == '\'' && env->is_inside == 0)
 			i += 2;
-		if (st[i] == '\'')
+		else if (st[i] == '\'')
+		{
+			env->new_str = ft_strjoin_c(env->new_str, st[i]);
 			i += in_or_out(st, i, env);
+		}
 		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
 			i += single_dollar(env);
 		else
-		{
-			if (st[i] == '$' && !env->is_inside)
-				i = handle_vars(env, (i + 1), st);
-			else
-			{
-				env->new_str = ft_strjoin_c(env->new_str, st[i]);
-				i++;
-			}
-		}
+			i = helper(env, i, st);
 	}
 }

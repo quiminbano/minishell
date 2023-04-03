@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
+#    By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
 #    Updated: 2023/04/03 10:38:22 by corellan         ###   ########.fr        #
@@ -24,8 +24,7 @@ minishell_args_lexer.c minishell_utils2.c minishell_process_lexer.c \
 minishell_process_args.c minishell_run_singleargs_error.c \
 minishell_run_multiargs.c minishell_redirections.c \
 minishell_split_lexer_utils2.c minishell_redirections_in.c \
-minishell_redirections_out.c
-
+minishell_redirections_out.c minishell_error_printing.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -39,7 +38,8 @@ minishell_args_lexer.o minishell_utils2.o minishell_process_lexer.o \
 minishell_process_args.o minishell_run_singleargs_error.o \
 minishell_run_multiargs.o minishell_redirections.o \
 minishell_split_lexer_utils2.o minishell_redirections_in.o \
-minishell_redirections_out.o
+minishell_redirections_out.o minishell_error_printing.o
+
 
 LIBFT = -Llibft -lft
 
