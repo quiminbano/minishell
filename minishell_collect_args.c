@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/30 11:37:08 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:17:50 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	handle_vars(t_env *env, int i, char *st)
 	ft_strlcpy(var_name, (st + i), var_len);
 	var_value = is_var_available(var_name, env);
 	if (var_value)
-		env->new_str = ft_strjoin_free(env->new_str, var_value + var_len);
+		replace_var_val(env, var_value, var_len);		
 	else if (st[i++] == '?')
 		handle_exlamation(env, st, i);
 	else
@@ -68,6 +68,22 @@ static int	in_or_out(char *st, int i, t_env *env)
 	if we are outside of ' ', it will collect characters, and expands variables with their value (if valid).
 	inside the ' ', it will not expand variables, but just print them character by character.
 */
+
+/*
+	this is here because of the 25 lines limit
+*/
+static int	helper(t_env *env, int i, char *st)
+{
+	if (st[i] == '$' && !env->is_inside)
+		i = handle_vars(env, (i + 1), st);
+	else
+	{
+		env->new_str = ft_strjoin_c(env->new_str, st[i]);
+		i++;
+	}
+	return (i);
+}
+
 void	collect_args(char *st, t_env *env)
 {
 	int		i;
@@ -86,14 +102,6 @@ void	collect_args(char *st, t_env *env)
 		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
 			i += single_dollar(env);
 		else
-		{
-			if (st[i] == '$' && !env->is_inside)
-				i = handle_vars(env, (i + 1), st);
-			else
-			{
-				env->new_str = ft_strjoin_c(env->new_str, st[i]);
-				i++;
-			}
-		}
+			i = helper(env, i, st);
 	}
 }
