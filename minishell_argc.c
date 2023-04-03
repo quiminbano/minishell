@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:27:17 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:56:28 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,9 @@ to be valid.*/
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
-	char	**args;
 
 	lex = NULL;
-	args = NULL;
+	env->args = NULL;
 	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
@@ -139,11 +138,11 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
 	}
-else if (lex != NULL)
+	else if (lex != NULL)
 	{
-		args = ft_split_lexer(st);
-		args = ft_process_lexer(args, st);
-		return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
+		env->args = ft_split_lexer(st);
+		env->args = ft_process_lexer(env->args, st);
+		return (ft_replace_dol_multi(env->args, &(*ret), &(*env), &lex));
 	}
 	return (3);
 }

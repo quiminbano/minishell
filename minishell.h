@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:14:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:56:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_lex_i
 typedef struct s_env
 {
 	char	**env;
+	char	**str;
+	char	**args;
+	char	**arr;
 	char	oldpwd[BUFFER];
 	char	newpwd[BUFFER];
 	int		level;
@@ -64,7 +67,7 @@ typedef struct s_env
 	int		is_inside;
 	int		is_inside_q;
 	int		is_inside_dq;
-  int		status;
+	int		status;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -97,6 +100,7 @@ typedef struct s_m_arg
 	int		i;
 	int		idx;
 	int		n_redir;
+	int		lex_size;
 	int		lex_f;
 	int		len;
 	int		tmpin;
@@ -161,7 +165,9 @@ void		ft_sort_and_print_strings(char **array);
 void		ft_putstr_export(char *st, int fd);
 int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
+void		check_and_process_d_quotes(char	**variable);
 int			ft_unset(t_env *env, char **array);
+int			ft_unset_mult(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
@@ -189,5 +195,10 @@ int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env,  char *var_value, int var_len);
+int 		ft_process_reout(t_m_arg *arg);
+int			ft_exit_check_m1(char **array, int *ret, t_env *env);
+int			ft_exit_check_m2(char **array, int *ret, t_env *env);
+int			ft_export_mult(t_env *env, char **array);
+int			ft_unset_mult(t_env *env, char **array);
 
 #endif
