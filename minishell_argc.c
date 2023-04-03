@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/02 19:20:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:27:17 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,18 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	return (3);
 }
 
-static void	ft_w_for_proc_free_and_close(char **ar, t_m_arg *arg, t_lexer **be)
+static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 {
 	arg->i = 0;
 	close(arg->fdin_pipe);
 	close(arg->fdout_pipe);
 	while (arg->pid[arg->i] != 0)
-		waitpid(arg->pid[((arg->i)++)], NULL, 0);
+	{
+		waitpid(arg->pid[((arg->i))], &(env->status), 0);
+		if (arg->pid[(arg->i)] != -1)
+			env->exit_stts = WEXITSTATUS(env->status);
+		(arg->i) += 1;
+	}
 	ft_free_split(ar);
 	arg->lexe = (*be);
 	ft_free_list_lexer(&(arg->lexe));
@@ -84,7 +89,7 @@ static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 	arg.pid[arg.len] = 0;
 	while (ar[arg.i] != NULL)
 		ft_iterate_mult_args(ar, &(*ret), &(*env), &arg);
-	ft_w_for_proc_free_and_close(ar, &arg, &(*le));
+	wait_for_p_close(ar, &arg, &(*le), &(*env));
 	return (3);
 }
 

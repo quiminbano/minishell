@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/02 19:19:12 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 10:39:07 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,8 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 	return (3);
 }
 
-int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
+static int ft_process_reout(t_m_arg *arg)
 {
-	ft_do_redirections(ar, &(*arg));
-	if (arg->len == (arg->i + 1) && arg->flag_out == 0)
-	{
-		arg->flag_end = 1;
-		arg->fdout = dup(arg->tmpout);
-	}
 	if (arg->lexe != NULL && arg->lexe->token == 5)
 	{
 		if (pipe(arg->fd) == -1)
@@ -110,6 +104,14 @@ int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 		dup2(arg->fdout_pipe, STDOUT_FILENO);
 		close(arg->fdout_pipe);
 	}
+	return (0);
+}
+
+int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
+{
+	ft_do_redirections(ar, &(*arg));
+	if (ft_process_reout(&(*arg)) == 3)
+		return (3);
 	if (arg->flag_err == 0)
 		ft_proc_and_check_mul(ar[arg->i], &(*re), &(*env), &(*arg));
 	arg->idx = 0;

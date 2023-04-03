@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/02 18:30:53 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:14:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_env
 	int		set_f;
 	int		exit_stts;
 	int		is_inside;
+	int		status;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -179,5 +180,8 @@ char		**ft_process_arg(char **array, char *str);
 char		*ft_find_path(char **cmd, t_env *env, int *flag);
 int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
 void		ft_do_redirections(char **ar, t_m_arg *arg);
+void		ft_redirections_input(char **ar, t_m_arg *arg);
+void		ft_redirections_output(char **ar, t_m_arg *arg);
+void		ft_redirect_out_append(char **ar, t_m_arg *arg);
 
 #endif
