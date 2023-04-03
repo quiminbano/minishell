@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 15:15:38 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:04:45 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static size_t	ft_wordcount(char const *str)
 			i = (i + 1 - 1);
 		else if (str[i] == 34 && ft_check_d_quot_lexer(str, &(i)) == 1)
 			i = (i + 1 - 1);
-		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
-			i += 2;
+		else if (ft_check_dash_split_lexer(str, &(i), &(j)) == 1)
+			continue ;
 		if ((str[i] == '\0') || (check_char(str, i) == 0 && \
 			(check_char(str, (i + 1)) == 1 || str[i + 1] == '\0')))
 		{
@@ -115,12 +115,12 @@ char	**ft_split_lexer(char const *s)
 	while (i < ft_wordcount(s))
 	{
 		li.temp = ft_strlen_char((s + store), &li);
-		character = ft_count_char((s + store + li.temp));
+		character = ft_count_char((s + store + li.temp + li.q));
 		array[i] = (char *)malloc(sizeof(char) * (li.temp + 1));
 		if (array[i] == NULL)
 			return (ft_custom_split_free(array, i));
 		ft_strlcpy_lexer(array[i], (s + store), (li.temp + li.q + 1), &li);
-		store = store + (li.temp + character);
+		store = store + (li.temp + character + li.q);
 		i++;
 	}
 	array[i] = NULL;

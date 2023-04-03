@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:08:22 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:14:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ typedef struct s_lexer
 
 typedef struct s_lex_i
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int 	k;
+	int		fl;
+	t_lexer	*le;
 }	t_lex_i;
 
 typedef struct s_env
@@ -61,6 +64,7 @@ typedef struct s_env
 	int		is_inside;
 	int		is_inside_q;
 	int		is_inside_dq;
+  int		status;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -86,14 +90,27 @@ typedef struct s_export
 	struct s_export *next;
 }	t_export;
 
-typedef struct s_multarg
+typedef struct s_m_arg
 {
-	char	**args;
-	char	***array;
+	int		fd[2];
+	t_lexer	*lexe;
 	int		i;
-	int		flag;
-	t_lexer	**lex;
-}	t_multarg;
+	int		idx;
+	int		n_redir;
+	int		lex_f;
+	int		len;
+	int		tmpin;
+	int		tmpout;
+	int		fdin;
+	int		fdout;
+	int		fdin_pipe;
+	int		fdout_pipe;
+	int		flag_end;
+	int		flag_in;
+	int		flag_out;
+	int		flag_err;
+	pid_t	pid[BUFFER];
+}	t_m_arg;
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
@@ -122,6 +139,8 @@ char		**ft_custom_split_free(char **array, size_t i);
 size_t		ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp);
 int			check_char_now(const char *str, int i);
 int			check_char_after(const char *str, int i);
+int			check_char(const char *str, int i);
+int			ft_check_dash_split_lexer(const char *str, int *i, int *j);
 int			ft_echo(char **array, t_env *env);
 size_t		ft_wordcount_args(char const *str, t_args **args);
 void		ft_add_to_list_args(t_args **begin, int num);
@@ -144,7 +163,6 @@ int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 int			ft_unset(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
-int			check_char(const char *str, int i);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
 size_t		ft_len_s_quot_lexer(char const *s, int i, int *flag);
@@ -153,12 +171,19 @@ void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
 int			ft_listsize_lexer(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
+int			ft_c_redic_in_a_row(t_lexer **a);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
 int 		ft_run_single_command(char **cmd, t_env *env);
 int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
+char		*ft_find_path(char **cmd, t_env *env, int *flag);
+int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
+void		ft_do_redirections(char **ar, t_m_arg *arg);
+void		ft_redirections_input(char **ar, t_m_arg *arg);
+void		ft_redirections_output(char **ar, t_m_arg *arg);
+void		ft_redirect_out_append(char **ar, t_m_arg *arg);
 int			catch_errors(char *st, t_env *env);
 int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);

@@ -6,39 +6,11 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 15:05:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:27:17 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*static int	ft_process_multi_cmd(char *st, int *ret, t_env *env, t_lexer **lex)
-{
-	t_multarg	arg;
-
-	arg.args = ft_split_lexer(st);
-	arg.args = ft_process_lexer(arg.args, st);
-	arg.i = ft_array_len(arg.args);
-	arg.flag = 0;
-	arg.array = (char ***)malloc(sizeof(char **) * (arg.i + 1));
-	if (arg.array == NULL)
-		return (3);
-	arg.i = 0;
-	while (arg.args[arg.i] != NULL)
-	{
-		if (arg.flag == 1)
-			env->new_str = ft_strdup("");
-		collect_args(arg.args[arg.i], &(*env));
-		arg.array[arg.i] = ft_custom_split(env->new_str);
-		arg.array[arg.i] = ft_process_arg(arg.array, env->new_str);
-		(arg.i)++;
-		if (arg.args[arg.i] != NULL)
-			free(env->new_str);
-		arg.flag = 1;
-	}
-	ft_free_list_lexer(&(*lex));
-	return (3);
-}*/
 
 /*This function process the line when we put just one single command, without
 any special token (|, <, >, <<, >>)*/
@@ -72,18 +44,88 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 	return (3);
 }
 
+static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
+{
+	arg->i = 0;
+	close(arg->fdin_pipe);
+	close(arg->fdout_pipe);
+	while (arg->pid[arg->i] != 0)
+	{
+		waitpid(arg->pid[((arg->i))], &(env->status), 0);
+		if (arg->pid[(arg->i)] != -1)
+			env->exit_stts = WEXITSTATUS(env->status);
+		(arg->i) += 1;
+	}
+	ft_free_split(ar);
+	arg->lexe = (*be);
+	ft_free_list_lexer(&(arg->lexe));
+	dup2(arg->tmpout, STDOUT_FILENO);
+	close(arg->tmpout);
+	dup2(arg->tmpin, STDIN_FILENO);
+	close(arg->tmpin);
+}
+
+/*This function prepares the arguments to be processed to run an multiargument
+instruccion.*/
+
+static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
+{
+	t_m_arg	arg;
+
+	arg.lexe = (*le);
+	arg.lex_f = 0;
+	if (arg.lexe->token == 0)
+		arg.lex_f = 1;
+	if (arg.lexe->token == 0)
+		arg.lexe = arg.lexe->next;
+	arg.i = 0;
+	arg.tmpin = dup(STDIN_FILENO);
+	arg.tmpout = dup(STDOUT_FILENO);
+	if (arg.lexe != NULL && ((arg.lexe->token == 2) || \
+		(arg.lexe->token == 4) || (arg.lexe->token == 5)))
+		arg.fdin = dup(arg.tmpin);
+	arg.fdin_pipe = dup(arg.tmpin);
+	arg.len = ft_array_len(ar);
+	arg.pid[arg.len] = 0;
+	while (ar[arg.i] != NULL)
+		ft_iterate_mult_args(ar, &(*ret), &(*env), &arg);
+	wait_for_p_close(ar, &arg, &(*le), &(*env));
+	return (3);
+}
+
+static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
+{
+	int	i;
+
+	i = 0;
+	while (ar[i] != NULL)
+	{
+		if (i >= 1)
+			env->new_str = ft_strdup("");
+		collect_args(ar[i], &(*env));
+		free(ar[i]);
+		ar[i] = ft_strdup(env->new_str);
+		i++;
+		if (ar[i] != NULL)
+			free(env->new_str);
+	}
+	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
+}
+
 /*This function check many things. First it checks that the string is not NULL.
 If it is not NULL, the function add_history is called to cast the history of
 the commands written. It also check if we press ctrl + D in the terminal to
 indicate the end of file (EOF). This is not handled properly yet. Finally, 
 the function check the differents ways that the command exit needs to be written
-to be valid. */
+to be valid.*/
 
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
+	char	**args;
 
 	lex = NULL;
+	args = NULL;
 	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
@@ -97,7 +139,11 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
 	}
-	/*else
-		return (ft_process_multi_cmd(st, &(*ret), &(*env), &lex));*/
+else if (lex != NULL)
+	{
+		args = ft_split_lexer(st);
+		args = ft_process_lexer(args, st);
+		return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
+	}
 	return (3);
 }

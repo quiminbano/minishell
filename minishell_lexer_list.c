@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 14:55:06 by corellan         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:45:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,19 @@ void	ft_print_list_lexer(t_lexer **a)
 		temp = temp->next;
 	}
 	ft_printf("\n");
+}
+
+int	ft_c_redic_in_a_row(t_lexer **a)
+{
+	t_lexer	*temp;
+	int		i;
+
+	i = 0;
+	temp = (*a);
+	while (temp != NULL && (temp->token > 0 && temp->token < 5))
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (i);
 }

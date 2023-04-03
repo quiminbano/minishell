@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/28 11:10:26 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:15:07 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*ft_find_path_aux(char **cmd, t_env *env, int *flag, char **array)
 	return (path);
 }
 
-static char	*ft_find_path(char **cmd, t_env *env, int *flag)
+char	*ft_find_path(char **cmd, t_env *env, int *flag)
 {
 	char	*path;
 	char	**array;
@@ -102,10 +102,10 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 		}
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &(env->status), 0);
 	free(path);
 	ft_free_split(cmd);
-	env->exit_stts = 0;
+	env->exit_stts = WEXITSTATUS(env->status);
 	return (3);
 }
 
