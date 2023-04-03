@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/01 16:17:50 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:20:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
 	}
-	else if (lex != NULL)
+else if (lex != NULL)
 	{
 		args = ft_split_lexer(st);
 		args = ft_process_lexer(args, st);

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/01 15:54:29 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/02 18:30:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_lex_i
 	int		j;
 	int 	k;
 	int		fl;
+	t_lexer	*le;
 }	t_lex_i;
 
 typedef struct s_env

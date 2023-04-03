@@ -6,17 +6,27 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:18:18 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:27:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:01:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_fill_list_lexer(char const *str, int i, int j, t_lexer **lex)
+static void	ft_fill_list_lex_aux(char const *str, int i, int j, t_lexer **lex)
 {
-	if (str[i] == '\0')
-		return ;
+	if (str[i] == '|' && str[i + 1] == '<')
+	{
+		ft_add_to_list_lexer(&(*lex), PIPE, j);
+		ft_add_to_list_lexer(&(*lex), RE_IN, j);
+	}
+	else if (str[i] == '|' && str[i + 1] == '>')
+	{
+		ft_add_to_list_lexer(&(*lex), PIPE, j);
+		ft_add_to_list_lexer(&(*lex), RE_OUT, j);
+	}
 	else if (str[i] == '>' && str[i + 1] != '>')
+		ft_add_to_list_lexer(&(*lex), RE_OUT, j);
+	else if (str[i] == '>' && str[i + 1] == '|')
 		ft_add_to_list_lexer(&(*lex), RE_OUT, j);
 	else if (str[i] == '<' && str[i + 1] != '<')
 		ft_add_to_list_lexer(&(*lex), RE_IN, j);
@@ -28,6 +38,26 @@ static void	ft_fill_list_lexer(char const *str, int i, int j, t_lexer **lex)
 		ft_add_to_list_lexer(&(*lex), PIPE, j);
 	else if (str[i] == '<' && str[i + 1] == '>')
 		ft_add_to_list_lexer(&(*lex), IN_OUT, j);
+}
+
+static void	ft_fill_list_lexer(char const *str, int i, int j, t_lexer **lex)
+{
+	if (str[i] == '\0')
+		return ;
+	else if (str[i + 1] == '\0')
+		ft_fill_list_lex_aux(str, i, j, &(*lex));
+	else if (str[i] == '|' && str[i + 1] == '<' && str[i + 2] == '<')
+	{
+		ft_add_to_list_lexer(&(*lex), PIPE, j);
+		ft_add_to_list_lexer(&(*lex), RERE_IN, j);
+	}
+	else if (str[i] == '|' && str[i + 1] == '>' && str[i + 2] == '>')
+	{
+		ft_add_to_list_lexer(&(*lex), PIPE, j);
+		ft_add_to_list_lexer(&(*lex), RERE_OUT, j);
+	}
+	else
+		ft_fill_list_lex_aux(str, i, j, &(*lex));
 }
 
 static void	ft_check_first_arg(char const *str, t_lexer **lex)

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 17:24:04 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/02 18:59:42 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 static void	ft_work_in_args_lexer(char **ar, char **te, int tok, t_lex_i *idx)
 {
-	int	*i;
-	int	*j;
 	int	sp;
 	int	l_sstr;
 
-	i = &(idx->i);
-	j = &(idx->j);
-	if ((ft_wordcount_space(ar[(*j)]) > 1) && (tok > 0 && tok < 5))
+	if ((idx->le != NULL) && (idx->le->next != NULL) && \
+		(idx->le->i_split == idx->le->next->i_split))
+		te[(idx->i)] = ft_strdup("");
+	else if ((ft_wordcount_space(ar[idx->j]) > 1) && (tok > 0 && tok < 5))
 	{
-		sp = ft_count_space(ar[(*j)]);
-		l_sstr = ft_strlen_w_space(ar[(*j)] + sp);
-		te[idx->k] = ft_strjoin_free(te[idx->k], (ar[(*j)] + sp + l_sstr));
-		te[(*i)] = (char *)malloc(sizeof(char) * (sp + l_sstr + 1));
-		if (te[(*i)] == NULL)
+		sp = ft_count_space(ar[idx->j]);
+		l_sstr = ft_strlen_w_space(ar[idx->j] + sp);
+		te[idx->k] = ft_strjoin_free(te[idx->k], (ar[idx->j] + sp + l_sstr));
+		te[idx->i] = (char *)malloc(sizeof(char) * (sp + l_sstr + 1));
+		if (te[idx->i] == NULL)
 			return ;
-		ft_strlcpy(te[(*i)], ar[(*j)], (sp + l_sstr + 1));
+		ft_strlcpy(te[idx->i], ar[idx->j], (sp + l_sstr + 1));
+		(idx->j) += 1;
 	}
 	else
-		te[(*i)] = ft_strdup(ar[(*j)]);
-	(*i)++;
-	(*j)++;
+	{
+		te[idx->i] = ft_strdup(ar[idx->j]);
+		(idx->j) += 1;
+	}
+	(idx->i) += 1;
 }
 
 static char	**ft_process_lexer_aux2(char **ar, char **te, t_lexer **lexe)
@@ -56,26 +58,25 @@ we need to join to form the processed strings. */
 static char	**ft_process_lexer_aux(char **ar, char **te, int le, t_lexer **lex)
 {
 	t_lex_i	idx;
-	t_lexer	*lexe;
 
 	idx.i = 0;
 	idx.j = 0;
 	idx.fl = 0;
 	idx.k = 0;
-	lexe = (*lex);
-	if (lexe != NULL && lexe->token != 0)
+	idx.le = (*lex);
+	if (idx.le != NULL && idx.le->token != 0)
 		idx.i = 1;
 	while (idx.i < le)
 	{
-		if ((ft_c_redic_in_a_row(&(lexe)) > 0 && idx.fl == 0))
+		if ((ft_c_redic_in_a_row(&(idx.le)) > 0 && idx.fl == 0))
 		{
 			idx.k = (idx.i - 1);
 			idx.fl = 1;
 		}
-		ft_work_in_args_lexer(ar, te, lexe->token, &idx);
-		if (lexe->next != NULL)
-			lexe = lexe->next;
-		if ((lexe == NULL) || (lexe != NULL && lexe->token == 5))
+		ft_work_in_args_lexer(ar, te, idx.le->token, &idx);
+		if (idx.le->next != NULL)
+			idx.le = idx.le->next;
+		if ((idx.le == NULL) || (idx.le != NULL && idx.le->token == 5))
 			idx.fl = 0;
 	}
 	return (ft_process_lexer_aux2(ar, te, &(*lex)));

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/01 16:57:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:19:12 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 		arg->flag_end = 1;
 		arg->fdout = dup(arg->tmpout);
 	}
-	if (arg->lexe != NULL)
+	if (arg->lexe != NULL && arg->lexe->token == 5)
 	{
 		if (pipe(arg->fd) == -1)
 		{
@@ -100,8 +100,9 @@ int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 	}
 	if (arg->flag_out == 1 || arg->flag_end == 1)
 	{
-		dup2(arg->fdout, STDOUT_FILENO);
 		write(arg->fdout_pipe, "\0", 1);
+		close(arg->fdout_pipe);
+		dup2(arg->fdout, STDOUT_FILENO);
 		close(arg->fdout);
 	}
 	else
