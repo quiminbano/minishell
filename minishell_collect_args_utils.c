@@ -6,11 +6,23 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:07:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/23 16:28:55 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:13:37 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	this function replaces the valid variable, with it's value, and also adds a " before and after 
+	the variables value
+*/
+void	replace_var_val(t_env *env,  char *var_value, int var_len)
+{
+		env->new_str = ft_strjoin_c(env->new_str, '"');
+		env->new_str = ft_strjoin_free(env->new_str, var_value + var_len);
+		env->new_str = ft_strjoin_c(env->new_str, '"');
+}
+
 /*
 	this function takes the string or var name that we need to check its validity,e.g "USER"
 	and adds the "=" sign to it, and then comapares it to all the env variables stored in env->env,
@@ -24,6 +36,7 @@ char	*is_var_available(char *substr, t_env *env)
 	int		i;
 	char	*var;
 	char	*add_equal;
+	//char	*new_var;
 
 	var = NULL;
 	add_equal = ft_strjoin(substr, "=");
@@ -32,7 +45,7 @@ char	*is_var_available(char *substr, t_env *env)
 	{
 		var = ft_strnstr(env->env[i], add_equal, ft_strlen(add_equal));
 		if (var)
-		{
+		{	
 			free(add_equal);
 			return (var);
 		}
