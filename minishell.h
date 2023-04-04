@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:14:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:53:28 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef struct s_env
 	int		is_inside;
 	int		is_inside_q;
 	int		is_inside_dq;
-  int		status;
+  	int		status;
+	char	*all_lines;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -189,5 +190,6 @@ int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env,  char *var_value, int var_len);
+void		testing_func(char *st, t_env *env);
 
 #endif

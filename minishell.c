@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/21 11:16:06 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:15:54 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		handle_shortcuts();
 		str = readline("minishell$ ");
+		//----------------to delete later ------------------------------
+		if (ft_strnstr(str, "<<", ft_strlen(str))) //and theres a delim
+		{
+			testing_func(str, &env);
+		}
+		//----------------to delete later ----------------------------
 		ac = ft_line_checker(str, &(ret), &env);
 		if (ac == 0)
 			return (0);
