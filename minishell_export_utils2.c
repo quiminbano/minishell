@@ -6,11 +6,46 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:08:15 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 12:44:50 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:41:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*ft_strdup_export_aux(char *dest, int s)
+{
+	dest[s] = '\0';
+	return (dest);
+}
+
+char	*ft_strdup_export(char const *src)
+{
+	int			s;
+	int			i;
+	int			flag;
+	char		*dest;
+
+	i = 0;
+	flag = 0;
+	s = (int)ft_strlen(src);
+	dest = (char *)malloc(sizeof(char) * (s));
+	if (dest == NULL)
+		return (NULL);
+	s = 0;
+	while (src[i] != '\0')
+	{
+		if (flag == 0 && src[i] == '+')
+		{
+			i++;
+			flag = 1;
+			continue ;
+		}
+		dest[s] = src[i];
+		i++;
+		s++;
+	}
+	return (ft_strdup_export_aux(dest, s));
+}
 
 static int	count_d_quot(char *variable)
 {

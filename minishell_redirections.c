@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 11:17:12 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:21:41 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:23:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	ft_do_redirections(char **ar, t_m_arg *arg)
 	arg->idx = 0;
 	arg->fdout = dup(arg->tmpout);
 	dup2(arg->tmpout, STDOUT_FILENO);
-	arg->pid[arg->i] = -1;
 	while (arg->idx < arg->n_redir)
 	{
 		ft_redirections_input(ar, &(*arg));

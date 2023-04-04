@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:51:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/30 16:00:50 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:36:32 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,19 @@ when the text is inside single quotation marks (''). It also set up a flag
 (sp->p) to know if the string has a double quotation mark in the beginning and 
 the end of the string.*/
 
-size_t	ft_len_s_quot_lexer(char const *s, int i, int *flag)
+size_t	ft_len_s_quot_lexer(char const *s, int i)
 {
 	size_t	k;
+	int		init;
 
+	init = i;
 	k = (i + 1);
 	while (s[k] != 39 && s[k] != '\0')
 		k++;
 	if (s[k] == '\0')
 		return (1);
 	k = k + 1;
-	(*flag) = 1;
-	return (k);
+	return (k - (size_t)init);
 }
 
 /*This function return the length, of the part of the string to be splitted, 
@@ -82,10 +83,12 @@ when the text is inside double quotation marks (""). It also set up a flag
 (sp->p) to know if the string has a double quotation mark in the beginning and 
 the end of the string.*/
 
-size_t	ft_len_d_quot_lexer(char const *s, int i, int *flag)
+size_t	ft_len_d_quot_lexer(char const *s, int i)
 {
 	size_t	k;
+	int		init;
 
+	init = i;
 	k = (i + 1);
 	while (s[k] != 34 && s[k] != '\0')
 	{
@@ -96,6 +99,5 @@ size_t	ft_len_d_quot_lexer(char const *s, int i, int *flag)
 	if (s[k] == '\0')
 		return (1);
 	k = k + 1;
-	(*flag) = 1;
-	return (k);
+	return (k - (size_t)init);
 }

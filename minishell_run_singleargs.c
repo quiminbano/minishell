@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 11:15:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:56:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 		{
 			free(path);
 			ft_free_split(cmd);
-			perror("minishell");
-			exit(EXIT_FAILURE);
+			write(STDERR_FILENO, "minishell: : command not found\n", 31);
+			exit (127);
 		}
 	}
 	else

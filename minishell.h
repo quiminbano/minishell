@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 18:56:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:32:08 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_m_arg
 	int		idx;
 	int		n_redir;
 	int		lex_size;
-	int		lex_f;
 	int		len;
 	int		tmpin;
 	int		tmpout;
@@ -113,6 +112,7 @@ typedef struct s_m_arg
 	int		flag_in;
 	int		flag_out;
 	int		flag_err;
+	int		wait;
 	pid_t	pid[BUFFER];
 }	t_m_arg;
 
@@ -166,13 +166,15 @@ void		ft_putstr_export(char *st, int fd);
 int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
 void		check_and_process_d_quotes(char	**variable);
+int			ft_check_plus(t_env *env, char *variable);
+char		*ft_strdup_export(char const *src);
 int			ft_unset(t_env *env, char **array);
 int			ft_unset_mult(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
-size_t		ft_len_s_quot_lexer(char const *s, int i, int *flag);
-size_t		ft_len_d_quot_lexer(char const *s, int i, int *flag);
+size_t		ft_len_s_quot_lexer(char const *s, int i);
+size_t		ft_len_d_quot_lexer(char const *s, int i);
 void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
 int			ft_listsize_lexer(t_lexer **lst);
@@ -200,5 +202,7 @@ int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);
 int			ft_export_mult(t_env *env, char **array);
 int			ft_unset_mult(t_env *env, char **array);
+int			ft_copy_d_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
+int			ft_copy_s_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
 
 #endif

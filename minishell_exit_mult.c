@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:49:42 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:55:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 main function to return exit.ret (*ret). The (*ret) number is gotten typecasting
 the number returned by the function ft_atoll as unsigned char.*/
 
-static int	ft_sucess_return_exit_m(char **ar, int *ret)
+static int	ft_sucess_return_exit_m(char **ar, int *ret, t_env *env)
 {
 	if (ft_strncmp(ar[1], "-9223372036854775808", 21) == 0)
 	{
@@ -25,6 +25,7 @@ static int	ft_sucess_return_exit_m(char **ar, int *ret)
 		return (1);
 	}
 	(*ret) = (unsigned char)ft_atoll(ar[1]);
+	env->exit_stts = (*ret);
 	ft_free_split(ar);
 	return (1);
 }
@@ -34,13 +35,14 @@ ft_exit_multiargument and returns a number to the main function. So, with
 this number, the main function knows which number should return to exit
 the minishell.*/
 
-static int	ft_print_error_e_m1(char **array, int error)
+static int	ft_print_error_e_m1(char **array, int error, t_env *env)
 {
 	if (error == 1)
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, array[1], ft_strlen(array[1]));
 		write(2, ": numeric argument required\n", 28);
+		env->exit_stts = 255;
 		ft_free_split(array);
 		return (2);
 	}
@@ -48,6 +50,7 @@ static int	ft_print_error_e_m1(char **array, int error)
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, "too many arguments\n", 19);
+		env->exit_stts = 1;
 		ft_free_split(array);
 		return (3);
 	}
@@ -61,7 +64,7 @@ if there are valid numbers to print the proper error message. On the
 other hand, it check the arguments when there is only one extra argument
 after the word exit.*/
 
-static int	ft_exit_args_m_aux(char **array, int *ret)
+static int	ft_exit_args_m_aux(char **array, int *ret, t_env *env)
 {
 	int	i;
 
@@ -70,17 +73,17 @@ static int	ft_exit_args_m_aux(char **array, int *ret)
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
 			ft_am_i_valid_number(array[1]) == 1)
-			return (ft_print_error_e_m1(array, 1));
+			return (ft_print_error_e_m1(array, 1, &(*env)));
 		else
-			return (ft_print_error_e_m1(array, 2));
+			return (ft_print_error_e_m1(array, 2, &(*env)));
 	}
 	else
 	{
 		if (ft_am_i_a_number(array[1]) == 1 || \
 			ft_am_i_valid_number(array[1]) == 1)
-			return (ft_print_error_e_m1(array, 1));
+			return (ft_print_error_e_m1(array, 1, &(*env)));
 		else
-			return (ft_sucess_return_exit_m(array, &(*ret)));
+			return (ft_sucess_return_exit_m(array, &(*ret), &(*env)));
 	}
 	return (0);
 }
@@ -103,6 +106,6 @@ int	ft_exit_check_m1(char **array, int *ret, t_env *env)
 		return (0);
 	}
 	else if (i > 1)
-		return (ft_exit_args_m_aux(array, &(*ret)));
+		return (ft_exit_args_m_aux(array, &(*ret), &(*env)));
 	return (3);
 }

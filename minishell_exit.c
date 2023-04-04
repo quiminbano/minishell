@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/29 13:32:36 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:55:55 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	ft_print_error_exit(char **array, char *str, int error, t_env *env)
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, "too many arguments\n", 19);
+		env->exit_stts = 1;
 		ft_free_split(array);
 		return (3);
 	}

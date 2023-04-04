@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 18:20:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:16:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 		{
 			free(path);
 			ft_free_split(cmd);
-			perror("minishell");
-			exit(EXIT_FAILURE);
+			write(STDERR_FILENO, "minishell: : command not found\n", 31);
+			exit (127);
 		}
 	}
 	free(path);
@@ -37,7 +37,7 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 	return (3);
 }
 
-static int ft_run_multiple_commands(char **cmd, t_env *env, pid_t *pid)
+static int run_mult_com(char **cmd, t_env *env, pid_t *pid)
 {
 	char	*path;
 	int		flag;
@@ -50,6 +50,9 @@ static int ft_run_multiple_commands(char **cmd, t_env *env, pid_t *pid)
 
 static int	ft_handle_spe_cases(int *ret, t_env *env, t_m_arg *arg)
 {
+	arg->pid[arg->wait] = -1;
+	arg->pid[(arg->wait) + 1] = 0;
+	(arg->wait) += 1;
 	if (arg->lex_size == arg->n_redir && arg->i == 0)
 	{
 		if (ft_strncmp("exit\0", (env->arr[0]), 5) == 0)
@@ -88,7 +91,7 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 			return(ft_export_mult(&(*env), env->arr));
 		if ((ft_strncmp("unset\0", (env->arr[0]), 6) == 0))
 			return(ft_unset_mult(&(*env), env->arr));
-		return (ft_run_multiple_commands(env->arr, &(*env), &arg->pid[arg->i]));
+		return (run_mult_com(env->arr, &(*env), &arg->pid[(arg->wait) - 1]));
 	}
 	ft_free_split(env->arr);
 	return (3);
