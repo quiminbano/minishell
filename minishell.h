@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
 /*   Updated: 2023/04/05 14:37:53 by corellan         ###   ########.fr       */
@@ -210,5 +210,6 @@ int			ft_export_mult(t_env *env, char **array);
 int			ft_unset_mult(t_env *env, char **array);
 int			ft_copy_d_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
 int			ft_copy_s_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
+int			ft_error_more_than_two(int err_num);
 
 #endif

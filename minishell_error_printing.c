@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:01:30 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/03 11:42:38 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:57:47 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,22 @@ int	ft_error_unsupported(void)
 {
 	write(STDERR_FILENO,
 		"\nNOT SUPPORTED.\nPlease upgrade to premium version.\n\n", 52);
+	return (1);
+}
+
+int	ft_error_more_than_two(int err_num)
+{
+	if (err_num == 3)
+	{
+		write(STDERR_FILENO, "minishell: syntax error near unexpected ", 40);
+		write(STDERR_FILENO, "token `", 7);
+		write(STDERR_FILENO, ">'\n", 3);
+	}
+	else if (err_num == 4)
+	{
+		write(STDERR_FILENO, "minishell: syntax error near unexpected ", 40);
+		write(STDERR_FILENO, "token `", 7);
+		write(STDERR_FILENO, ">>'\n", 4);
+	}
 	return (1);
 }
