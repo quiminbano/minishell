@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:56:58 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:37:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,8 @@ int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env, char *var_value, int var_len);
-void		here_doc(char *st, t_env *env);
+void		check_here_doc(char ***arr, t_lexer **lex, t_env *env);
+void		here_doc(char **st, t_env *env);
 int			ft_process_reout(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);

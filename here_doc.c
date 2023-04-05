@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:41:04 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 13:54:28 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:39:27 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void handle_sig(int sig)
 	}
 }
 
-static void	here_doc_helper(t_env *env, char *delimiter, char *line_str)
+static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 {
 	while (1)
 	{
@@ -37,7 +37,6 @@ static void	here_doc_helper(t_env *env, char *delimiter, char *line_str)
 		{
 			if (!line_str)
 				printf("\033[1A\033[2C");
-			//PROCESS INPUT HERE
 			break ;
 		}
 		if (!g_should_process)
@@ -51,20 +50,19 @@ static void	here_doc_helper(t_env *env, char *delimiter, char *line_str)
 	}
 }
 
-void here_doc(char *st, t_env *env)
+void here_doc(char **st, t_env *env)
 {	
-	char 	*redir_sign; //<<
-	char	*delimiter; // after << 
 	char	*line_str;
 	int		i;
+	int		sp;
 
 	i = 0;
 	line_str = NULL;
-	env->all_lines = ft_strdup(""); //dont forget to free env->all_lines
-	redir_sign = ft_strnstr(st, "<<", ft_strlen(st));
-	delimiter = redir_sign + 2;
-	while (*delimiter == ' ')
-		delimiter++;
-	here_doc_helper(env, delimiter, line_str);
+	env->all_lines = ft_strdup("");
+	sp = ft_count_space((*st));
+	h_doc_helper(env, ((*st) + sp), line_str);
+	free((*st));
+	(*st) = ft_strdup(env->all_lines);
+	free(env->all_lines);
 }
 

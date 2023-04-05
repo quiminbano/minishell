@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:57:36 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:29:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 
 	i = 0;
 	ar = ft_process_lexer(ar, (*(env->str)));
+	check_here_doc(&ar, &(*le), &(*env));
 	while (ar[i] != NULL)
 	{
 		if (i >= 1)
