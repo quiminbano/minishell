@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:59:58 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 13:12:57 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:58:53 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ static int	first_or_both(char *st)
 	this is here because of the 25 lines limitation.
 */
 
+static int	more_than_two(char *st)
+{
+	int	i;
+
+	i = 0;
+	while (st[i])
+	{
+		if (st[i] == '>' && st[i + 1] == '>' && st[i + 2] == '>' && st[i + 3] != '>')
+			return (3);
+		else if (st[i] == '>' && st[i + 1] == '>' && st[i + 2] == '>' && st[i + 3] == '>')
+			return (4);
+		i++;
+	}
+	return (0);
+}
+
 static int	check_errors_helper (char *st, int i, int inside, t_env *env)
 {
 	while (st[i])
@@ -48,6 +64,8 @@ static int	check_errors_helper (char *st, int i, int inside, t_env *env)
 		inside = is_inside(st[i], env);
 		if (st[i] == '\\' && st[i + 1])
 			i++;
+		else if (more_than_two(st))
+			return (ft_error_more_than_two(more_than_two(st)));
 		else if (first_or_both(st) != 0)
 			return (ft_error_pipe(first_or_both(st)));
 		else if (((st[i] == '<' && st[i + 1] == '<' && st[i + 2] == '<')
