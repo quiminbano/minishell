@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:16:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:04:14 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function process the line when we put just one single command, without
-any special token (|, <, >, <<, >>)*/
 
 static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 {
@@ -70,9 +67,6 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	close(arg->tmpin);
 }
 
-/*This function prepares the arguments to be processed to run an multiargument
-instruccion.*/
-
 static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 {
 	t_m_arg	arg;
@@ -119,13 +113,6 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
 }
 
-/*This function check many things. First it checks that the string is not NULL.
-If it is not NULL, the function add_history is called to cast the history of
-the commands written. It also check if we press ctrl + D in the terminal to
-indicate the end of file (EOF). This is not handled properly yet. Finally, 
-the function check the differents ways that the command exit needs to be written
-to be valid.*/
-
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
@@ -136,7 +123,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
 	if (st == (void *)0)
-		return (handle_ctrlD(st, env));
+		return (handle_ctrl_d(st, env));
 	if (catch_errors(st, env) == 1)
 		return (3);
 	ft_tokens_recognition(st, &lex);

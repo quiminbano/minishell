@@ -6,14 +6,11 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/03/20 13:14:41 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:54:56 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function updates the oldpwd enviroment variable, depending if oldpwd was
-written before or not. We identified this with env->flag.*/
 
 static void	ft_env_update_oldpwd(t_env *env, char **array, int i)
 {
@@ -41,10 +38,6 @@ static void	ft_env_update_oldpwd(t_env *env, char **array, int i)
 		env->flag = 2;
 	}
 }
-
-/*This function overwrite the information of the variables PWD and OLDPWD in
-the enviromental variables, everytime that the command cd is called and changes
-directory successfully. */
 
 static void	ft_env_update(t_env *env)
 {
@@ -74,9 +67,6 @@ static void	ft_env_update(t_env *env)
 		ft_env_update_oldpwd(&(*env), array, i);
 }
 
-/*	print working directory path
-	print error if fail.
-*/
 int	ft_pwd(t_env *env)
 {
 	char	path[BUFFER];
@@ -93,9 +83,6 @@ int	ft_pwd(t_env *env)
 	}
 	return (3);
 }
-
-/*This function works to find the HOME path to access it, when cd is called 
-without other arguments.*/
 
 static int	ft_find_home_path(char ***path, t_env *env, int *i)
 {
@@ -120,19 +107,6 @@ static int	ft_find_home_path(char ***path, t_env *env, int *i)
 	return (0);
 }
 
-/*
-	str = everything typed after "cd"
-	path = it takes str, and if a space is found, everything after it is cut, as in the original cd
-	if we have a space after the path and some other text after the space, cd would still work, taking 
-	in consideration the path before the space.
-	e.g in: cd ./desktop/application/ garbage text
-	"garbage text" will be ignored and the path "./desktop/application/" will apply.
-	UPDATE
-	ft_cd now tracks the information about the directory we are now and the
-	directory we want to access. So, we can print the variable OLDPWD enerytime
-	we call the command env. Another change I did is, now, when we fail to
-	change directory, we print the message in the STDERR instead of the STDOUT.
-*/
 int	ft_cd(char **path, t_env *env)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_split_lexer_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:51:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 18:36:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:58:11 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ int	check_char(const char *str, int i)
 	else
 		return (0);
 }
-
-/*This function helps to check how many words are in the string
-to split when there are single quotaations in the string.*/
 
 int	ft_check_s_quot_lexer(char const *str, int *i)
 {
@@ -36,9 +33,6 @@ int	ft_check_s_quot_lexer(char const *str, int *i)
 		(*i) = (k);
 	return (1);
 }
-
-/*This function helps to check how many words are in the string
-to split when there are double quotaations in the string.*/
 
 int	ft_check_d_quot_lexer(char const *str, int *i)
 {
@@ -58,11 +52,6 @@ int	ft_check_d_quot_lexer(char const *str, int *i)
 	return (1);
 }
 
-/*This function return the length, of the part of the string to be splitted, 
-when the text is inside single quotation marks (''). It also set up a flag
-(sp->p) to know if the string has a double quotation mark in the beginning and 
-the end of the string.*/
-
 size_t	ft_len_s_quot_lexer(char const *s, int i)
 {
 	size_t	k;
@@ -77,11 +66,6 @@ size_t	ft_len_s_quot_lexer(char const *s, int i)
 	k = k + 1;
 	return (k - (size_t)init);
 }
-
-/*This function return the length, of the part of the string to be splitted, 
-when the text is inside double quotation marks (""). It also set up a flag
-(sp->p) to know if the string has a double quotation mark in the beginning and 
-the end of the string.*/
 
 size_t	ft_len_d_quot_lexer(char const *s, int i)
 {

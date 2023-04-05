@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:41:04 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 16:21:14 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:01:06 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void handle_sig(int sig)
+static void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -49,7 +49,7 @@ static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 	}
 }
 
-void here_doc(char **st, t_env *env)
+void	here_doc(char **st, t_env *env)
 {	
 	char	*line_str;
 	char	**temp;
@@ -64,4 +64,3 @@ void here_doc(char **st, t_env *env)
 	(*st) = ft_strdup(env->all_lines);
 	free(env->all_lines);
 }
-

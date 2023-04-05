@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 11:06:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:51:14 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* This function checks if the second argument of the command echo is indeed
-the option -n (-nn, -nnn, -nnnn, etc.) or not.*/
 
 static int	ft_second_arg_echo_check(char *str)
 {
@@ -27,11 +24,6 @@ static int	ft_second_arg_echo_check(char *str)
 	return (i);
 }
 
-/*This function prints spaces between the strings in the split if necessary.
-if the second argument is not the -n argument( or -nn or -nnn, etc), the shell 
-prints the second argument. if the -n option is setted up, we print the
-third word as a first word.*/
-
 static void	ft_echo_aux(char **array, int i)
 {
 	while (ft_second_arg_echo_check(array[i]) == (int)ft_strlen(array[i]))
@@ -44,13 +36,6 @@ static void	ft_echo_aux(char **array, int i)
 			write(1, " ", 1);
 	}
 }
-
-/*This function checks every argument to use when we call echo through the
-minishell. First, we check if there is just one argument (if we write just
-echo in the minishell). In the function ft_echo_aux, we
-prepare the system to print the text written. With the function ft_second_arg
-_echo_check, we check if we need to print a skip line(\n) or not, adding
-the opcion -n, -nn, -nnn, etc. ft_free_split frees the array.*/
 
 int	ft_echo(char **array, t_env *env)
 {

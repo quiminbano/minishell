@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/13 13:55:39 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:52:50 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function frees the t_export list.*/
 
 void	ft_free_list_export(t_export **lst)
 {
@@ -30,8 +28,6 @@ void	ft_free_list_export(t_export **lst)
 	free(temp);
 }
 
-/*This function adds a new node to the t_export linked list.*/
-
 static t_export	*ft_listnew_export(int content)
 {
 	t_export	*new;
@@ -43,8 +39,6 @@ static t_export	*ft_listnew_export(int content)
 	new->next = NULL;
 	return (new);
 }
-
-/*This function adds the number num as a last node of the list.*/
 
 void	ft_add_to_list_export(t_export **begin, int num)
 {
@@ -63,8 +57,6 @@ void	ft_add_to_list_export(t_export **begin, int num)
 	}
 }
 
-/*This function measure the length of the list.*/
-
 int	ft_listsize_export(t_export **lst)
 {
 	int			i;
@@ -79,9 +71,6 @@ int	ft_listsize_export(t_export **lst)
 	}
 	return (i);
 }
-
-/*This function prints every member of the list. This function was made to
-debug.*/
 
 void	ft_print_list_export(t_export **a)
 {

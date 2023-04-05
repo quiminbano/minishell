@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process_lexer.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:54:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:54:40 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ static char	**ft_process_lexer_aux2(char **ar, char **te, t_lexer **lexe)
 	return (te);
 }
 
-/*In this function, we start to process the strings we are gonna have in our
-2D-array with the command processed. We pass the element of the list to the
-function ft_work_in_arg, to know how many strings from the original 2D array
-we need to join to form the processed strings. */
-
 static char	**ft_process_lexer_aux(char **ar, char **te, int le, t_lexer **lex)
 {
 	t_lex_i	idx;
@@ -82,14 +77,6 @@ static char	**ft_process_lexer_aux(char **ar, char **te, int le, t_lexer **lex)
 	}
 	return (ft_process_lexer_aux2(ar, te, &(*lex)));
 }
-
-/*This function process the line in case of the arguments are separated by
-"". The function casts in the linked list t_args between what indexes of the
-2D array (**array) there is an space in the original string. if a number is
-repeated in the linked list (for example 1->2->2->3) it means that there is
-combinations of "" or '' in the middle of the text, and we need to create
-empty strings in the processed 2D-array with arguments. The amount of strings
-we are going to create, are gonna be the length of the linked list.*/
 
 char	**ft_process_lexer(char **arg, char *str)
 {

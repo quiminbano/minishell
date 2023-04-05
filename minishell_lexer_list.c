@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_lexer_list.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:47:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:54:10 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function frees the t_lexer list.*/
 
 void	ft_free_list_lexer(t_lexer **lst)
 {
@@ -30,8 +28,6 @@ void	ft_free_list_lexer(t_lexer **lst)
 	free(temp);
 }
 
-/*This function adds a new node to the t_lexer linked list.*/
-
 static t_lexer	*ft_listnew_lexer(int content, int index)
 {
 	t_lexer	*new;
@@ -44,8 +40,6 @@ static t_lexer	*ft_listnew_lexer(int content, int index)
 	new->next = NULL;
 	return (new);
 }
-
-/*This function adds the number num as a last node of the list.*/
 
 void	ft_add_to_list_lexer(t_lexer **begin, int num, int index)
 {
@@ -64,8 +58,6 @@ void	ft_add_to_list_lexer(t_lexer **begin, int num, int index)
 	}
 }
 
-/*This function measure the length of the list.*/
-
 int	size_lex(t_lexer **lst)
 {
 	int		i;
@@ -80,9 +72,6 @@ int	size_lex(t_lexer **lst)
 	}
 	return (i);
 }
-
-/*This function prints every member of the list. This function was made to
-debug.*/
 
 void	ft_print_list_lexer(t_lexer **a)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:15:53 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:03:50 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@
 # include <sys/errno.h>
 # define BUFFER 1024
 # define NORM_START 0
-# define RE_IN 1 // <
-# define RE_OUT 2 // >
-# define RERE_IN 3 // <<
-# define RERE_OUT 4 // >>
-# define PIPE 5 // |
-# define IN_OUT 6 // <>
+# define RE_IN 1
+# define RE_OUT 2
+# define RERE_IN 3
+# define RERE_OUT 4
+# define PIPE 5
+# define IN_OUT 6
 
 int	g_should_process;
 
@@ -121,7 +121,7 @@ typedef struct s_m_arg
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-int			handle_ctrlD(char *str, t_env *env);
+int			handle_ctrl_d(char *str, t_env *env);
 void		collect_args(char *st, t_env *env);
 void		handle_exlamation(t_env *env, char *st, int i);
 char		*ft_strjoin_c(char *s1, char const c);

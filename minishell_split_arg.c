@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_split_arg.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/27 10:33:19 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:57:58 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function counts the length of the strings to be processed. The number to
-be returned depends of the kind of string to be processed.*/
 
 static size_t	ft_strlen_char(char const *str, size_t *sto, t_sp_arg *sp)
 {
@@ -42,10 +39,6 @@ static size_t	ft_strlen_char(char const *str, size_t *sto, t_sp_arg *sp)
 	return (i - (sp->q));
 }
 
-/*This auxiliar function helps to count how many string needs to be
-processed. It also prevents some situations such as many ''''' or 
-"""" written in a row to be counts as words.*/
-
 static int	ft_incrementer_wc(const char *str, int *i, int *j)
 {
 	if ((str[(*i)] == 39 && str[(*i) + 1] == 39) || \
@@ -72,9 +65,6 @@ static int	ft_incrementer_wc(const char *str, int *i, int *j)
 	return (0);
 }
 
-/*This function process how many string we need to process splitting
-the big string.*/
-
 static size_t	ft_wordcount(char const *str)
 {
 	int	i;
@@ -94,15 +84,6 @@ static size_t	ft_wordcount(char const *str)
 	}
 	return (j);
 }
-
-/*This function processes and allocates the needed amount of memory
-to create every string after spliting. temp counts how many characters
-are gonna be written per string. character counts how many characters
-should be skipped to process the following string. sto helps to skip
-characters to process the next string. sp.p, sp.q, and sp.q helps to
-handle edge cases such as text between "" or '' (sp.p), if there is
-an \ character to be skipped (sp.q) or the kind of text to be handled
-(sp.t). */
 
 static char	**ft_custom_split_aux(char const *s, char **ar, size_t sto)
 {
@@ -128,8 +109,6 @@ static char	**ft_custom_split_aux(char const *s, char **ar, size_t sto)
 	ar[i] = NULL;
 	return (ar);
 }
-
-/*This function initialize the 2D-array to split the text*/
 
 char	**ft_custom_split(char const *s)
 {

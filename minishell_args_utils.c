@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_args_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 10:23:24 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 16:52:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:50:22 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function is similar to ft_check_single_quot. The difference in this one
-is, ft_check_s_quot_args add the value of (*j) to the t_args linked list if
-there is an space after the ' character in the string splitted. */
 
 static int	ft_check_s_quot_args(char const *str, int *i, int *j, t_args **ar)
 {
@@ -36,10 +32,6 @@ static int	ft_check_s_quot_args(char const *str, int *i, int *j, t_args **ar)
 	}
 	return (1);
 }
-
-/*This function is similar to ft_check_single_quot. The difference in this one
-is, ft_check_s_quot_args add the value of (*j) to the t_args linked list if
-there is an space after the " character in the string splitted. */
 
 static int	ft_check_d_quot_args(char const *str, int *i, int *j, t_args **ar)
 {
@@ -78,11 +70,6 @@ static void	ft_increment_args_aux(const char *str, int *i, int *j, t_args **ar)
 	(*i)++;
 }
 
-/*This auxiliar function is similar to ft_incrementer in the ft_custom_split.
-The difference between them are that, We store the value of word where it is
-an space character (*j) in t. We store this value in the list t_args. We do 
-that with the ft_add_to_list function. */
-
 static int	ft_incrementer_args(const char *str, int *i, int *j, t_args **ar)
 {
 	if ((str[(*i)] == 39 && str[(*i) + 1] == 39) || \
@@ -107,11 +94,6 @@ static int	ft_incrementer_args(const char *str, int *i, int *j, t_args **ar)
 		ft_increment_args_aux(str, &(*i), &(*j), &(*ar));
 	return (0);
 }
-
-/*This function is similar to ft_wordcount in the ft_custom_split.  The
-differences between them are that, in this function we pass the linked
-list (t_args) as a double pointer, to store the word value where we there is
-an space character between the words.*/
 
 size_t	ft_wordcount_args(char const *str, t_args **args)
 {

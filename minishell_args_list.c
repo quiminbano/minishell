@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_args_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 15:11:53 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:49:55 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function frees the t_echo list.*/
 
 void	ft_free_list_args(t_args **lst)
 {
@@ -30,8 +28,6 @@ void	ft_free_list_args(t_args **lst)
 	free(temp);
 }
 
-/*This function adds a new node to the t_echo linked list.*/
-
 static t_args	*ft_listnew_args(int content)
 {
 	t_args	*new;
@@ -43,8 +39,6 @@ static t_args	*ft_listnew_args(int content)
 	new->next = NULL;
 	return (new);
 }
-
-/*This function adds the number num as a last node of the list.*/
 
 void	ft_add_to_list_args(t_args **begin, int num)
 {
@@ -63,8 +57,6 @@ void	ft_add_to_list_args(t_args **begin, int num)
 	}
 }
 
-/*This function measure the length of the list.*/
-
 int	ft_listsize_args(t_args **lst)
 {
 	int		i;
@@ -79,9 +71,6 @@ int	ft_listsize_args(t_args **lst)
 	}
 	return (i);
 }
-
-/*This function prints every member of the list. This function was made to
-debug.*/
 
 void	ft_print_list_args(t_args **a)
 {

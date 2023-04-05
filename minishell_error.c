@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:59:58 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:58:53 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:06:06 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ static int	first_or_both(char *st)
 	return (0);
 }
 
-/*
-	this is here because of the 25 lines limitation.
-*/
-
 static int	more_than_two(char *st)
 {
 	int	i;
@@ -48,16 +44,18 @@ static int	more_than_two(char *st)
 	i = 0;
 	while (st[i])
 	{
-		if (st[i] == '>' && st[i + 1] == '>' && st[i + 2] == '>' && st[i + 3] != '>')
+		if (st[i] == '>' && st[i + 1] == '>' && st[i + 2]
+			== '>' && st[i + 3] != '>')
 			return (3);
-		else if (st[i] == '>' && st[i + 1] == '>' && st[i + 2] == '>' && st[i + 3] == '>')
+		else if (st[i] == '>' && st[i + 1] == '>' && st[i + 2]
+			== '>' && st[i + 3] == '>')
 			return (4);
 		i++;
 	}
 	return (0);
 }
 
-static int	check_errors_helper (char *st, int i, int inside, t_env *env)
+static int	check_errors_helper(char *st, int i, int inside, t_env *env)
 {
 	while (st[i])
 	{
@@ -83,14 +81,6 @@ static int	check_errors_helper (char *st, int i, int inside, t_env *env)
 	return (0);
 }
 
-/*
-	catch and throw error when it finds:
-	- | and || in the beginning of the line
-	- < or > at the end of line
-	- && and <<<
-	- \< \! --- \<\<
-	- >< ><< ><<<
-*/
 int	catch_errors(char *st, t_env *env)
 {	
 	int	i;
@@ -100,5 +90,5 @@ int	catch_errors(char *st, t_env *env)
 	inside = 0;
 	env->is_inside_q = 0;
 	env->is_inside_dq = 0;
-	return(check_errors_helper(st, i, inside, env));
+	return (check_errors_helper(st, i, inside, env));
 }

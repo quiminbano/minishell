@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_split_arg_utils2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:38:45 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/24 16:44:13 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:57:43 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This is a modification of the ft_strlcpy from libft. It was modified to avoid
-copying the \ character in certain contitions. ft_strlcpy avoid copying the \ 
-character when a text starts and finish with "" and there is a \" in the middle 
-of the text. It also skips the \ when a text starts and finish wirh '' and there 
-is a \' in the middle of the text. Finally, it skips the \ character when the
-text starts and finish with a different character than ' or ", but there is
-an \0, \t or \n in the middle of the text. */
 
 size_t	ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp)
 {
@@ -45,8 +37,6 @@ size_t	ft_strlcpy_arg(char *d, char const *s, size_t size, t_sp_arg *sp)
 	}
 	return (sp->len);
 }
-
-/*This function frees the split created in case of error*/
 
 char	**ft_custom_split_free(char **array, size_t i)
 {

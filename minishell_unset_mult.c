@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_unset_mult.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:00:13 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:55:29 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:58:30 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function checks if the arguments passed to the ft_unset_aux function
-are valid or not.*/
 
 static int	ft_check_unset_variable(char *variable)
 {
@@ -30,9 +27,6 @@ static int	ft_check_unset_variable(char *variable)
 		return (1);
 	return (0);
 }
-
-/*This function is similar to ft_export_aux. So, it check if the arguments
-we pass are valid.*/
 
 static void	ft_unset_m_aux(char **array, int *i, t_env *env)
 {
@@ -57,9 +51,6 @@ static void	ft_unset_m_aux(char **array, int *i, t_env *env)
 	}
 	(*i)++;
 }
-
-/*This function is similar to ft_unset. The difference is that when we call
-unset without any variable, the programm does not do anything.*/
 
 int	ft_unset_mult(t_env *env, char **array)
 {

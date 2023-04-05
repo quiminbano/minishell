@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export_mult.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 13:15:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:52:57 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function checks if the arguments to define new enviromental variables
-are valid or not.*/
 
 static void	ft_export_m_aux(char **array, int *i, t_env *env)
 {
@@ -39,15 +36,6 @@ static void	ft_export_m_aux(char **array, int *i, t_env *env)
 	}
 	(*i)++;
 }
-
-/*This function checks the arguments when the command export is called. 
-First, the function checks how many arguments are in the 2D array with
-the command parsed. if it is just one argument, the function calls the
-function ft_sort_and_print_strings, that prints the enviroment variables
-sorted by ASCII index. If there is more than one argument in the command
-and and the second argument starts with the - character, the function
-prints an error. if there is some futher stuff to be checked, the function
-calls the ft_export_aux function.*/
 
 int	ft_export_mult(t_env *env, char **array)
 {

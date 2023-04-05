@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_run_multiargs.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:58:28 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:56:37 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static int	ft_handle_spe_cases(int *ret, t_env *env, t_m_arg *arg)
 	}
 	return (-1);
 }
-
-/*This function process the multi argument*/
 
 static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 {

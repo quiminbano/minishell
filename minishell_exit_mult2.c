@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_exit_mult2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:09:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:52:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:52:21 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function prints the exit message and it returns a number to notify to the 
-main function to return exit.ret (*ret). The (*ret) number is gotten typecasting
-the number returned by the function ft_atoll as unsigned char.*/
 
 static int	ft_sucess_ret_exit_m2(char **ar, int *ret, t_env *env)
 {
@@ -37,11 +33,6 @@ static int	ft_sucess_ret_exit_m2(char **ar, int *ret, t_env *env)
 	free(*(env->str));
 	exit ((*ret));
 }
-
-/*This function prints the proper error case detected in the function 
-ft_exit_multiargument and returns a number to the main function. So, with
-this number, the main function knows which number should return to exit
-the minishell.*/
 
 static int	ft_print_er_ex_m2(char **array, int error, t_env *env)
 {
@@ -68,13 +59,6 @@ static int	ft_print_er_ex_m2(char **array, int error, t_env *env)
 	return (0);
 }
 
-/*This function splits all the arguments in the string, to check the
-arguments written after the word exit. First, the function checks if
-there are more than one argument after the word exit, and it checks
-if there are valid numbers to print the proper error message. On the 
-other hand, it check the arguments when there is only one extra argument
-after the word exit.*/
-
 static int	ft_exit_mult2(char **array, int *ret, t_env *env)
 {
 	int	i;
@@ -98,12 +82,6 @@ static int	ft_exit_mult2(char **array, int *ret, t_env *env)
 	}
 	return (0);
 }
-
-/*This function check how many arguments were written after the word exit.
-if it was just written the word exit, if it was just written the word exit,
-the minishell prints in stderr the word exit, and returns a 0. if it has more
-arguments, the function returns a value given by the auxiliar function
-ft_exit_multiargument.*/
 
 int	ft_exit_check_m2(char **array, int *ret, t_env *env)
 {

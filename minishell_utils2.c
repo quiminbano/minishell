@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:03:55 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 15:59:22 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:00:16 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ static int	ft_len_s_quot_spe(char const *s, int i)
 		return (1);
 	return (k - init);
 }
-
-/*This function return the length, of the part of the string to be splitted, 
-when the text is inside double quotation marks (""). It also set up a flag
-(sp->p) to know if the string has a double quotation mark in the beginning and 
-the end of the string.*/
 
 static int	ft_len_d_quot_spe(char const *s, int i)
 {

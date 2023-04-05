@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:48:36 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/02 18:46:57 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:59:11 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ int	ft_count_space(char *str)
 	return (i);
 }
 
-/*This function returns the index of a string where a word (needle) is 
-contained. If the word doesn't exist, it returns the ammount of strings in the
-array.*/
-
 int	ft_find_word_array(char **array, char *needle)
 {
 	int	i;
@@ -39,8 +35,6 @@ int	ft_find_word_array(char **array, char *needle)
 	return (i);
 }
 
-/*This function returns the ammount of strings that a 2D-array has.*/
-
 int	ft_array_len(char **array)
 {
 	int	i;
@@ -52,9 +46,6 @@ int	ft_array_len(char **array)
 		i++;
 	return (i);
 }
-
-/*This function checks if there are special characters in the command written.
-it works for now with the command exit.*/
 
 int	ft_check_symbols(char const *str)
 {
@@ -71,9 +62,6 @@ int	ft_check_symbols(char const *str)
 	}
 	return (j);
 }
-
-/*This function counts how many arguments are in a line. For now, it works with
-the command exit.*/
 
 int	ft_wordcount_space(char const *str)
 {

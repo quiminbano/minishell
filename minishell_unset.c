@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_unset.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 16:42:40 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:42:17 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:58:44 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function copies back the information that it is in the temp 2D-array 
-without the removed enviroment variable.*/
 
 static void	ft_copy_back_after_unset(t_env *env, char **array, int i)
 {
@@ -30,12 +27,6 @@ static void	ft_copy_back_after_unset(t_env *env, char **array, int i)
 	}
 	ft_free_split(array);
 }
-
-/*This function removes an enviromental variable to the env->env 2D array.
-This function copies the env->env into a temporary 2D array (**array). 
-This temp 2D array is malloced with one less space than the original env->env 
-2D array. The reason of that is because, we need to skip of copying the variable
-we want to remove.*/
 
 void	ft_remove_variables(t_env *env, char *variable)
 {
@@ -65,9 +56,6 @@ void	ft_remove_variables(t_env *env, char *variable)
 	ft_copy_back_after_unset(&(*env), array, i);
 }
 
-/*This function checks if the arguments passed to the ft_unset_aux function
-are valid or not.*/
-
 static int	ft_check_unset_variable(char *variable)
 {
 	int		i;
@@ -83,9 +71,6 @@ static int	ft_check_unset_variable(char *variable)
 		return (1);
 	return (0);
 }
-
-/*This function is similar to ft_export_aux. So, it check if the arguments
-we pass are valid.*/
 
 static void	ft_unset_aux(char **array, int *i, t_env *env)
 {
@@ -111,9 +96,6 @@ static void	ft_unset_aux(char **array, int *i, t_env *env)
 	ft_remove_variables(&(*env), array[(*i)]);
 	(*i)++;
 }
-
-/*This function is similar to ft_export. The difference is that when we call
-unset without any variable, the programm does not do anything.*/
 
 int	ft_unset(t_env *env, char **array)
 {
