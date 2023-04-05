@@ -68,6 +68,7 @@ typedef struct s_env
 	int		is_inside_q;
 	int		is_inside_dq;
 	int		status;
+	char	*all_lines;
 }	t_env;
 
 typedef struct s_sp_arg
@@ -200,6 +201,7 @@ int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env, char *var_value, int var_len);
+void		here_doc(char *st, t_env *env);
 int			ft_process_reout(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);
