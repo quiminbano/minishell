@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_split_lexer.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 13:01:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/31 10:04:45 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:11:44 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ static size_t	ft_count_char(char const *str)
 static size_t	ft_strlen_char(char const *str, t_sp_arg *li)
 {
 	size_t	i;
-	int		flag;
 
 	i = 0;
-	flag = 0;
 	li->q = 0;
-	if (str[i] == 39)
-		i = ft_len_s_quot_lexer(str, i, &flag);
-	else if (str[i] == 34)
-		i = ft_len_d_quot_lexer(str, i, &flag);
-	while (flag == 0 && (str[i] != '\0' && check_char(str, i) == 0))
+	while (str[i] != '\0' && check_char(str, i) == 0)
 	{
-		li->t = 1;
-		if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
+		if (str[i] == 39)
+			i += ft_len_s_quot_lexer(str, i);
+		else if (str[i] == 34)
+			i += ft_len_d_quot_lexer(str, i);
+		else if (str[i] == '\\' && check_char(str, (i + 1)) == 1)
 		{
 			i += 2;
 			li->q += 1;
@@ -86,8 +83,12 @@ size_t	ft_strlcpy_lexer(char *d, char const *s, size_t size, t_sp_arg *li)
 	{
 		while ((li->i < (size - 1)) && s[li->i] != '\0')
 		{
-			if (li->t == 1 && (s[li->i] == '\\' && \
-				(check_char(s, (li->i + 1)) == 1)))
+			if (s[li->i] == 39 && ft_copy_s_qu_lex(&d, s, &(*li), size) == 0)
+				continue ;
+			else if (s[li->i] == 34 && \
+				ft_copy_d_qu_lex(&d, s, &(*li), size) == 0)
+				continue ;
+			if ((s[li->i] == '\\' && (check_char(s, (li->i + 1)) == 1)))
 				(li->i)++;
 			d[li->j] = s[li->i];
 			(li->i)++;

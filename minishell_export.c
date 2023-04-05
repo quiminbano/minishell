@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/23 17:38:31 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:49:08 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 /*This function updates and replaces the existing enviromental variable we
 want to change the value.*/
 
-static void	ft_check_already_exist_aux(t_env *env, char **ar, int i)
+static void	ft_check_already_exist_aux(t_env *env, char **ar, int i, char *va)
 {
-	env->env[i] = ft_strjoin_free(env->env[i], "=");
-	env->env[i] = ft_strjoin_free(env->env[i], ar[1]);
+	free(env->env[i]);
+	env->env[i] = ft_strdup(ar[0]);
+	if ((ar[1] != NULL) || ((ar[1] == NULL) && (va[ft_strlen(va) - 1] == '=')))
+	{
+		env->env[i] = ft_strjoin_free(env->env[i], "=");
+		if (ar[1] != NULL)
+			env->env[i] = ft_strjoin_free(env->env[i], ar[1]);
+	}
+	ft_free_split(ar);
 }
 
 /*This function checks if the variable we try to define with the export
@@ -38,7 +45,7 @@ static int	ft_check_already_exist(t_env *env, char *variable)
 		if ((ft_strncmp(env->env[i], ar[0], ft_strlen(ar[0])) == 0) && \
 			((env->env[i][ft_strlen(ar[0])] == '\0') || \
 			(env->env[i][ft_strlen(ar[0])] == '=')))
-				break ;
+			break ;
 		i++;
 	}
 	if (env->env[i] == NULL)
@@ -46,11 +53,7 @@ static int	ft_check_already_exist(t_env *env, char *variable)
 		ft_free_split(ar);
 		return (0);
 	}
-	free(env->env[i]);
-	env->env[i] = ft_strdup(ar[0]);
-	if (ar[1] != NULL)
-		ft_check_already_exist_aux(&(*env), ar, i);
-	ft_free_split(ar);
+	ft_check_already_exist_aux(&(*env), ar, i, variable);
 	return (1);
 }
 
@@ -67,6 +70,8 @@ void	ft_add_variables(t_env *env, char *variable)
 	char	**array;
 	int		i;
 
+	if (ft_check_plus(&(*env), variable) == 1)
+		return ;
 	if (ft_check_already_exist(&(*env), variable) == 1)
 		return ;
 	i = ft_array_len(env->env);
@@ -109,6 +114,7 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 		(*i)++;
 		return ;
 	}
+	check_and_process_d_quotes(&(array[(*i)]));
 	ft_add_variables(&(*env), array[(*i)]);
 	(*i)++;
 }

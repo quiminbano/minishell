@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 13:44:29 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:57:36 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 		if ((ft_strncmp("pwd\0", (array[0]), 4) == 0))
 			return (ft_pwd(env));
 		if ((ft_strncmp("cd\0", (array[0]), 3) == 0))
-			return(ft_cd(array, &(*env)));
+			return (ft_cd(array, &(*env)));
 		if ((ft_strncmp("env\0", (array[0]), 4) == 0))
-			return(ft_env(&(*env), array));
+			return (ft_env(&(*env), array));
 		if ((ft_strncmp("export\0", (array[0]), 7) == 0))
-			return(ft_export(&(*env), array));
+			return (ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
-			return(ft_unset(&(*env), array));
+			return (ft_unset(&(*env), array));
 		return (ft_run_single_command(array, &(*env)));
 	}
 	ft_free_split(array);
@@ -49,11 +49,16 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	arg->i = 0;
 	close(arg->fdin_pipe);
 	close(arg->fdout_pipe);
-	while (arg->pid[arg->i] != 0)
+	while ((arg->wait) > 0 && arg->pid[arg->i] != 0)
 	{
-		waitpid(arg->pid[((arg->i))], &(env->status), 0);
-		if (arg->pid[(arg->i)] != -1)
-			env->exit_stts = WEXITSTATUS(env->status);
+		if (arg->pid[(arg->i) + 1] == 0)
+		{
+			waitpid(arg->pid[((arg->i))], &(env->status), 0);
+			if (arg->pid[(arg->i)] != -1)
+				env->exit_stts = WEXITSTATUS(env->status);
+		}
+		else
+			waitpid(arg->pid[((arg->i))], &(env->status), 0);
 		(arg->i) += 1;
 	}
 	ft_free_split(ar);
@@ -73,14 +78,12 @@ static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 	t_m_arg	arg;
 
 	arg.lexe = (*le);
-	arg.lex_f = 0;
-	if (arg.lexe->token == 0)
-		arg.lex_f = 1;
 	if (arg.lexe->token == 0)
 		arg.lexe = arg.lexe->next;
 	arg.i = 0;
 	arg.tmpin = dup(STDIN_FILENO);
 	arg.tmpout = dup(STDOUT_FILENO);
+	arg.wait = 0;
 	if (arg.lexe != NULL && ((arg.lexe->token == 2) || \
 		(arg.lexe->token == 4) || (arg.lexe->token == 5)))
 		arg.fdin = dup(arg.tmpin);
@@ -98,6 +101,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 	int	i;
 
 	i = 0;
+	ar = ft_process_lexer(ar, (*(env->str)));
 	while (ar[i] != NULL)
 	{
 		if (i >= 1)
@@ -122,28 +126,28 @@ to be valid.*/
 int	ft_line_checker(char *st, int *ret, t_env *env)
 {
 	t_lexer	*lex;
-	char	**args;
 
 	lex = NULL;
-	args = NULL;
+	env->args = NULL;
 	env->new_str = ft_strdup("");
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
 	if (st == (void *)0)
-		return(handle_ctrlD(st, env));
+		return (handle_ctrlD(st, env));
 	if (catch_errors(st, env) == 1)
 		return (3);
 	ft_tokens_recognition(st, &lex);
-	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)
+	if (lex != NULL && size_lex(&lex) == 1 && lex->token == 0)
 	{
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
 	}
-else if (lex != NULL)
+	else if (lex != NULL)
 	{
-		args = ft_split_lexer(st);
-		args = ft_process_lexer(args, st);
-		return (ft_replace_dol_multi(args, &(*ret), &(*env), &lex));
+		env->args = ft_split_lexer(st);
+		if (catch_empty(env->args, &lex, st) == 1)
+			return (3);
+		return (ft_replace_dol_multi(env->args, &(*ret), &(*env), &lex));
 	}
 	return (3);
 }

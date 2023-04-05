@@ -1,69 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_unset.c                                  :+:      :+:    :+:   */
+/*   minishell_unset_mult.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/16 16:42:40 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:42:17 by corellan         ###   ########.fr       */
+/*   Created: 2023/04/03 16:00:13 by corellan          #+#    #+#             */
+/*   Updated: 2023/04/03 17:55:29 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*This function copies back the information that it is in the temp 2D-array 
-without the removed enviroment variable.*/
-
-static void	ft_copy_back_after_unset(t_env *env, char **array, int i)
-{
-	ft_free_split(env->env);
-	env->env = (char **)malloc(sizeof(char *) * (i + 1));
-	if (env->env == NULL)
-		return ;
-	env->env[i] = NULL;
-	i = 0;
-	while (array[i] != NULL)
-	{
-		env->env[i] = ft_strdup(array[i]);
-		i++;
-	}
-	ft_free_split(array);
-}
-
-/*This function removes an enviromental variable to the env->env 2D array.
-This function copies the env->env into a temporary 2D array (**array). 
-This temp 2D array is malloced with one less space than the original env->env 
-2D array. The reason of that is because, we need to skip of copying the variable
-we want to remove.*/
-
-void	ft_remove_variables(t_env *env, char *variable)
-{
-	char	**array;
-	int		i;
-	int		j;
-	int		k;
-
-	i = ft_array_len(env->env);
-	j = 0;
-	if (ft_find_word_array(env->env, variable) == i)
-		return ;
-	k = ft_find_word_array(env->env, variable);
-	array = (char **)malloc(sizeof(char *) * (i));
-	if (array == NULL)
-		return ;
-	array[i - 1] = NULL;
-	i = 0;
-	while (env->env[j] != NULL)
-	{
-		array[i] = ft_strdup(env->env[j]);
-		j++;
-		i++;
-		if (j == k)
-			j++;
-	}
-	ft_copy_back_after_unset(&(*env), array, i);
-}
 
 /*This function checks if the arguments passed to the ft_unset_aux function
 are valid or not.*/
@@ -87,7 +34,7 @@ static int	ft_check_unset_variable(char *variable)
 /*This function is similar to ft_export_aux. So, it check if the arguments
 we pass are valid.*/
 
-static void	ft_unset_aux(char **array, int *i, t_env *env)
+static void	ft_unset_m_aux(char **array, int *i, t_env *env)
 {
 	if ((ft_wordcount_space(array[(*i)]) > 1) || ((array[(*i)][0] > 47) && \
 		(array[(*i)][0] < 58)))
@@ -108,14 +55,13 @@ static void	ft_unset_aux(char **array, int *i, t_env *env)
 		(*i)++;
 		return ;
 	}
-	ft_remove_variables(&(*env), array[(*i)]);
 	(*i)++;
 }
 
-/*This function is similar to ft_export. The difference is that when we call
+/*This function is similar to ft_unset. The difference is that when we call
 unset without any variable, the programm does not do anything.*/
 
-int	ft_unset(t_env *env, char **array)
+int	ft_unset_mult(t_env *env, char **array)
 {
 	int	i;
 
@@ -136,7 +82,7 @@ int	ft_unset(t_env *env, char **array)
 	else
 	{
 		while (array[i] != NULL)
-			ft_unset_aux(array, &i, &(*env));
+			ft_unset_m_aux(array, &i, &(*env));
 	}
 	if (array != NULL)
 		ft_free_split(array);

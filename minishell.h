@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 16:26:53 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:55:44 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_lex_i
 {
 	int		i;
 	int		j;
-	int 	k;
+	int		k;
 	int		fl;
 	t_lexer	*le;
 }	t_lex_i;
@@ -54,6 +54,9 @@ typedef struct s_lex_i
 typedef struct s_env
 {
 	char	**env;
+	char	**str;
+	char	**args;
+	char	**arr;
 	char	oldpwd[BUFFER];
 	char	newpwd[BUFFER];
 	int		level;
@@ -64,7 +67,7 @@ typedef struct s_env
 	int		is_inside;
 	int		is_inside_q;
 	int		is_inside_dq;
-  	int		status;
+	int		status;
 	char	*all_lines;
 }	t_env;
 
@@ -88,17 +91,17 @@ typedef struct s_args
 typedef struct s_export
 {
 	int				index;
-	struct s_export *next;
+	struct s_export	*next;
 }	t_export;
 
 typedef struct s_m_arg
 {
-	int		fd[2];
+	int		fd[RE_OUT];
 	t_lexer	*lexe;
 	int		i;
 	int		idx;
 	int		n_redir;
-	int		lex_f;
+	int		lex_size;
 	int		len;
 	int		tmpin;
 	int		tmpout;
@@ -110,12 +113,13 @@ typedef struct s_m_arg
 	int		flag_in;
 	int		flag_out;
 	int		flag_err;
+	int		wait;
 	pid_t	pid[BUFFER];
 }	t_m_arg;
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-int 		handle_ctrlD(char *str, t_env *env);
+int			handle_ctrlD(char *str, t_env *env);
 void		collect_args(char *st, t_env *env);
 void		handle_exlamation(t_env *env, char *st, int i);
 char		*ft_strjoin_c(char *s1, char const c);
@@ -162,19 +166,24 @@ void		ft_sort_and_print_strings(char **array);
 void		ft_putstr_export(char *st, int fd);
 int			ft_check_first_variable(char *variable);
 void		ft_print_list_export(t_export **a);
+void		check_and_process_d_quotes(char	**variable);
+int			ft_check_plus(t_env *env, char *variable);
+char		*ft_strdup_export(char const *src);
 int			ft_unset(t_env *env, char **array);
+int			ft_unset_mult(t_env *env, char **array);
 char		*is_var_available(char *substr, t_env *env);
 int			ft_check_s_quot_lexer(char const *str, int *i);
 int			ft_check_d_quot_lexer(char const *str, int *i);
-size_t		ft_len_s_quot_lexer(char const *s, int i, int *flag);
-size_t		ft_len_d_quot_lexer(char const *s, int i, int *flag);
+size_t		ft_len_s_quot_lexer(char const *s, int i);
+size_t		ft_len_d_quot_lexer(char const *s, int i);
 void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
-int			ft_listsize_lexer(t_lexer **lst);
+int			size_lex(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
 int			ft_c_redic_in_a_row(t_lexer **a);
+t_lexer		*ft_lexlast(t_lexer **lst);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
-int 		ft_run_single_command(char **cmd, t_env *env);
+int			ft_run_single_command(char **cmd, t_env *env);
 int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
@@ -184,12 +193,21 @@ int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
 void		ft_do_redirections(char **ar, t_m_arg *arg);
 void		ft_redirections_input(char **ar, t_m_arg *arg);
 void		ft_redirections_output(char **ar, t_m_arg *arg);
+void		ft_reredirect_input(char **ar, t_m_arg *arg);
 void		ft_redirect_out_append(char **ar, t_m_arg *arg);
 int			catch_errors(char *st, t_env *env);
+int			catch_empty(char **arr, t_lexer **lex, char *st);
 int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
-void		replace_var_val(t_env *env,  char *var_value, int var_len);
+void		replace_var_val(t_env *env, char *var_value, int var_len);
 void		here_doc(char *st, t_env *env);
+int			ft_process_reout(t_m_arg *arg);
+int			ft_exit_check_m1(char **array, int *ret, t_env *env);
+int			ft_exit_check_m2(char **array, int *ret, t_env *env);
+int			ft_export_mult(t_env *env, char **array);
+int			ft_unset_mult(t_env *env, char **array);
+int			ft_copy_d_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
+int			ft_copy_s_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
 
 #endif

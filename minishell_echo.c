@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 13:07:14 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:06:32 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ third word as a first word.*/
 
 static void	ft_echo_aux(char **array, int i)
 {
-	if (ft_second_arg_echo_check(array[1]) < (int)ft_strlen(array[1]))
-	{
-		write(1, array[1], ft_strlen(array[1]));
-		write(1, " ", 1);
-	}
+	while (ft_second_arg_echo_check(array[i]) == (int)ft_strlen(array[i]))
+		i++;
 	while (array[i] != NULL)
 	{
 		write(1, array[i], ft_strlen(array[i]));
@@ -59,7 +56,7 @@ int	ft_echo(char **array, t_env *env)
 {
 	int	i;
 
-	i = 2;
+	i = 1;
 	env->exit_stts = 0;
 	if (array[1] == NULL)
 	{

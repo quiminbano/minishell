@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 10:39:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:58:28 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 		{
 			free(path);
 			ft_free_split(cmd);
-			perror("minishell");
-			exit(EXIT_FAILURE);
+			write(STDERR_FILENO, "minishell: : command not found\n", 31);
+			exit (127);
 		}
 	}
 	free(path);
@@ -37,7 +37,7 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 	return (3);
 }
 
-static int ft_run_multiple_commands(char **cmd, t_env *env, pid_t *pid)
+static int	run_mult_com(char **cmd, t_env *env, pid_t *pid)
 {
 	char	*path;
 	int		flag;
@@ -48,63 +48,53 @@ static int ft_run_multiple_commands(char **cmd, t_env *env, pid_t *pid)
 	return (ft_run_m_comman_aux(cmd, &(*env), path, &(*pid)));
 }
 
+static int	ft_handle_spe_cases(int *ret, t_env *env, t_m_arg *arg)
+{
+	arg->pid[arg->wait] = -1;
+	arg->pid[(arg->wait) + 1] = 0;
+	(arg->wait) += 1;
+	if (arg->lex_size == arg->n_redir && arg->i == 0)
+	{
+		if (ft_strncmp("exit\0", (env->arr[0]), 5) == 0)
+			return (ft_exit_check_m2(env->arr, &(*ret), &(*env)));
+		if ((ft_strncmp("export\0", (env->arr[0]), 7) == 0))
+			return (ft_export(&(*env), env->arr));
+		if ((ft_strncmp("unset\0", (env->arr[0]), 6) == 0))
+			return (ft_unset(&(*env), env->arr));
+		if ((ft_strncmp("cd\0", (env->arr[0]), 3) == 0))
+			return (ft_cd(env->arr, &(*env)));
+	}
+	return (-1);
+}
+
 /*This function process the multi argument*/
 
 static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 {
-	char	**array;
-
-	array = ft_custom_split(ar);
-	array = ft_process_arg(array, ar);
-	if (array[0] != NULL)
+	env->arr = ft_custom_split(ar);
+	env->arr = ft_process_arg(env->arr, ar);
+	if (env->arr[0] != NULL)
 	{
-		if (ft_strncmp("exit\0", (array[0]), 5) == 0)
-			return (ft_exit_check(array, ar, &(*ret), &(*env)));
-		if (ft_strncmp("echo\0", (array[0]), 5) == 0)
-			return (ft_echo(array, env));
-		if ((ft_strncmp("pwd\0", (array[0]), 4) == 0))
-			return (ft_pwd(env));
-		if ((ft_strncmp("cd\0", (array[0]), 3) == 0))
-			return(ft_cd(array, &(*env)));
-		if ((ft_strncmp("env\0", (array[0]), 4) == 0))
-			return(ft_env(&(*env), array));
-		if ((ft_strncmp("export\0", (array[0]), 7) == 0))
-			return(ft_export(&(*env), array));
-		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
-			return(ft_unset(&(*env), array));
-		return (ft_run_multiple_commands(array, &(*env), &arg->pid[arg->i]));
-	}
-	ft_free_split(array);
-	return (3);
-}
-
-static int ft_process_reout(t_m_arg *arg)
-{
-	if (arg->lexe != NULL && arg->lexe->token == 5)
-	{
-		if (pipe(arg->fd) == -1)
-		{
-			perror("minishell");
-			(arg->i) = arg->len;
+		if (ft_handle_spe_cases(&(*ret), &(*env), &(*arg)) != -1)
 			return (3);
-		}
-		arg->fdout_pipe = arg->fd[1];
-		arg->fdin_pipe = arg->fd[0];
-		arg->lexe = arg->lexe->next;
+		if (ft_strncmp("exit\0", (env->arr[0]), 5) == 0)
+			return (ft_exit_check_m1(env->arr, &(*ret), &(*env)));
+		if (ft_strncmp("echo\0", (env->arr[0]), 5) == 0)
+			return (ft_echo(env->arr, env));
+		if ((ft_strncmp("pwd\0", (env->arr[0]), 4) == 0))
+			return (ft_pwd(env));
+		if ((ft_strncmp("cd\0", (env->arr[0]), 3) == 0))
+			return (3);
+		if ((ft_strncmp("env\0", (env->arr[0]), 4) == 0))
+			return (ft_env(&(*env), env->arr));
+		if ((ft_strncmp("export\0", (env->arr[0]), 7) == 0))
+			return (ft_export_mult(&(*env), env->arr));
+		if ((ft_strncmp("unset\0", (env->arr[0]), 6) == 0))
+			return (ft_unset_mult(&(*env), env->arr));
+		return (run_mult_com(env->arr, &(*env), &arg->pid[(arg->wait) - 1]));
 	}
-	if (arg->flag_out == 1 || arg->flag_end == 1)
-	{
-		write(arg->fdout_pipe, "\0", 1);
-		close(arg->fdout_pipe);
-		dup2(arg->fdout, STDOUT_FILENO);
-		close(arg->fdout);
-	}
-	else
-	{
-		dup2(arg->fdout_pipe, STDOUT_FILENO);
-		close(arg->fdout_pipe);
-	}
-	return (0);
+	ft_free_split(env->arr);
+	return (3);
 }
 
 int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)

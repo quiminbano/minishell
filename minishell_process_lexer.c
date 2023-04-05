@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 15:14:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/02 18:59:42 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 10:10:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	ft_work_in_args_lexer(char **ar, char **te, int tok, t_lex_i *idx)
 	if ((idx->le != NULL) && (idx->le->next != NULL) && \
 		(idx->le->i_split == idx->le->next->i_split))
 		te[(idx->i)] = ft_strdup("");
-	else if ((ft_wordcount_space(ar[idx->j]) > 1) && (tok > 0 && tok < 5))
+	else if ((ft_wordcount_space(ar[idx->j]) > 1) && ((tok > 0 && tok < 5) || \
+		(tok == 6)))
 	{
 		sp = ft_count_space(ar[idx->j]);
 		l_sstr = ft_strlen_w_space(ar[idx->j] + sp);
@@ -100,7 +101,7 @@ char	**ft_process_lexer(char **arg, char *str)
 	lex = NULL;
 	flag = 0;
 	ft_tokens_recognition(str, &lex);
-	len = ft_listsize_lexer(&lex);
+	len = size_lex(&lex);
 	if (lex != NULL && lex->token != 0)
 	{
 		flag = 1;

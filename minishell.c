@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 13:49:31 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 10:31:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ static int	ft_start(char **environ)
 	return (0);
 }
 
+static int	ft_setup_everything(int ac, char **av, char **envp, t_env *env)
+{
+	env->exit_stts = 0;
+	if (av[0] != NULL)
+		ac = 0;
+	env->flag = 0;
+	env->set_f = 0;
+	ft_copy_env(&(*env), envp);
+	if (ft_start(env->env) == 1)
+		return (1);
+	return (0);
+}
+
 /*This function initialize the shell and initialize the while loop to write
 text until the user decides to exit the program. This text is gathered through
 the readline function and this function prints the prompt minishell$ everytime
@@ -55,18 +68,13 @@ int	main(int ac, char **av, char **envp)
 	int		ret;
 	t_env	env;
 
-	env.exit_stts = 0;
-	if (av[0] != NULL)
-		ac = 0;
-	env.flag = 0;
-	env.set_f = 0;
-	ft_copy_env(&env, envp);
-	if (ft_start(env.env) == 1)
+	if (ft_setup_everything(ac, av, envp, &env) == 1)
 		return (1);
 	while (1)
 	{
 		handle_shortcuts();
 		str = readline("minishell$ ");
+		env.str = &str;
 		ac = ft_line_checker(str, &(ret), &env);
 		if (ac == 0)
 			return (0);

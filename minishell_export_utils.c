@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/17 17:08:35 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:48:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_putstr_export(char *st, int fd)
 		}
 		i++;
 		if (st[i] == '\0' && flag == 1)
-			write(fd, "\"", 1);		
+			write(fd, "\"", 1);
 	}
 	write(fd, "\n", 1);
 }
@@ -155,6 +155,9 @@ int	ft_check_first_variable(char *variable)
 	while ((array[0][i] > 47 && array[0][i] < 58) || \
 		(array[0][i] > 64 && array[0][i] < 91) || \
 		(array[0][i] > 96 && array[0][i] < 123) || (array[0][i] == 95))
+		i++;
+	if ((array[0][ft_strlen(array[0]) - 1] == '+') && \
+		(variable[ft_strlen(array[0])] == '='))
 		i++;
 	if (i < (int)ft_strlen(array[0]))
 	{
