@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:19:39 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:57:36 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 		if ((ft_strncmp("pwd\0", (array[0]), 4) == 0))
 			return (ft_pwd(env));
 		if ((ft_strncmp("cd\0", (array[0]), 3) == 0))
-			return(ft_cd(array, &(*env)));
+			return (ft_cd(array, &(*env)));
 		if ((ft_strncmp("env\0", (array[0]), 4) == 0))
-			return(ft_env(&(*env), array));
+			return (ft_env(&(*env), array));
 		if ((ft_strncmp("export\0", (array[0]), 7) == 0))
-			return(ft_export(&(*env), array));
+			return (ft_export(&(*env), array));
 		if ((ft_strncmp("unset\0", (array[0]), 6) == 0))
-			return(ft_unset(&(*env), array));
+			return (ft_unset(&(*env), array));
 		return (ft_run_single_command(array, &(*env)));
 	}
 	ft_free_split(array);
@@ -133,7 +133,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	if (st != NULL && ft_strlen(st) > 0)
 		add_history(st);
 	if (st == (void *)0)
-		return(handle_ctrlD(st, env));
+		return (handle_ctrlD(st, env));
 	if (catch_errors(st, env) == 1)
 		return (3);
 	ft_tokens_recognition(st, &lex);

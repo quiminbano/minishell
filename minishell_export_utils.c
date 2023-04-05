@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:31:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 13:19:54 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:48:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_putstr_export(char *st, int fd)
 		}
 		i++;
 		if (st[i] == '\0' && flag == 1)
-			write(fd, "\"", 1);		
+			write(fd, "\"", 1);
 	}
 	write(fd, "\n", 1);
 }

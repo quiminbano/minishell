@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 11:56:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:43:48 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*ft_find_path_aux(char **cmd, t_env *env, int *flag, char **array)
 	char	*path;
 	int		i;
 
-	path = NULL;	
+	path = NULL;
 	i = ft_find_word_array(env->env, "PATH=");
 	if (i < ft_array_len(env->env))
 		array = ft_split(env->env[i] + 5, ':');
@@ -109,7 +109,7 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 	return (3);
 }
 
-int ft_run_single_command(char **cmd, t_env *env)
+int	ft_run_single_command(char **cmd, t_env *env)
 {
 	pid_t	pid;
 	char	*path;

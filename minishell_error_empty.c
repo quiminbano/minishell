@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:29:01 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:21:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:51:24 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	print_error_middle(int token, char **arr, char **tempo)
 
 static int	catch_empty_aux(char **arr, t_lexer **lex, char *st)
 {
-	int 	i;
+	int		i;
 	char	**tempo;
 	t_lexer	*temp;
 
@@ -65,7 +65,7 @@ static void	print_error_last(int token)
 {
 	if (token == 5)
 	{
-		write(STDERR_FILENO,"\nNOT SUPPORTED.\n", 16);
+		write(STDERR_FILENO, "\nNOT SUPPORTED.\n", 16);
 		write(STDERR_FILENO, "Please upgrade to premium version.\n\n", 36);
 		return ;
 	}

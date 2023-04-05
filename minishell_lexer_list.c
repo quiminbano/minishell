@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:06:30 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 10:59:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:47:19 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_add_to_list_lexer(t_lexer **begin, int num, int index)
 
 int	size_lex(t_lexer **lst)
 {
-	int			i;
+	int		i;
 	t_lexer	*temp;
 
 	i = 0;

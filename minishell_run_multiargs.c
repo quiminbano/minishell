@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 16:16:20 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:58:28 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 	return (3);
 }
 
-static int run_mult_com(char **cmd, t_env *env, pid_t *pid)
+static int	run_mult_com(char **cmd, t_env *env, pid_t *pid)
 {
 	char	*path;
 	int		flag;
@@ -58,11 +58,11 @@ static int	ft_handle_spe_cases(int *ret, t_env *env, t_m_arg *arg)
 		if (ft_strncmp("exit\0", (env->arr[0]), 5) == 0)
 			return (ft_exit_check_m2(env->arr, &(*ret), &(*env)));
 		if ((ft_strncmp("export\0", (env->arr[0]), 7) == 0))
-			return(ft_export(&(*env), env->arr));
+			return (ft_export(&(*env), env->arr));
 		if ((ft_strncmp("unset\0", (env->arr[0]), 6) == 0))
-			return(ft_unset(&(*env), env->arr));
+			return (ft_unset(&(*env), env->arr));
 		if ((ft_strncmp("cd\0", (env->arr[0]), 3) == 0))
-			return(ft_cd(env->arr, &(*env)));
+			return (ft_cd(env->arr, &(*env)));
 	}
 	return (-1);
 }
@@ -84,13 +84,13 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 		if ((ft_strncmp("pwd\0", (env->arr[0]), 4) == 0))
 			return (ft_pwd(env));
 		if ((ft_strncmp("cd\0", (env->arr[0]), 3) == 0))
-			return(3);
+			return (3);
 		if ((ft_strncmp("env\0", (env->arr[0]), 4) == 0))
-			return(ft_env(&(*env), env->arr));
+			return (ft_env(&(*env), env->arr));
 		if ((ft_strncmp("export\0", (env->arr[0]), 7) == 0))
-			return(ft_export_mult(&(*env), env->arr));
+			return (ft_export_mult(&(*env), env->arr));
 		if ((ft_strncmp("unset\0", (env->arr[0]), 6) == 0))
-			return(ft_unset_mult(&(*env), env->arr));
+			return (ft_unset_mult(&(*env), env->arr));
 		return (run_mult_com(env->arr, &(*env), &arg->pid[(arg->wait) - 1]));
 	}
 	ft_free_split(env->arr);

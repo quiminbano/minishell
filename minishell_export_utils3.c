@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:39:33 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 15:49:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:47:48 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	check_already_exist_plus(t_env *env, char *variable)
 		if ((ft_strncmp(env->env[i], ar2[0], ft_strlen(ar2[0])) == 0) && \
 			((env->env[i][ft_strlen(ar2[0])] == '\0') || \
 			(env->env[i][ft_strlen(ar2[0])] == '=')))
-				break ;
+			break ;
 		i++;
 	}
 	if (env->env[i] == NULL)

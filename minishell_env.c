@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:14:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/03/20 14:14:05 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/05 13:23:47 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ void	ft_copy_env(t_env *env, char **envp)
 	ft_copy_env_aux(&(*env), i);
 }
 
+static int	ft_print_env_error(char **array, t_env *env)
+{
+	env->exit_stts = 127;
+	write(STDERR_FILENO, "env: ", 5);
+	write(STDERR_FILENO, array[1], ft_strlen(array[1]));
+	write(STDERR_FILENO, ": No such file or directory\n", 28);
+	ft_free_split(array);
+	return (3);
+}
+
 /*This function prints the enviroment variables that have a defined value in
 the env 2D array. We can know if an eviromental variable has a value if the
 equal character (=) is present in the string. Also, we need to print the
@@ -103,19 +113,12 @@ int	ft_env(t_env *env, char **array)
 	i = ft_array_len(array);
 	env->exit_stts = 0;
 	if (i > 1)
-	{
-		env->exit_stts = 127;
-		write(STDERR_FILENO, "env: ", 5);
-		write(STDERR_FILENO, array[1], ft_strlen(array[1]));
-		write(STDERR_FILENO, ": No such file or directory\n", 28);
-		ft_free_split(array);
-		return (3);
-	}
+		return (ft_print_env_error(array, &(*env)));
 	while (env->env[i] != NULL)
 	{
-		if(ft_strchr(env->env[i], '=') != NULL)
+		if (ft_strchr(env->env[i], '=') != NULL)
 		{
-			if(ft_strncmp("_=", env->env[i], 2) == 0)
+			if (ft_strncmp("_=", env->env[i], 2) == 0)
 				printf("_=/usr/bin/env\n");
 			else
 				printf("%s\n", env->env[i]);

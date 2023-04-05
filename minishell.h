@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:19:16 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:55:44 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_lex_i
 {
 	int		i;
 	int		j;
-	int 	k;
+	int		k;
 	int		fl;
 	t_lexer	*le;
 }	t_lex_i;
@@ -90,7 +90,7 @@ typedef struct s_args
 typedef struct s_export
 {
 	int				index;
-	struct s_export *next;
+	struct s_export	*next;
 }	t_export;
 
 typedef struct s_m_arg
@@ -118,7 +118,7 @@ typedef struct s_m_arg
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
-int 		handle_ctrlD(char *str, t_env *env);
+int			handle_ctrlD(char *str, t_env *env);
 void		collect_args(char *st, t_env *env);
 void		handle_exlamation(t_env *env, char *st, int i);
 char		*ft_strjoin_c(char *s1, char const c);
@@ -182,7 +182,7 @@ void		ft_print_list_lexer(t_lexer **a);
 int			ft_c_redic_in_a_row(t_lexer **a);
 t_lexer		*ft_lexlast(t_lexer **lst);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
-int 		ft_run_single_command(char **cmd, t_env *env);
+int			ft_run_single_command(char **cmd, t_env *env);
 int			ft_print_error_command(char **cmd, t_env *env, int flag);
 char		**ft_split_lexer(char const *s);
 char		**ft_process_lexer(char **arg, char *str);
@@ -199,8 +199,8 @@ int			catch_empty(char **arr, t_lexer **lex, char *st);
 int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
-void		replace_var_val(t_env *env,  char *var_value, int var_len);
-int 		ft_process_reout(t_m_arg *arg);
+void		replace_var_val(t_env *env, char *var_value, int var_len);
+int			ft_process_reout(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);
 int			ft_export_mult(t_env *env, char **array);

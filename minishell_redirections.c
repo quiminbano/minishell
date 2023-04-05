@@ -6,13 +6,13 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 11:17:12 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 10:11:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:46:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void incorrect_redirect_aux(t_m_arg *arg)
+static void	incorrect_redirect_aux(t_m_arg *arg)
 {
 	int	fd[RE_OUT];
 
@@ -53,7 +53,7 @@ static void	ft_incorrect_redirect(char **ar, t_m_arg *arg)
 	}
 }
 
-int ft_process_reout(t_m_arg *arg)
+int	ft_process_reout(t_m_arg *arg)
 {
 	if (arg->lexe != NULL && arg->lexe->token == 5)
 	{
