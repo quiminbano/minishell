@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/04 17:44:42 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/05 10:58:25 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ minishell_run_multiargs.c minishell_redirections.c \
 minishell_split_lexer_utils2.c minishell_redirections_in.c \
 minishell_redirections_out.c minishell_error_printing.c \
 minishell_export_utils2.c minishell_exit_mult.c minishell_exit_mult2.c \
-minishell_export_mult.c minishell_unset_mult.c minishell_export_utils3.c
+minishell_export_mult.c minishell_unset_mult.c minishell_export_utils3.c \
+minishell_error_empty.c minishell_lexer_list2.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -42,7 +43,8 @@ minishell_run_multiargs.o minishell_redirections.o \
 minishell_split_lexer_utils2.o minishell_redirections_in.o \
 minishell_redirections_out.o minishell_error_printing.o \
 minishell_export_utils2.o minishell_exit_mult.o minishell_exit_mult2.o \
-minishell_export_mult.o minishell_unset_mult.o minishell_export_utils3.o
+minishell_export_mult.o minishell_unset_mult.o minishell_export_utils3.o \
+minishell_error_empty.o minishell_lexer_list2.o
 
 LIBFT = -Llibft -lft
 

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 17:44:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 10:31:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ int	main(int ac, char **av, char **envp)
 
 	if (ft_setup_everything(ac, av, envp, &env) == 1)
 		return (1);
-	env.str = &str;
 	while (1)
 	{
 		handle_shortcuts();
 		str = readline("minishell$ ");
+		env.str = &str;
 		ac = ft_line_checker(str, &(ret), &env);
 		if (ac == 0)
 			return (0);

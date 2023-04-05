@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 17:37:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:19:39 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 	int	i;
 
 	i = 0;
+	ar = ft_process_lexer(ar, (*(env->str)));
 	while (ar[i] != NULL)
 	{
 		if (i >= 1)
@@ -136,7 +137,7 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	if (catch_errors(st, env) == 1)
 		return (3);
 	ft_tokens_recognition(st, &lex);
-	if (lex != NULL && ft_listsize_lexer(&lex) == 1 && lex->token == 0)
+	if (lex != NULL && size_lex(&lex) == 1 && lex->token == 0)
 	{
 		ft_free_list_lexer(&lex);
 		return (ft_process_single_cmd(st, &(*ret), &(*env)));
@@ -144,7 +145,8 @@ int	ft_line_checker(char *st, int *ret, t_env *env)
 	else if (lex != NULL)
 	{
 		env->args = ft_split_lexer(st);
-		env->args = ft_process_lexer(env->args, st);
+		if (catch_empty(env->args, &lex, st) == 1)
+			return (3);
 		return (ft_replace_dol_multi(env->args, &(*ret), &(*env), &lex));
 	}
 	return (3);

@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   minishell_lexer_list2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 12:33:38 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 10:44:07 by corellan         ###   ########.fr       */
+/*   Created: 2023/04/05 10:40:27 by corellan          #+#    #+#             */
+/*   Updated: 2023/04/05 11:01:12 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+int	ft_c_redic_in_a_row(t_lexer **a)
 {
-	t_list	*temp;
+	t_lexer	*temp;
+	int		i;
 
-	temp = lst;
-	if (lst == (void *)0)
-		return ((void *)0);
-	while (temp->next != (void *)0)
+	i = 0;
+	temp = (*a);
+	while (temp != NULL && ((temp->token > 0 && temp->token < 5) || \
+		(temp->token == 6)))
+	{
+		i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+t_lexer	*ft_lexlast(t_lexer **lst)
+{
+	t_lexer	*temp;
+
+	temp = *lst;
+	if (lst == NULL || *lst == NULL)
+		return (NULL);
+	while (temp->next != NULL)
 		temp = temp->next;
 	return (temp);
 }

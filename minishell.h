@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 17:32:08 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 12:19:16 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_export
 
 typedef struct s_m_arg
 {
-	int		fd[2];
+	int		fd[RE_OUT];
 	t_lexer	*lexe;
 	int		i;
 	int		idx;
@@ -177,9 +177,10 @@ size_t		ft_len_s_quot_lexer(char const *s, int i);
 size_t		ft_len_d_quot_lexer(char const *s, int i);
 void		ft_free_list_lexer(t_lexer **lst);
 void		ft_add_to_list_lexer(t_lexer **begin, int num, int index);
-int			ft_listsize_lexer(t_lexer **lst);
+int			size_lex(t_lexer **lst);
 void		ft_print_list_lexer(t_lexer **a);
 int			ft_c_redic_in_a_row(t_lexer **a);
+t_lexer		*ft_lexlast(t_lexer **lst);
 void		ft_tokens_recognition(char const *str, t_lexer **lex);
 int 		ft_run_single_command(char **cmd, t_env *env);
 int			ft_print_error_command(char **cmd, t_env *env, int flag);
@@ -191,8 +192,10 @@ int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
 void		ft_do_redirections(char **ar, t_m_arg *arg);
 void		ft_redirections_input(char **ar, t_m_arg *arg);
 void		ft_redirections_output(char **ar, t_m_arg *arg);
+void		ft_reredirect_input(char **ar, t_m_arg *arg);
 void		ft_redirect_out_append(char **ar, t_m_arg *arg);
 int			catch_errors(char *st, t_env *env);
+int			catch_empty(char **arr, t_lexer **lex, char *st);
 int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);

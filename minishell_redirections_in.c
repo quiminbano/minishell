@@ -6,11 +6,35 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:14:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 10:15:27 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 09:48:59 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_reredirect_input(char **ar, t_m_arg *arg)
+{
+	char	**temp;
+	int		fd[RE_OUT];
+
+	temp = NULL;
+	if (arg->lexe->token == 3 && arg->flag_err == 0)
+	{
+		if (arg->flag_in == 1)
+			close(arg->fdin);
+		if (pipe(fd) == -1)
+		{
+			arg->flag_err = 1;
+			perror("minishell");
+			return ;
+		}
+		write(fd[1], ar[(arg->i) + arg->idx + 1], \
+			ft_strlen(ar[(arg->i) + arg->idx + 1]));
+		close(fd[1]);
+		arg->fdin = fd[0];
+		arg->flag_in = 1;
+	}
+}
 
 void	ft_redirections_input(char **ar, t_m_arg *arg)
 {
