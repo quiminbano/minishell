@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/05 14:40:05 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/05 16:18:29 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ minishell_error_empty.o minishell_lexer_list2.o here_doc.o minishell_argc2.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -static-libsan -g
+FLAGS = -Wall -Wextra -Werror
 
 RL_L = -lreadline -L ~/.brew/opt/readline/lib
 

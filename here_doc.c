@@ -6,13 +6,11 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:41:04 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 14:39:27 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:21:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_should_process = 1;
 
 static void handle_sig(int sig)
 {
@@ -37,11 +35,12 @@ static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 		{
 			if (!line_str)
 				printf("\033[1A\033[2C");
+			free(line_str);
 			break ;
 		}
 		if (!g_should_process)
 		{
-			g_should_process = 1;
+			free(line_str);
 			break ;
 		}
 		env->all_lines = ft_strjoin_free(env->all_lines, line_str);
@@ -53,14 +52,14 @@ static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 void here_doc(char **st, t_env *env)
 {	
 	char	*line_str;
-	int		i;
-	int		sp;
+	char	**temp;
 
-	i = 0;
 	line_str = NULL;
+	temp = ft_custom_split((*st));
+	temp = ft_process_arg(temp, (*st));
 	env->all_lines = ft_strdup("");
-	sp = ft_count_space((*st));
-	h_doc_helper(env, ((*st) + sp), line_str);
+	h_doc_helper(env, temp[0], line_str);
+	ft_free_split(temp);
 	free((*st));
 	(*st) = ft_strdup(env->all_lines);
 	free(env->all_lines);

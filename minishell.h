@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:37:53 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:15:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define RERE_OUT 4 // >>
 # define PIPE 5 // |
 # define IN_OUT 6 // <>
+
+int	g_should_process;
 
 typedef struct s_lexer
 {
@@ -201,7 +203,7 @@ int			ft_error_pipe(int err);
 int			ft_error_redir(int err, char *st, int i);
 int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env, char *var_value, int var_len);
-void		check_here_doc(char ***arr, t_lexer **lex, t_env *env);
+int			check_here_doc(char ***arr, t_lexer **lex, t_env *env);
 void		here_doc(char **st, t_env *env);
 int			ft_process_reout(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
@@ -211,5 +213,6 @@ int			ft_unset_mult(t_env *env, char **array);
 int			ft_copy_d_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
 int			ft_copy_s_qu_lex(char **d, const char *s, t_sp_arg *li, size_t si);
 int			ft_error_more_than_two(int err_num);
+int			wordcount_spac_spe(char const *str);
 
 #endif

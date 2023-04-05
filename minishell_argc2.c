@@ -6,13 +6,13 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:19:28 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:11:54 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
+int	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
 {
 	t_lexer	*temp;
 	int		i;
@@ -25,7 +25,17 @@ void	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
 	{
 		if (temp->token == 3)
 			here_doc(&((*arr)[i]), &(*env));
+		if (g_should_process == 0)
+			break ;
 		i++;
 		temp = temp->next;
 	}
+	if (g_should_process == 0)
+	{
+		g_should_process = 1;
+		ft_free_split(*(arr));
+		ft_free_list_lexer(&(*lex));
+		return (1);
+	}
+	return (0);
 }
