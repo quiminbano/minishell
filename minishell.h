@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
 /*   Updated: 2023/04/06 15:36:35 by corellan         ###   ########.fr       */
@@ -67,6 +67,7 @@ typedef struct s_env
 	int		set_f;
 	int		exit_stts;
 	int		is_inside;
+	int		is_inside_2;
 	int		is_inside_q;
 	int		is_inside_dq;
 	int		status;
@@ -217,6 +218,9 @@ int			ft_error_more_than_two(int err_num);
 int			wordcount_spac_spe(char const *str);
 int			ft_strlen_in(const char *str);
 int			ft_strlen_out(const char *str);
+int			in_or_out_2(char *st, int i, t_env *env);
+int			single_inside_double(char *st, int i);
+int			separator_char(char *st, int last_idx);
 void		ft_child(char *path, char **cmd, t_env *env);
 void		handle_shortcuts2(void);
 

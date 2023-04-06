@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 17:05:37 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:13:47 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static int	handle_vars(t_env *env, int i, char *st)
 	var_len = 0;
 	last_idx = 0;
 	last_idx = i;
-	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
-		&& st[last_idx] != '$' && st[last_idx] != '\"')
-		last_idx++;
+	last_idx = separator_char(st, last_idx);
 	var_len = last_idx - i + 1;
 	var_name = malloc((sizeof(char) * var_len) + 1);
 	ft_strlcpy(var_name, (st + i), var_len);
@@ -59,6 +57,9 @@ static int	helper(t_env *env, int i, char *st)
 {
 	if (st[i] == '$' && !env->is_inside)
 		i = handle_vars(env, (i + 1), st);
+	else if (st[i] == '$' && env->is_inside && env->is_inside_2
+		&& single_inside_double(st, i))
+		i = handle_vars(env, (i + 1), st);
 	else
 	{
 		env->new_str = ft_strjoin_c(env->new_str, st[i]);
@@ -73,6 +74,7 @@ void	collect_args(char *st, t_env *env)
 
 	i = 0;
 	env->is_inside = 0;
+	env->is_inside_2 = 0;
 	while (st[i])
 	{
 		if (st[i] == '\\' && st[i + 1] == '\'' && env->is_inside == 0)
@@ -81,6 +83,11 @@ void	collect_args(char *st, t_env *env)
 		{
 			env->new_str = ft_strjoin_c(env->new_str, st[i]);
 			i += in_or_out(st, i, env);
+		}
+		else if (st[i] == '"')
+		{
+			env->new_str = ft_strjoin_c(env->new_str, st[i]);
+			i += in_or_out_2(st, i, env);
 		}
 		else if (st[i] == '$' && (st[i + 1] == ' ' || st[i + 1] == '\0'))
 			i += single_dollar(env);
