@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:36:53 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:07:04 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ static char	*ft_find_path_aux(char **cmd, t_env *env, int *flag, char **array)
 	int		i;
 
 	path = NULL;
+	array = NULL;
 	i = ft_find_word_array(env->env, "PATH=");
 	if (i < ft_array_len(env->env))
 		array = ft_split(env->env[i] + 5, ':');
 	i = 0;
-	while (array[i] != NULL)
+	while (array != NULL && array[i] != NULL)
 	{
 		path = ft_strjoin(array[i], "/");
 		path = ft_strjoin_free(path, cmd[0]);
@@ -48,12 +49,9 @@ static char	*ft_find_path_aux(char **cmd, t_env *env, int *flag, char **array)
 		free(path);
 		i++;
 	}
-	if (i == ft_array_len(array))
-	{
-		(*flag) = 1;
-		path = NULL;
-	}
-	ft_free_split(array);
+	ft_setup_flag(&(*flag), &path, i, array);
+	if (array != NULL)
+		ft_free_split(array);
 	return (path);
 }
 

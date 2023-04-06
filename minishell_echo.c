@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_echo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:00:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:51:14 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:29:43 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	ft_second_arg_echo_check(char *str)
 
 static void	ft_echo_aux(char **array, int i)
 {
-	while (ft_second_arg_echo_check(array[i]) == (int)ft_strlen(array[i]))
+	while ((array[i] != NULL) && \
+		(ft_second_arg_echo_check(array[i]) == (int)ft_strlen(array[i])))
 		i++;
 	while (array[i] != NULL)
 	{
