@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:43:48 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:36:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*ft_find_path(char **cmd, t_env *env, int *flag)
 
 static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 {
+	handle_shortcuts2();
 	pid = fork();
 	if (pid == -1)
 	{
@@ -93,19 +94,20 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 	}
 	if (pid == 0)
 	{
-		if (execve(path, cmd, env->env) < 0)
-		{
-			free(path);
-			ft_free_split(cmd);
-			write(STDERR_FILENO, "minishell: : command not found\n", 31);
-			exit (127);
-		}
+		ft_child(path, cmd, &(*env));
+		exit (EXIT_SUCCESS);
 	}
 	else
+	{
+		g_should_process = pid;
 		waitpid(pid, &(env->status), 0);
+	}
 	free(path);
 	ft_free_split(cmd);
-	env->exit_stts = WEXITSTATUS(env->status);
+	if (g_should_process == 1)
+		env->exit_stts = WEXITSTATUS(env->status);
+	else
+		env->exit_stts = 131;
 	return (3);
 }
 

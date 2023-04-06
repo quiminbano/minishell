@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:59:46 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:36:35 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,7 @@ int			ft_strlen_out(const char *str);
 int			in_or_out_2(char *st, int i, t_env *env);
 int			single_inside_double(char *st, int i);
 int			separator_char(char *st, int last_idx);
+void		ft_child(char *path, char **cmd, t_env *env);
+void		handle_shortcuts2(void);
 
 #endif
