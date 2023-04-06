@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:35:50 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/06 15:41:36 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:13:47 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static int	handle_vars(t_env *env, int i, char *st)
 	var_len = 0;
 	last_idx = 0;
 	last_idx = i;
-	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
-		&& st[last_idx] != '$' && st[last_idx] != '\"')
-		last_idx++;
+	last_idx = separator_char(st, last_idx);
 	var_len = last_idx - i + 1;
 	var_name = malloc((sizeof(char) * var_len) + 1);
 	ft_strlcpy(var_name, (st + i), var_len);

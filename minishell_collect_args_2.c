@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:53:38 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/06 15:42:22 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:13:49 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,17 @@ int	single_inside_double(char *st, int i)
 		i++;
 	}
 	return (0);
+}
+
+int	separator_char(char *st, int last_idx)
+{
+	while (st[last_idx] != ' ' && st[last_idx] != '\'' && st[last_idx] != '\0'
+		&& st[last_idx] != '$' && st[last_idx] != '\"' && st[last_idx] != ','
+		&& st[last_idx] != '.' && st[last_idx] != '<' && st[last_idx] != '>'
+		&& st[last_idx] != '/' && st[last_idx] != ':' && st[last_idx] != '@'
+		&& st[last_idx] != '#' && st[last_idx] != '%' && st[last_idx] != '^'
+		&& st[last_idx] != '*' && st[last_idx] != '-' && st[last_idx] != '+'
+		&& st[last_idx] != '=')
+		last_idx++;
+	return (last_idx);
 }
