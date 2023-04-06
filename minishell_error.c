@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:59:58 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 17:06:06 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:01:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,38 +37,41 @@ static int	first_or_both(char *st)
 	return (0);
 }
 
-static int	more_than_two(char *st)
+static int	more_than_two(char *st, t_env *env)
 {
 	int	i;
 
 	i = 0;
 	while (st[i])
 	{
-		if (st[i] == '>' && st[i + 1] == '>' && st[i + 2]
-			== '>' && st[i + 3] != '>')
+		if (st[i] == 39)
+			i += (int)ft_len_s_quot_lexer(st, i);
+		else if (st[i] == 34)
+			i += (int)ft_len_d_quot_lexer(st, i);
+		else if (ft_strlen_out(st + i) == 3)
 			return (3);
-		else if (st[i] == '>' && st[i + 1] == '>' && st[i + 2]
-			== '>' && st[i + 3] == '>')
+		else if (ft_strlen_out(st + i) > 3)
 			return (4);
 		i++;
 	}
+	env->fl_mtt = 1;
 	return (0);
 }
 
 static int	check_errors_helper(char *st, int i, int inside, t_env *env)
 {
+	env->fl_mtt = 0;
 	while (st[i])
 	{
 		inside = is_inside(st[i], env);
 		if (st[i] == '\\' && st[i + 1])
 			i++;
-		else if (more_than_two(st))
-			return (ft_error_more_than_two(more_than_two(st)));
+		else if ((env->fl_mtt == 0) && (more_than_two(st, &(*env))))
+			return (ft_error_more_than_two(more_than_two(st, &(*env))));
 		else if (first_or_both(st) != 0)
 			return (ft_error_pipe(first_or_both(st)));
-		else if (((st[i] == '<' && st[i + 1] == '<' && st[i + 2] == '<')
-				&& (!inside)) || ((st[i] == '&' && st[i + 1] == '&')
-				&& (!inside)))
+		else if (((ft_strlen_in(st) > 2) && (!inside)) || \
+			((st[i] == '&' && st[i + 1] == '&') && (!inside)))
 			return (ft_error_unsupported());
 		else if ((st[i] == '>' && st[i + 1] == '<') && (!inside))
 			return (ft_error_redir(1, st, i));

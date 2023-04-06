@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:14:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 09:48:59 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:44:02 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ft_reredirect_input(char **ar, t_m_arg *arg)
 {
-	char	**temp;
-	int		fd[RE_OUT];
+	int	fd[RE_OUT];
 
-	temp = NULL;
 	if (arg->lexe->token == 3 && arg->flag_err == 0)
 	{
 		if (arg->flag_in == 1)

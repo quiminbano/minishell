@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:08:42 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 17:00:15 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:43:36 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static int	ft_start(char **environ)
 
 static int	ft_setup_everything(int ac, char **av, char **envp, t_env *env)
 {
+	ac = 0;
 	env->exit_stts = 0;
-	if (av[0] != NULL)
+	if (av[ac] != NULL)
 		ac = 0;
 	env->flag = 0;
 	env->set_f = 0;
