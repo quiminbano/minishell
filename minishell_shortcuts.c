@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_shortcuts.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:26:40 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 17:05:01 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:36:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_signals2(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		write(STDERR_FILENO, "Quit: 3\n", 8);
+		kill(g_should_process, SIGQUIT);
+		g_should_process = 0;
+	}
+	if (sig == SIGINT)
+	{
+		kill(g_should_process, SIGINT);
+		g_should_process = 0;
+	}
+}
+
+void	handle_shortcuts2(void)
+{
+	signal(SIGQUIT, &handle_signals2);
+	signal(SIGINT, &handle_signals2);
+}
 
 int	handle_ctrl_d(char *str, t_env *env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_run_multiargs.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:56:37 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:41:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 {
+	handle_shortcuts2();
 	(*pid) = fork();
 	if ((*pid) == -1)
 	{
@@ -23,17 +24,11 @@ static int	ft_run_m_comman_aux(char **cmd, t_env *env, char *path, pid_t *pid)
 	}
 	if ((*pid) == 0)
 	{
-		if (execve(path, cmd, env->env) < 0)
-		{
-			free(path);
-			ft_free_split(cmd);
-			write(STDERR_FILENO, "minishell: : command not found\n", 31);
-			exit (127);
-		}
+		ft_child(path, cmd, &(*env));
+		exit (EXIT_SUCCESS);
 	}
 	free(path);
 	ft_free_split(cmd);
-	env->exit_stts = 0;
 	return (3);
 }
 

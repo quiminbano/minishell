@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 17:04:14 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:52:55 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	{
 		if (arg->pid[(arg->i) + 1] == 0)
 		{
+			g_should_process = arg->pid[((arg->i))];
 			waitpid(arg->pid[((arg->i))], &(env->status), 0);
 			if (arg->pid[(arg->i)] != -1)
 				env->exit_stts = WEXITSTATUS(env->status);
@@ -58,6 +59,8 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 			waitpid(arg->pid[((arg->i))], &(env->status), 0);
 		(arg->i) += 1;
 	}
+	if (g_should_process == 0)
+		env->exit_stts = 131;
 	ft_free_split(ar);
 	arg->lexe = (*be);
 	ft_free_list_lexer(&(arg->lexe));

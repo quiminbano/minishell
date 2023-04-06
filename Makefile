@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/06 09:58:20 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/06 11:59:19 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ minishell_redirections_out.c minishell_error_printing.c \
 minishell_export_utils2.c minishell_exit_mult.c minishell_exit_mult2.c \
 minishell_export_mult.c minishell_unset_mult.c minishell_export_utils3.c \
 minishell_error_empty.c minishell_lexer_list2.c here_doc.c minishell_argc2.c \
-minishell_error_utils.c
+minishell_error_utils.c minishell_child.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -46,7 +46,7 @@ minishell_redirections_out.o minishell_error_printing.o \
 minishell_export_utils2.o minishell_exit_mult.o minishell_exit_mult2.o \
 minishell_export_mult.o minishell_unset_mult.o minishell_export_utils3.o \
 minishell_error_empty.o minishell_lexer_list2.o here_doc.o minishell_argc2.o \
-minishell_error_utils.o
+minishell_error_utils.o minishell_child.o
 
 LIBFT = -Llibft -lft
 
