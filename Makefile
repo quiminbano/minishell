@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/06 18:07:32 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/08 10:52:56 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,9 @@ LIBFT = -Llibft -lft
 
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g -static-libsan
 
-RL_L = -lreadline -L ~/.brew/opt/readline/lib
+RL_L = -lreadline -L /opt/Homebrew/opt/readline/lib
 
-RL_I = -I ~/.brew/opt/readline/include
+RL_I = -I /opt/Homebrew/opt/readline/include
 
 CC = cc
 

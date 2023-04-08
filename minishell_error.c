@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:59:58 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 10:01:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:08:25 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ static int	more_than_two(char *st, t_env *env)
 			return (3);
 		else if (ft_strlen_out(st + i) > 3)
 			return (4);
+		else if (ft_strlen_pipe(st + i) == 2)
+			return (5);
+		else if (ft_strlen_pipe(st + i) == 3)
+			return (6);
+		else if (ft_strlen_pipe(st + i) > 3)
+			return (7);
 		i++;
 	}
 	env->fl_mtt = 1;
