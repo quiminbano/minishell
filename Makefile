@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/09 11:22:53 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/09 17:01:01 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ minishell_run_singleargs2.o minishell_multiargs_utils.o minishell_pipes.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g -static-libsan
+FLAGS = -Wall -Wextra -Werror
 
 RL_L = -lreadline -L /opt/Homebrew/opt/readline/lib
 

@@ -6,11 +6,26 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:21:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/04 11:15:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:20:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	error_cmd_aux2(char **cmd, t_env *env, int flag)
+{
+	if (flag == 5)
+	{
+		write(STDERR_FILENO, "minishell: ", 11);
+		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, strerror(2), ft_strlen(strerror(2)));
+		write(STDERR_FILENO, "\n", 1);
+		env->exit_stts = 127;
+		return (3);
+	}
+	return (3);
+}
 
 static int	ft_print_error_command_aux(char **cmd, t_env *env, int flag)
 {
@@ -36,7 +51,7 @@ static int	ft_print_error_command_aux(char **cmd, t_env *env, int flag)
 		env->exit_stts = 126;
 		return (3);
 	}
-	return (3);
+	return (error_cmd_aux2(cmd, &(*env), flag));
 }
 
 int	ft_print_error_command(char **cmd, t_env *env, int flag)
