@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/08 10:55:14 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 10:36:02 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,6 @@ typedef struct s_lex_i
 	t_lexer	*le;
 }	t_lex_i;
 
-typedef struct s_env
-{
-	char	**env;
-	char	**str;
-	char	**args;
-	char	**arr;
-	char	oldpwd[BUFFER];
-	char	newpwd[BUFFER];
-	int		level;
-	int		flag;
-	char	*new_str;
-	int		set_f;
-	int		exit_stts;
-	int		is_inside;
-	int		is_inside_2;
-	int		is_inside_q;
-	int		is_inside_dq;
-	int		status;
-	char	*all_lines;
-	int		fl_mtt;
-}	t_env;
-
 typedef struct s_sp_arg
 {
 	int		p;
@@ -100,8 +78,9 @@ typedef struct s_export
 
 typedef struct s_m_arg
 {
-	int		fd[RE_OUT];
+	int		**fd;
 	t_lexer	*lexe;
+	t_lexer	*begin;
 	int		i;
 	int		idx;
 	int		n_redir;
@@ -113,13 +92,39 @@ typedef struct s_m_arg
 	int		fdout;
 	int		fdin_pipe;
 	int		fdout_pipe;
-	int		flag_end;
+	int		flag_pipe;
 	int		flag_in;
 	int		flag_out;
 	int		flag_err;
 	int		wait;
+	int		n_pipe;
+	int		c_pipe;
+	char	**path;
 	pid_t	pid[BUFFER];
 }	t_m_arg;
+
+typedef struct s_env
+{
+	char	**env;
+	char	**str;
+	char	**args;
+	char	**arr;
+	char	oldpwd[BUFFER];
+	char	newpwd[BUFFER];
+	int		level;
+	int		flag;
+	char	*new_str;
+	int		set_f;
+	int		exit_stts;
+	int		is_inside;
+	int		is_inside_2;
+	int		is_inside_q;
+	int		is_inside_dq;
+	int		status;
+	char	*all_lines;
+	int		fl_mtt;
+	int		ret;
+}	t_env;
 
 void		ft_copy_env(t_env *env, char **envp);
 void		handle_shortcuts(void);
@@ -207,7 +212,9 @@ int			ft_error_unsupported(void);
 void		replace_var_val(t_env *env, char *var_value, int var_len);
 int			check_here_doc(char ***arr, t_lexer **lex, t_env *env);
 void		here_doc(char **st, t_env *env);
+void		ft_process_rein(t_m_arg *arg);
 int			ft_process_reout(t_m_arg *arg);
+int			ft_process_pipe(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);
 int			ft_export_mult(t_env *env, char **array);
@@ -222,8 +229,14 @@ int			ft_strlen_pipe(const char *str);
 int			in_or_out_2(char *st, int i, t_env *env);
 int			single_inside_double(char *st, int i);
 int			separator_char(char *st, int last_idx);
-void		ft_child(char *path, char **cmd, t_env *env);
+void		ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg);
+void		ft_child_s(char *path, char **cmd, t_env *env);
 void		handle_shortcuts2(void);
 void		ft_setup_flag(int *flag, char **path, int i, char **array);
+int			find_special_cases(char **cmd);
+void		close_fd(t_m_arg *arg);
+int			count_pipes(t_lexer **lst);
+int			prepare_pipe_fd(int	***fd, t_m_arg *arg);
+void		ft_free_pipes(int ***fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 15:52:55 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 11:15:07 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 {
 	arg->i = 0;
-	close(arg->fdin_pipe);
-	close(arg->fdout_pipe);
 	while ((arg->wait) > 0 && arg->pid[arg->i] != 0)
 	{
 		if (arg->pid[(arg->i) + 1] == 0)
@@ -64,10 +62,6 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	ft_free_split(ar);
 	arg->lexe = (*be);
 	ft_free_list_lexer(&(arg->lexe));
-	dup2(arg->tmpout, STDOUT_FILENO);
-	close(arg->tmpout);
-	dup2(arg->tmpin, STDIN_FILENO);
-	close(arg->tmpin);
 }
 
 static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
@@ -75,21 +69,22 @@ static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 	t_m_arg	arg;
 
 	arg.lexe = (*le);
+	arg.begin = (*le);
 	if (arg.lexe->token == 0)
 		arg.lexe = arg.lexe->next;
 	arg.i = 0;
-	arg.tmpin = dup(STDIN_FILENO);
-	arg.tmpout = dup(STDOUT_FILENO);
 	arg.wait = 0;
-	if (arg.lexe != NULL && ((arg.lexe->token == 2) || \
-		(arg.lexe->token == 4) || (arg.lexe->token == 5)))
-		arg.fdin = dup(arg.tmpin);
-	arg.fdin_pipe = dup(arg.tmpin);
+	arg.tmpout = dup(STDOUT_FILENO);
 	arg.len = ft_array_len(ar);
-	arg.pid[arg.len] = 0;
+	arg.n_pipe = count_pipes(&(*le));
+	arg.c_pipe = 0;
+	if (prepare_pipe_fd(&(arg.fd), &(arg)) == -1)
+		return (3);
+	arg.c_pipe = 0;
 	while (ar[arg.i] != NULL)
 		ft_iterate_mult_args(ar, &(*ret), &(*env), &arg);
 	wait_for_p_close(ar, &arg, &(*le), &(*env));
+	ft_free_pipes(&(arg.fd));
 	return (3);
 }
 

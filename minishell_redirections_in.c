@@ -6,11 +6,24 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:14:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 09:44:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 11:47:01 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_process_rein(t_m_arg *arg)
+{
+	if (arg->i == 0 && arg->flag_in == 0)
+		close(arg->fdin);
+	else if (arg->i != 0 && arg->flag_in == 0)
+	{
+		dup2(arg->fdin_pipe, STDIN_FILENO);
+		close(arg->fdin_pipe);
+	}
+	else
+		dup2(arg->fdin, STDIN_FILENO);
+}
 
 void	ft_reredirect_input(char **ar, t_m_arg *arg)
 {

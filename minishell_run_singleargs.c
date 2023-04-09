@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/06 18:07:04 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 00:35:17 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 	}
 	if (pid == 0)
 	{
-		ft_child(path, cmd, &(*env));
+		ft_child_s(path, cmd, &(*env));
 		exit (EXIT_SUCCESS);
 	}
 	else
