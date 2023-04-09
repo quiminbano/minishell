@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 10:36:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:56:49 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,12 @@ typedef struct s_m_arg
 	int		n_redir;
 	int		lex_size;
 	int		len;
-	int		tmpin;
-	int		tmpout;
 	int		fdin;
 	int		fdout;
-	int		fdin_pipe;
-	int		fdout_pipe;
-	int		flag_pipe;
 	int		flag_in;
 	int		flag_out;
 	int		flag_err;
+	int		flag_pipe;
 	int		wait;
 	int		n_pipe;
 	int		c_pipe;
@@ -213,8 +209,7 @@ void		replace_var_val(t_env *env, char *var_value, int var_len);
 int			check_here_doc(char ***arr, t_lexer **lex, t_env *env);
 void		here_doc(char **st, t_env *env);
 void		ft_process_rein(t_m_arg *arg);
-int			ft_process_reout(t_m_arg *arg);
-int			ft_process_pipe(t_m_arg *arg);
+void		ft_process_reout(t_m_arg *arg);
 int			ft_exit_check_m1(char **array, int *ret, t_env *env);
 int			ft_exit_check_m2(char **array, int *ret, t_env *env);
 int			ft_export_mult(t_env *env, char **array);
@@ -237,6 +232,8 @@ int			find_special_cases(char **cmd);
 void		close_fd(t_m_arg *arg);
 int			count_pipes(t_lexer **lst);
 int			prepare_pipe_fd(int	***fd, t_m_arg *arg);
+int			create_pipes(int ***fd, int *index, t_lexer **lex, char **arr);
 void		ft_free_pipes(int ***fd);
+void		close_pipes(t_m_arg *arg);
 
 #endif

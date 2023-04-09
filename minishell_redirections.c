@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 11:17:12 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 11:55:44 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:55:15 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,11 @@ static void	ft_incorrect_redirect(char **ar, t_m_arg *arg)
 
 void	close_fd(t_m_arg *arg)
 {
-	close(arg->fdin);
-	if (arg->flag_pipe == 1)
-		close(arg->fdout_pipe);
+	if (arg->flag_in == 1)
+		close(arg->fdin);
 	if (arg->flag_out == 1)
 		close(arg->fdout);
-	if ((arg->i + arg->idx) == (arg->len - 1))
-		close(arg->tmpout);
-}
-
-int	ft_process_pipe(t_m_arg *arg)
-{
-	if (arg->flag_in == 0 && arg->i != 0)
-		arg->fdin = arg->fd[arg->c_pipe - 1][0];
-	else if (arg->flag_in == 1 && arg->i != 0)
-		close(arg->fd[arg->c_pipe - 1][0]);
-	if (arg->c_pipe < arg->n_pipe)
-	{
-		arg->flag_pipe = 1;
-		if (pipe(arg->fd[arg->c_pipe]) == -1)
-		{
-			perror("minishell");
-			ft_free_pipes(&(arg->fd));
-			(arg->i) = arg->len;
-			return (3);
-		}
-		arg->fdout_pipe = arg->fd[(arg->c_pipe)][1];
-		(arg->c_pipe) += 1;
-		arg->lexe = arg->lexe->next;
-	}
-	return (0);
+	close_pipes(&(*arg));
 }
 
 void	ft_do_redirections(char **ar, t_m_arg *arg)
@@ -94,7 +69,6 @@ void	ft_do_redirections(char **ar, t_m_arg *arg)
 	arg->flag_err = 0;
 	arg->flag_in = 0;
 	arg->flag_out = 0;
-	arg->flag_pipe = 0;
 	arg->idx = 0;
 	if (arg->i == 0)
 		arg->pid[0] = 0;

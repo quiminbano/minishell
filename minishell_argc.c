@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 11:15:07 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:56:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	ft_process_single_cmd(char *st, int *ret, t_env *env)
 static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 {
 	arg->i = 0;
+	close_pipes(&(*arg));
 	while ((arg->wait) > 0 && arg->pid[arg->i] != 0)
 	{
 		if (arg->pid[(arg->i) + 1] == 0)
@@ -74,12 +75,17 @@ static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
 		arg.lexe = arg.lexe->next;
 	arg.i = 0;
 	arg.wait = 0;
-	arg.tmpout = dup(STDOUT_FILENO);
 	arg.len = ft_array_len(ar);
 	arg.n_pipe = count_pipes(&(*le));
 	arg.c_pipe = 0;
+	arg.flag_pipe = 0;
 	if (prepare_pipe_fd(&(arg.fd), &(arg)) == -1)
 		return (3);
+	while (arg.c_pipe < arg.n_pipe)
+	{
+		if (create_pipes(&(arg.fd), &(arg.c_pipe), &(*le), ar) == -1)
+			return (3);
+	}
 	arg.c_pipe = 0;
 	while (ar[arg.i] != NULL)
 		ft_iterate_mult_args(ar, &(*ret), &(*env), &arg);

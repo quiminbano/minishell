@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:55:01 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 07:57:39 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:04:11 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static int	process_child_aux(char **cmd, t_env *env, int flag, t_m_arg *arg)
 {
-	if ((ft_strncmp("env\0", (cmd[0]), 4) == 0))
+	if ((flag == 0) && (ft_strncmp("env\0", (cmd[0]), 4) == 0))
 	{
 		ft_env(&(*env), cmd);
 		flag = 1;
 	}
-	else if ((ft_strncmp("export\0", (cmd[0]), 7) == 0))
+	else if ((flag == 0) && (ft_strncmp("export\0", (cmd[0]), 7) == 0))
 	{
 		ft_export_mult(&(*env), cmd);
 		flag = 1;
 	}
-	else if ((ft_strncmp("unset\0", (cmd[0]), 6) == 0))
+	else if ((flag == 0) && (ft_strncmp("unset\0", (cmd[0]), 6) == 0))
 	{
 		ft_unset_mult(&(*env), cmd);
 		flag = 1;
@@ -73,6 +73,7 @@ void	ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg)
 	arg->path = &path;
 	ft_process_rein(&(*arg));
 	ft_process_reout(&(*arg));
+	close_fd(&(*arg));
 	if (process_child(cmd, &(*env), &(*arg)) != 0)
 		exit (EXIT_SUCCESS);
 	if (execve(path, cmd, env->env) < 0)

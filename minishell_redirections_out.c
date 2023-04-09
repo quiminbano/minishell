@@ -6,34 +6,18 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:17:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 08:14:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:38:56 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_process_reout(t_m_arg *arg)
+void	ft_process_reout(t_m_arg *arg)
 {
 	if (arg->flag_out == 1)
-	{
-		write(arg->fdout_pipe, "\0", 1);
-		close(arg->tmpout);
-		close(arg->fdout_pipe);
 		dup2(arg->fdout, STDOUT_FILENO);
-		close(arg->fdout);
-	}
-	else if ((arg->i + arg->idx) == (arg->len - 1) && arg->flag_out == 0)
-	{
-		dup2(arg->tmpout, STDOUT_FILENO);
-		close(arg->tmpout);
-	}
-	else
-	{
-		dup2(arg->fdout_pipe, STDOUT_FILENO);
-		close(arg->tmpout);
-		close(arg->fdout_pipe);
-	}
-	return (0);
+	else if ((arg->flag_out == 0) && (arg->c_pipe < (arg->n_pipe)))
+		dup2(arg->fd[arg->c_pipe][1], STDOUT_FILENO);
 }
 
 void	ft_redirect_out_append(char **ar, t_m_arg *arg)

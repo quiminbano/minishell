@@ -6,11 +6,38 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 10:20:37 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 11:24:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:57:25 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_pipes(t_m_arg *arg)
+{
+	int	index;
+
+	index = 0;
+	while (index < arg->n_pipe)
+	{
+		close(arg->fd[index][0]);
+		close(arg->fd[index][1]);
+		index++;
+	}
+}
+
+int	create_pipes(int ***fd, int *index, t_lexer **lex, char **arr)
+{
+	if (pipe((*fd)[(*index)]) == -1)
+	{
+		perror("minishell");
+		ft_free_split(arr);
+		ft_free_list_lexer(&(*lex));
+		ft_free_pipes(&(*fd));
+		return (-1);
+	}
+	(*index) += 1;
+	return (0);
+}
 
 void	ft_free_pipes(int ***fd)
 {
