@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
 /*   Updated: 2023/04/10 14:46:05 by corellan         ###   ########.fr       */
@@ -237,5 +237,6 @@ int			create_pipes(int ***fd, int *index, t_lexer **lex, char **arr);
 void		ft_free_pipes(int ***fd);
 void		close_pipes(t_m_arg *arg);
 void		print_exit_stts(t_env *env);
+void		disable_characters(int toggle);
 
 #endif

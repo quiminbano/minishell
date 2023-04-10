@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_shortcuts.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:26:40 by hel-hosr          #+#    #+#             */
 /*   Updated: 2023/04/10 13:52:09 by corellan         ###   ########.fr       */
