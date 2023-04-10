@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_collect_args_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:53:38 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/06 16:13:49 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:41:15 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	separator_char(char *st, int last_idx)
 		&& st[last_idx] != '/' && st[last_idx] != ':' && st[last_idx] != '@'
 		&& st[last_idx] != '#' && st[last_idx] != '%' && st[last_idx] != '^'
 		&& st[last_idx] != '*' && st[last_idx] != '-' && st[last_idx] != '+'
-		&& st[last_idx] != '=')
+		&& st[last_idx] != '=' && st[last_idx] != '\n')
 		last_idx++;
 	return (last_idx);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 14:50:43 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:46:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_env
 	char	**env;
 	char	**str;
 	char	**args;
+	char	***c_arg;
 	char	**arr;
 	char	oldpwd[BUFFER];
 	char	newpwd[BUFFER];
@@ -195,11 +196,11 @@ char		**ft_process_lexer(char **arg, char *str);
 char		**ft_process_arg(char **array, char *str);
 char		*ft_find_path(char **cmd, t_env *env, int *flag);
 int			ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg);
-void		ft_do_redirections(char **ar, t_m_arg *arg);
-void		ft_redirections_input(char **ar, t_m_arg *arg);
-void		ft_redirections_output(char **ar, t_m_arg *arg);
+void		ft_do_redirections(char **ar, t_m_arg *arg, t_env *env);
+void		ft_redirections_input(char **ar, t_m_arg *arg, t_env *env);
+void		ft_redirections_output(char **ar, t_m_arg *arg, t_env *env);
 void		ft_reredirect_input(char **ar, t_m_arg *arg);
-void		ft_redirect_out_append(char **ar, t_m_arg *arg);
+void		ft_redirect_out_append(char **ar, t_m_arg *arg, t_env *env);
 int			catch_errors(char *st, t_env *env);
 int			catch_empty(char **arr, t_lexer **lex, char *st);
 int			ft_error_pipe(int err);
@@ -235,6 +236,7 @@ int			prepare_pipe_fd(int	***fd, t_m_arg *arg);
 int			create_pipes(int ***fd, int *index, t_lexer **lex, char **arr);
 void		ft_free_pipes(int ***fd);
 void		close_pipes(t_m_arg *arg);
+void		print_exit_stts(t_env *env);
 void		disable_characters(int toggle);
 
 #endif

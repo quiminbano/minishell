@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 18:07:29 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:39:44 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static int	ft_run_m_comman_a(char **cmd, t_env *env, char *path, t_m_arg *ar)
 {
-	handle_shortcuts2();
 	(ar->pid[ar->wait - 1]) = fork();
 	if ((ar->pid[ar->wait - 1]) == -1)
 	{
+		handle_shortcuts2();
 		perror("minishell");
 		ft_free_split(cmd);
 		return (3);
@@ -83,7 +83,7 @@ static int	ft_proc_and_check_mul(char *ar, int *ret, t_env *env, t_m_arg *arg)
 
 int	ft_iterate_mult_args(char **ar, int *re, t_env *env, t_m_arg *arg)
 {
-	ft_do_redirections(ar, &(*arg));
+	ft_do_redirections(ar, &(*arg), &(*env));
 	if (arg->c_pipe < arg->n_pipe)
 		arg->lexe = arg->lexe->next;
 	if (arg->flag_err == 0)

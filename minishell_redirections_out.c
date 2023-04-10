@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:17:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 16:38:56 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:46:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_process_reout(t_m_arg *arg)
 		dup2(arg->fd[arg->c_pipe][1], STDOUT_FILENO);
 }
 
-void	ft_redirect_out_append(char **ar, t_m_arg *arg)
+void	ft_redirect_out_append(char **ar, t_m_arg *arg, t_env *env)
 {
 	char	**temp;
 
@@ -40,13 +40,14 @@ void	ft_redirect_out_append(char **ar, t_m_arg *arg)
 			write(STDERR_FILENO, ": ", 2);
 			write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 			write(STDERR_FILENO, "\n", 1);
+			env->exit_stts = 1;
 		}
 		ft_free_split(temp);
 		arg->flag_out = 1;
 	}
 }
 
-void	ft_redirections_output(char **ar, t_m_arg *arg)
+void	ft_redirections_output(char **ar, t_m_arg *arg, t_env *env)
 {
 	char	**temp;
 
@@ -66,6 +67,7 @@ void	ft_redirections_output(char **ar, t_m_arg *arg)
 			write(STDERR_FILENO, ": ", 2);
 			write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 			write(STDERR_FILENO, "\n", 1);
+			env->exit_stts = 1;
 		}
 		ft_free_split(temp);
 		arg->flag_out = 1;

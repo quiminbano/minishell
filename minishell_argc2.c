@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:19:28 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:49:20 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:57:38 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_exit_stts(t_env *env)
+{
+	if (WTERMSIG(env->status) == 11)
+	{
+		write(STDERR_FILENO, "Segmentation fault: 11\n", 23);
+		env->exit_stts = 139;
+	}
+	else if (WTERMSIG(env->status) == 3)
+	{
+		write(STDERR_FILENO, "Quit: 3\n", 8);
+		env->exit_stts = 131;
+	}
+	else if (WTERMSIG(env->status) == 9)
+	{
+		write(STDERR_FILENO, "Killed: 9\n", 10);
+		env->exit_stts = 137;
+	}
+	else if (WTERMSIG(env->status) == 6)
+	{
+		write(STDERR_FILENO, "Abort trap: 6\n", 14);
+		env->exit_stts = 134;
+	}
+	else if (WTERMSIG(env->status) == 10)
+	{
+		write(STDERR_FILENO, "Bus error: 10\n", 14);
+		env->exit_stts = 138;
+	}
+}
 
 int	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
 {

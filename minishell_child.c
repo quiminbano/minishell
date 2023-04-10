@@ -6,11 +6,22 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:55:01 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 16:10:18 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 12:47:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_enerything_child(t_env *env, t_m_arg *arg)
+{
+	ft_free_list_lexer(&(arg->begin));
+	free(env->new_str);
+	free(*(env->str));
+	free(*(arg->path));
+	ft_free_pipes(&(arg->fd));
+	ft_free_split((*(env->c_arg)));
+	ft_free_split(env->env);
+}
 
 static int	process_child_aux(char **cmd, t_env *env, int flag, t_m_arg *arg)
 {
@@ -31,10 +42,7 @@ static int	process_child_aux(char **cmd, t_env *env, int flag, t_m_arg *arg)
 	}
 	if (flag == 1)
 	{
-		ft_free_list_lexer(&(arg->begin));
-		free(env->new_str);
-		free(*(env->str));
-		free(*(arg->path));
+		free_enerything_child(&(*env), &(*arg));
 		exit (env->exit_stts);
 	}
 	return (0);
@@ -80,6 +88,12 @@ void	ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg)
 	{
 		free(path);
 		ft_free_split(cmd);
+		ft_free_list_lexer(&(arg->begin));
+		free(env->new_str);
+		free(*(env->str));
+		ft_free_split(env->env);
+		ft_free_pipes(&(arg->fd));
+		ft_free_split((*(env->c_arg)));
 		write(STDERR_FILENO, "minishell: : command not found\n", 31);
 		exit (127);
 	}
@@ -91,6 +105,9 @@ void	ft_child_s(char *path, char **cmd, t_env *env)
 	{
 		free(path);
 		ft_free_split(cmd);
+		free(env->new_str);
+		free(*(env->str));
+		ft_free_split(env->env);
 		write(STDERR_FILENO, "minishell: : command not found\n", 31);
 		exit (127);
 	}

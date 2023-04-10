@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 15:56:06 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:58:16 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,16 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	{
 		if (arg->pid[(arg->i) + 1] == 0)
 		{
-			g_should_process = arg->pid[((arg->i))];
 			waitpid(arg->pid[((arg->i))], &(env->status), 0);
-			if (arg->pid[(arg->i)] != -1)
+			if (WIFSIGNALED(env->status) == 0 && arg->pid[arg->i] != -1)
 				env->exit_stts = WEXITSTATUS(env->status);
+			else
+				print_exit_stts(&(*env));
 		}
 		else
 			waitpid(arg->pid[((arg->i))], &(env->status), 0);
 		(arg->i) += 1;
 	}
-	if (g_should_process == 0)
-		env->exit_stts = 131;
 	ft_free_split(ar);
 	arg->lexe = (*be);
 	ft_free_list_lexer(&(arg->lexe));
@@ -114,6 +113,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 		if (ar[i] != NULL)
 			free(env->new_str);
 	}
+	env->c_arg = &ar;
 	return (ft_process_multi_cmd(ar, &(*ret), &(*env), &(*le)));
 }
 
