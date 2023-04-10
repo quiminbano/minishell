@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_run_singleargs_error.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:21:46 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 18:20:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:10:12 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
