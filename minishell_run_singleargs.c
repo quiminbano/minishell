@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 14:00:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:29:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*ft_find_path(char **cmd, t_env *env, int *flag)
 
 static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 {
+	disable_characters(1);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -96,16 +97,14 @@ static int	ft_run_s_command_aux(char **cmd, t_env *env, char *path, pid_t pid)
 		exit (EXIT_SUCCESS);
 	}
 	else
-	{
-		g_should_process = pid;
 		waitpid(pid, &(env->status), 0);
-	}
 	free(path);
 	ft_free_split(cmd);
 	if (WIFSIGNALED(env->status) == 0)
 		env->exit_stts = WEXITSTATUS(env->status);
 	else
 		print_exit_stts(&(*env));
+	disable_characters(0);
 	return (3);
 }
 

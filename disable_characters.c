@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   disable_characters.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:08:47 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/10 13:54:50 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:21:49 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void disable_characters(int toggle)
+void	disable_characters(int toggle)
 {
-	struct termios term;
+	struct termios	term;
 
 	if (!toggle)
 	{

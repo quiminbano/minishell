@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:35:02 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 14:58:16 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:25:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	wait_for_p_close(char **ar, t_m_arg *arg, t_lexer **be, t_env *env)
 	ft_free_split(ar);
 	arg->lexe = (*be);
 	ft_free_list_lexer(&(arg->lexe));
+	disable_characters(0);
 }
 
 static int	ft_process_multi_cmd(char **ar, int *ret, t_env *env, t_lexer **le)
@@ -98,6 +99,7 @@ static int	ft_replace_dol_multi(char **ar, int *ret, t_env *env, t_lexer **le)
 	int	i;
 
 	i = 0;
+	disable_characters(1);
 	g_should_process = 1;
 	ar = ft_process_lexer(ar, (*(env->str)));
 	if (check_here_doc(&ar, &(*le), &(*env)) == 1)
