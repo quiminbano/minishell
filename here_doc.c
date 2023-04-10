@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:41:04 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/10 14:23:35 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:53:31 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 			ft_strncmp(delimiter, line_str, ft_strlen(delimiter)) == 0) && \
 				g_should_process)
 		{
-			if (!line_str)
-			{
-				// printf("XX");
-			}
 			free(line_str);
 			break ;
 		}
