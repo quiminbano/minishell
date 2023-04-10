@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:14:43 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 15:40:45 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:43:59 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_reredirect_input(char **ar, t_m_arg *arg)
 	}
 }
 
-void	ft_redirections_input(char **ar, t_m_arg *arg)
+void	ft_redirections_input(char **ar, t_m_arg *arg, t_env *env)
 {
 	char	**temp;
 
@@ -62,6 +62,7 @@ void	ft_redirections_input(char **ar, t_m_arg *arg)
 			write(STDERR_FILENO, ": ", 2);
 			write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 			write(STDERR_FILENO, "\n", 1);
+			env->exit_stts = 1;
 		}
 		ft_free_split(temp);
 		arg->flag_in = 1;

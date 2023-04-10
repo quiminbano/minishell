@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 11:17:12 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 15:55:15 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:44:15 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	incorrect_redirect_aux(t_m_arg *arg)
 	arg->flag_in = 1;
 }
 
-static void	ft_incorrect_redirect(char **ar, t_m_arg *arg)
+static void	ft_incorrect_redirect(char **ar, t_m_arg *arg, t_env *env)
 {
 	char	**temp;
 	int		ferr;
@@ -46,6 +46,7 @@ static void	ft_incorrect_redirect(char **ar, t_m_arg *arg)
 			write(STDERR_FILENO, ": ", 2);
 			write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 			write(STDERR_FILENO, "\n", 1);
+			env->exit_stts = 1;
 		}
 		ft_free_split(temp);
 		close(ferr);
@@ -62,7 +63,7 @@ void	close_fd(t_m_arg *arg)
 	close_pipes(&(*arg));
 }
 
-void	ft_do_redirections(char **ar, t_m_arg *arg)
+void	ft_do_redirections(char **ar, t_m_arg *arg, t_env *env)
 {
 	arg->n_redir = ft_c_redic_in_a_row(&(arg->lexe));
 	arg->lex_size = size_lex(&(arg->lexe));
@@ -74,11 +75,11 @@ void	ft_do_redirections(char **ar, t_m_arg *arg)
 		arg->pid[0] = 0;
 	while (arg->idx < arg->n_redir)
 	{
-		ft_redirections_input(ar, &(*arg));
-		ft_redirections_output(ar, &(*arg));
+		ft_redirections_input(ar, &(*arg), &(*env));
+		ft_redirections_output(ar, &(*arg), &(*env));
 		ft_reredirect_input(ar, &(*arg));
-		ft_redirect_out_append(ar, &(*arg));
-		ft_incorrect_redirect(ar, &(*arg));
+		ft_redirect_out_append(ar, &(*arg), &(*env));
+		ft_incorrect_redirect(ar, &(*arg), &(*env));
 		arg->lexe = arg->lexe->next;
 		(arg->idx)++;
 		arg->pid[arg->i + arg->idx] = -1;

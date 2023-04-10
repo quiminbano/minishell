@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+         #
+#    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/10 11:22:58 by hel-hosr         ###   ########.fr        #
+#    Updated: 2023/04/10 12:04:21 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ minishell_run_singleargs2.o minishell_multiargs_utils.o minishell_pipes.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -static-libsan -g
 
 RL_L = -lreadline -L ~/.brew/opt/readline/lib
 
