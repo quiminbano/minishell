@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
+#    By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/09 17:01:01 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/10 11:22:58 by hel-hosr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,9 @@ LIBFT = -Llibft -lft
 
 FLAGS = -Wall -Wextra -Werror
 
-RL_L = -lreadline -L /opt/Homebrew/opt/readline/lib
+RL_L = -lreadline -L ~/.brew/opt/readline/lib
 
-RL_I = -I /opt/Homebrew/opt/readline/include
+RL_I = -I ~/.brew/opt/readline/include
 
 CC = cc
 
