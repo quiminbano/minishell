@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_error_printing.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 13:01:30 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 16:51:39 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:07:36 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,20 @@ int	ft_error_unsupported(void)
 
 int	ft_error_more_than_two(int err_num)
 {
-	if (err_num == 3)
+	if (err_num == 3 || err_num == 4 || err_num == 6 || err_num == 7)
 	{
 		write(STDERR_FILENO, "minishell: syntax error near unexpected ", 40);
 		write(STDERR_FILENO, "token `", 7);
-		write(STDERR_FILENO, ">'\n", 3);
+		if (err_num == 3)
+			write(STDERR_FILENO, ">'\n", 3);
+		else if (err_num == 4)
+			write(STDERR_FILENO, ">>'\n", 4);
+		else if (err_num == 6)
+			write(STDERR_FILENO, "|'\n", 4);
+		else
+			write(STDERR_FILENO, "||'\n", 4);
 	}
-	else if (err_num == 4)
-	{
-		write(STDERR_FILENO, "minishell: syntax error near unexpected ", 40);
-		write(STDERR_FILENO, "token `", 7);
-		write(STDERR_FILENO, ">>'\n", 4);
-	}
+	else if (err_num == 5)
+		return (ft_error_unsupported());
 	return (1);
 }

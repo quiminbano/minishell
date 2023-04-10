@@ -6,11 +6,19 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 10:17:03 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/03 10:17:47 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:38:56 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_process_reout(t_m_arg *arg)
+{
+	if (arg->flag_out == 1)
+		dup2(arg->fdout, STDOUT_FILENO);
+	else if ((arg->flag_out == 0) && (arg->c_pipe < (arg->n_pipe)))
+		dup2(arg->fd[arg->c_pipe][1], STDOUT_FILENO);
+}
 
 void	ft_redirect_out_append(char **ar, t_m_arg *arg)
 {

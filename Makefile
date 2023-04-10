@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/23 10:11:10 by corellan          #+#    #+#              #
-#    Updated: 2023/04/06 18:07:32 by corellan         ###   ########.fr        #
+#    Updated: 2023/04/09 17:01:01 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ minishell_export_utils2.c minishell_exit_mult.c minishell_exit_mult2.c \
 minishell_export_mult.c minishell_unset_mult.c minishell_export_utils3.c \
 minishell_error_empty.c minishell_lexer_list2.c here_doc.c minishell_argc2.c \
 minishell_error_utils.c minishell_child.c minishell_collect_args_2.c \
-minishell_run_singleargs2.c
+minishell_run_singleargs2.c minishell_multiargs_utils.c minishell_pipes.c
 
 OBJ = minishell.o minishell_utils.o minishell_exit.o minishell_argc.o \
 minishell_utils_exit.o minishell_echo.o minishell_split_arg.o \
@@ -48,15 +48,15 @@ minishell_export_utils2.o minishell_exit_mult.o minishell_exit_mult2.o \
 minishell_export_mult.o minishell_unset_mult.o minishell_export_utils3.o \
 minishell_error_empty.o minishell_lexer_list2.o here_doc.o minishell_argc2.o \
 minishell_error_utils.o minishell_child.o minishell_collect_args_2.o \
-minishell_run_singleargs2.o
+minishell_run_singleargs2.o minishell_multiargs_utils.o minishell_pipes.o
 
 LIBFT = -Llibft -lft
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g -static-libsan
+FLAGS = -Wall -Wextra -Werror
 
-RL_L = -lreadline -L ~/.brew/opt/readline/lib
+RL_L = -lreadline -L /opt/Homebrew/opt/readline/lib
 
-RL_I = -I ~/.brew/opt/readline/include
+RL_I = -I /opt/Homebrew/opt/readline/include
 
 CC = cc
 

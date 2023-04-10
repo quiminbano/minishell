@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:29:01 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 12:51:24 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:58:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ static void	print_error_middle(int token, char **arr, char **tempo)
 	return ;
 }
 
+static int	catch_except(t_lexer **lex)
+{
+	t_lexer	*temp;
+
+	temp = (*lex);
+	if ((temp->next != NULL) && ((temp->token == 5) && \
+		((temp->next->token > 0 && temp->next->token < 5) || \
+		(temp->next->token == 6))))
+		return (1);
+	return (0);
+}
+
 static int	catch_empty_aux(char **arr, t_lexer **lex, char *st)
 {
 	int		i;
@@ -47,7 +59,8 @@ static int	catch_empty_aux(char **arr, t_lexer **lex, char *st)
 	i = 1;
 	while (tempo[i] != NULL && temp != NULL)
 	{
-		if (ft_count_space(tempo[i]) == (int)ft_strlen(tempo[i]))
+		if ((catch_except(&temp) == 0) && \
+			(ft_count_space(tempo[i]) == (int)ft_strlen(tempo[i])))
 		{
 			temp = temp->next;
 			print_error_middle(temp->token, arr, tempo);
@@ -81,7 +94,7 @@ int	catch_empty(char **arr, t_lexer **lex, char *st)
 
 	i = ft_array_len(arr);
 	temp = (*lex);
-	if (ft_count_space(arr[i - 1]) == (int)ft_strlen(arr[i - 1]))
+	if ((i >= 2) && (ft_count_space(arr[i - 1]) == (int)ft_strlen(arr[i - 1])))
 	{
 		print_error_last(ft_lexlast(&temp)->token);
 		ft_free_split(arr);
