@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:59:47 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 20:47:13 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:35:30 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	ft_run_m_comman_a(char **cmd, t_env *env, char *path, t_m_arg *ar)
 {
+	handle_shortcuts2(2);
 	(ar->pid[ar->wait - 1]) = fork();
 	if ((ar->pid[ar->wait - 1]) == -1)
 	{

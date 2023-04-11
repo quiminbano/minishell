@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:55:01 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 12:47:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:35:14 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg)
 	close_fd(&(*arg));
 	if (process_child(cmd, &(*env), &(*arg)) != 0)
 		exit (EXIT_SUCCESS);
+	disable_characters(1);
 	if (execve(path, cmd, env->env) < 0)
 	{
 		free(path);
@@ -101,6 +102,7 @@ void	ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg)
 
 void	ft_child_s(char *path, char **cmd, t_env *env)
 {
+	disable_characters(1);
 	if (execve(path, cmd, env->env) < 0)
 	{
 		free(path);
