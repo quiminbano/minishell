@@ -6,7 +6,7 @@
 /*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:19:28 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/11 10:28:40 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:31:17 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_exit_stts(t_env *env)
 		write(STDERR_FILENO, "Abort trap: 6\n", 14);
 		env->exit_stts = 134;
 	}
-	exit_stts_helper(env);
+	exit_stts_helper(&(*env));
 }
 
 int	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
