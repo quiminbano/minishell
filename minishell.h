@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 10:15:56 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 14:46:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:46:28 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ int			single_inside_double(char *st, int i);
 int			separator_char(char *st, int last_idx);
 void		ft_child(char *path, char **cmd, t_env *env, t_m_arg *arg);
 void		ft_child_s(char *path, char **cmd, t_env *env);
-void		handle_shortcuts2(void);
+void		handle_shortcuts2(int flag);
 void		ft_setup_flag(int *flag, char **path, int i, char **array);
 int			find_special_cases(char **cmd);
 void		close_fd(t_m_arg *arg);
