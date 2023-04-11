@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_argc2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 14:19:28 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 16:57:38 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:28:40 by hel-hosr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	exit_stts_helper(t_env *env)
+{
+	if (WTERMSIG(env->status) == 10)
+	{
+		write(STDERR_FILENO, "Bus error: 10\n", 14);
+		env->exit_stts = 138;
+	}
+	else if (WTERMSIG(env->status) == SIGINT)
+		env->exit_stts = 130;
+}
 
 void	print_exit_stts(t_env *env)
 {
@@ -34,11 +45,7 @@ void	print_exit_stts(t_env *env)
 		write(STDERR_FILENO, "Abort trap: 6\n", 14);
 		env->exit_stts = 134;
 	}
-	else if (WTERMSIG(env->status) == 10)
-	{
-		write(STDERR_FILENO, "Bus error: 10\n", 14);
-		env->exit_stts = 138;
-	}
+	exit_stts_helper(env);
 }
 
 int	check_here_doc(char ***arr, t_lexer **lex, t_env *env)
