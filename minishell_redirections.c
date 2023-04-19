@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 11:17:12 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/10 14:44:15 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:39:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_incorrect_redirect(char **ar, t_m_arg *arg, t_env *env)
 	{
 		temp = ft_custom_split(ar[(arg->i) + arg->idx + 1]);
 		temp = ft_process_arg(temp, ar[(arg->i) + 1 + arg->idx]);
-		ferr = open(temp[0], O_RDWR | O_CREAT | O_TRUNC, 0644);
+		ferr = open(temp[0], O_RDWR | O_CREAT, 0644);
 		if (ferr == -1 && arg->flag_err == 0)
 		{
 			arg->flag_err = 1;

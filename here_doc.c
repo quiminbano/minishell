@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:41:04 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/11 10:17:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:21:42 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ static void	h_doc_helper(t_env *env, char *delimiter, char *line_str)
 		env->all_lines = ft_strjoin_c(env->all_lines, '\n');
 		free(line_str);
 	}
-	printf("%s\n", env->all_lines);
 }
 
 void	here_doc(char **st, t_env *env)
