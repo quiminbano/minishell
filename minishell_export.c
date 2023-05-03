@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_export.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/05 16:53:55 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:41:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	ft_export_aux(char **array, int *i, t_env *env)
 {
 	if (((ft_wordcount_space(array[(*i)]) > 1) && \
 		(ft_strchr(array[(*i)], '=') == NULL)) || ((array[(*i)][0] > 47) && \
-		(array[(*i)][0] < 58)))
+		(array[(*i)][0] < 58)) || (array[(*i)][0] == '='))
 	{
 		env->exit_stts = 1;
 		write(STDERR_FILENO, "minishell: export: `", 20);
