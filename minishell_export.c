@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 13:58:35 by corellan          #+#    #+#             */
-/*   Updated: 2023/05/03 10:41:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:49:43 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	ft_check_already_exist_aux(t_env *env, char **ar, int i, char *va)
 {
-	free(env->env[i]);
-	env->env[i] = ft_strdup(ar[0]);
 	if ((ar[1] != NULL) || ((ar[1] == NULL) && (va[ft_strlen(va) - 1] == '=')))
 	{
+		free(env->env[i]);
+		env->env[i] = ft_strdup(ar[0]);
 		env->env[i] = ft_strjoin_free(env->env[i], "=");
 		if (ar[1] != NULL)
 			env->env[i] = ft_strjoin_free(env->env[i], ar[1]);

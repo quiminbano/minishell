@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:40:27 by corellan          #+#    #+#             */
-/*   Updated: 2023/04/09 09:40:14 by corellan         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:26:06 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ t_lexer	*ft_lexlast(t_lexer **lst)
 
 int	count_pipes(t_lexer **lst)
 {
-	int		i;
 	int		j;
 	t_lexer	*temp;
 
-	i = 0;
 	j = 0;
 	temp = *lst;
 	while (temp != NULL)
@@ -54,7 +52,6 @@ int	count_pipes(t_lexer **lst)
 		if (temp->token == 5)
 			j++;
 		temp = temp->next;
-		i++;
 	}
 	return (j);
 }
