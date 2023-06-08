@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_pwd_cd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-hosr <hel-hosr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:10:18 by hel-hosr          #+#    #+#             */
-/*   Updated: 2023/04/05 16:54:56 by hel-hosr         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:53:39 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,13 @@ int	ft_cd(char **path, t_env *env)
 	else
 	{
 		env->exit_stts = 1;
+		if (ft_strncmp(path[1], "\0", 1) == 0)
+			return (ft_free_split(path), 3);
 		write(STDERR_FILENO, "minishell: cd: ", 15);
 		write(STDERR_FILENO, path[1], ft_strlen(path[1]));
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, strerror(errno), ft_strlen(strerror(errno)));
 		write(STDERR_FILENO, "\n", 1);
 	}
-	ft_free_split(path);
-	return (3);
+	return (ft_free_split(path), 3);
 }
